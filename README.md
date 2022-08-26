@@ -77,7 +77,7 @@ Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as vers�
 ## ✒️ Autores
 
 * **Alexandre C. Pedro** - *Trabalho Inicial* - [Desenvolvedor](https://github.com/alexandrecpedro)
-* **Fábio Neres** - *Trabalho Inicial* - [Desenvolvedor]https://github.com/neresfabio)
+* **Fábio Neres** - *Trabalho Inicial* - [Desenvolvedor](https://github.com/neresfabio)
 * **Tiago Vale** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
 * **SanKler** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
 * **Atef Chelaghma** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
