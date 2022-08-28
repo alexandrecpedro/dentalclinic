@@ -2,25 +2,22 @@ package br.com.dentalclinic.model;
 
 import java.io.Serializable;
 
-public class Dentista implements Serializable {
+public class TipoUsuario implements Serializable {
     /** Attributes **/
     private int id;
-    private String nome, cro;
-    private int fk_idUsuario;
+    private String nome;
 
     /** Constructor **/
-    public Dentista() {
+    public TipoUsuario() {
     }
 
-    public Dentista(String nome, String cro) {
+    public TipoUsuario(String nome) {
         this.nome = nome;
-        this.cro = cro;
     }
 
-    public Dentista(int id, String nome, String cro) {
+    public TipoUsuario(int id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.cro = cro;
     }
 
     /** Getters/Setters **/
@@ -40,29 +37,12 @@ public class Dentista implements Serializable {
         this.nome = nome;
     }
 
-    public String getCro() {
-        return cro;
-    }
-
-    public void setCro(String cro) {
-        this.cro = cro;
-    }
-
-    public int getFk_idUsuario() {
-        return fk_idUsuario;
-    }
-
-    public void setFk_idUsuario(int fk_idUsuario) {
-        this.fk_idUsuario = fk_idUsuario;
-    }
-
     /** Methods **/
     @Override
     public String toString() {
-        return "Dentista{" +
+        return "TipoUsuario{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", cro='" + cro + '\'' +
                 '}';
     }
 }
