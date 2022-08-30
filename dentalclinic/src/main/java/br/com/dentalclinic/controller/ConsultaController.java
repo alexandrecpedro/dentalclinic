@@ -4,6 +4,7 @@ import br.com.dentalclinic.dao.ConfiguracaoJDBC;
 import br.com.dentalclinic.dao.impl.ConsultaDaoImpl;
 import br.com.dentalclinic.model.Consulta;
 import br.com.dentalclinic.service.ConsultaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/consulta")
 public class ConsultaController {
     /** Attribute **/
+    @Autowired
     private ConsultaService consultaService = new ConsultaService(
             new ConsultaDaoImpl(new ConfiguracaoJDBC())
     );

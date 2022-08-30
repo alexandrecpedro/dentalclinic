@@ -4,6 +4,7 @@ import br.com.dentalclinic.dao.ConfiguracaoJDBC;
 import br.com.dentalclinic.dao.impl.UsuarioDaoImpl;
 import br.com.dentalclinic.model.Usuario;
 import br.com.dentalclinic.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/usuario")
 public class UsuarioController {
     /** Attribute **/
+    @Autowired
     private UsuarioService usuarioService = new UsuarioService(
             new UsuarioDaoImpl(new ConfiguracaoJDBC())
     );

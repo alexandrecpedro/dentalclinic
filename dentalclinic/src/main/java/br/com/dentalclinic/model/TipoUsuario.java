@@ -2,6 +2,7 @@ package br.com.dentalclinic.model;
 
 import java.io.Serializable;
 
+
 public class TipoUsuario implements Serializable {
     /** Attributes **/
     private int id;

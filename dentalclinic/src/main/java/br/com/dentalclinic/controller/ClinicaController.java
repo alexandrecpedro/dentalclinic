@@ -4,6 +4,7 @@ import br.com.dentalclinic.dao.ConfiguracaoJDBC;
 import br.com.dentalclinic.dao.impl.ClinicaDaoImpl;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.service.ClinicaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/clinica")
 public class ClinicaController {
     /** Attribute **/
+    @Autowired
     private ClinicaService clinicaService = new ClinicaService(
             new ClinicaDaoImpl(new ConfiguracaoJDBC())
     );
