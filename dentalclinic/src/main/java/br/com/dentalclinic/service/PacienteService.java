@@ -2,32 +2,37 @@ package br.com.dentalclinic.service;
 
 import br.com.dentalclinic.dao.IDao;
 import br.com.dentalclinic.model.Paciente;
+import br.com.dentalclinic.repository.PacienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class PacienteService {
     /** Attribute **/
-    private IDao<Paciente> pacienteIDao;
+    @Autowired
+    private PacienteRepository pacienterepository;
 
     /** Constructor **/
-    public PacienteService(IDao<Paciente> pacienteIDao) {
-        this.pacienteIDao = pacienteIDao;
+    public PacienteService(PacienteRepository pacienterepository) {
+        this.pacienterepository = pacienterepository;
     }
 
     /** Methods **/
     public Paciente salvar(Paciente paciente) {
-        return pacienteIDao.salvar(paciente);
+        return pacienterepository.save(paciente);
     }
 
-    public Paciente buscarById(Integer id) {
-        return pacienteIDao.buscarById(id);
+    public Optional<Paciente> buscarById(Integer id) {
+        return pacienterepository.findById(id);
     }
 
     public Paciente atualizar(Paciente paciente) {
-        return pacienteIDao.atualizar(paciente);
+        return pacienterepository.save(paciente);
     }
 
     public void deletar(Integer id) {
-        pacienteIDao.deletar(id);
+        pacienterepository.deleteById(id);
     }
 }
