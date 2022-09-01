@@ -9,24 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/dentista")
 public class DentistaController {
     /** Attribute **/
     @Autowired
-    private DentistaService dentistaService = new DentistaService(
-            new DentistaDaoImpl(new ConfiguracaoJDBC())
-    );
+    private DentistaService dentistaService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public Dentista salvar(@RequestBody Dentista dentista) {
-        return dentistaService.salvar(dentista);
+    public ResponseEntity<Dentista> salvar(@RequestBody Dentista dentista) {
+        return ResponseEntity.ok(dentistaService.salvar(dentista));
     }
 
     @GetMapping("/{id}")
-    public Dentista buscarById(@PathVariable Integer id) {
-        return dentistaService.buscarById(id);
+    public ResponseEntity<Optional<Dentista>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(dentistaService.buscarById(id));
     }
 
     @PutMapping("/atualizar")

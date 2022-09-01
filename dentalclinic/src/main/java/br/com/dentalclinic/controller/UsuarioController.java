@@ -9,24 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
     /** Attribute **/
     @Autowired
-    private UsuarioService usuarioService = new UsuarioService(
-            new UsuarioDaoImpl(new ConfiguracaoJDBC())
-    );
+    private UsuarioService usuarioService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public Usuario salvar(@RequestBody Usuario usuario) {
-        return usuarioService.salvar(usuario);
+    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
+        return ResponseEntity.ok(usuarioService.salvar(usuario));
     }
 
     @GetMapping("/{id}")
-    public Usuario buscarById(@PathVariable Integer id) {
-        return usuarioService.buscarById(id);
+    public ResponseEntity<Optional<Usuario>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(usuarioService.buscarById(id));
     }
 
     @PutMapping("/atualizar")

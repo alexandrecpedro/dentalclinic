@@ -9,24 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/paciente")
 public class PacienteController {
     /** Attribute **/
     @Autowired
-    private PacienteService pacienteService = new PacienteService(
-            new PacienteDaoImpl(new ConfiguracaoJDBC())
-    );
+    private PacienteService pacienteService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public Paciente salvar(@RequestBody Paciente paciente) {
-        return pacienteService.salvar(paciente);
+    public ResponseEntity<Paciente> salvar(@RequestBody Paciente paciente) {
+        return ResponseEntity.ok(pacienteService.salvar(paciente));
     }
 
     @GetMapping("/{id}")
-    public Paciente buscarById(@PathVariable Integer id) {
-        return pacienteService.buscarById(id);
+    public ResponseEntity<Optional<Paciente>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(pacienteService.buscarById(id));
     }
 
     @PutMapping("/atualizar")

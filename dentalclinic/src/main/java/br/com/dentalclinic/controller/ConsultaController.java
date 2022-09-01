@@ -4,29 +4,30 @@ import br.com.dentalclinic.dao.ConfiguracaoJDBC;
 import br.com.dentalclinic.dao.impl.ConsultaDaoImpl;
 import br.com.dentalclinic.model.Consulta;
 import br.com.dentalclinic.service.ConsultaService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/consulta")
 public class ConsultaController {
     /** Attribute **/
     @Autowired
-    private ConsultaService consultaService = new ConsultaService(
-            new ConsultaDaoImpl(new ConfiguracaoJDBC())
-    );
+    private ConsultaService consultaService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public Consulta salvar(@RequestBody Consulta consulta) {
-        return consultaService.salvar(consulta);
+    public ResponseEntity<Consulta> salvar(@RequestBody Consulta consulta) {
+        return ResponseEntity.ok(consultaService.salvar(consulta));
     }
 
     @GetMapping("/{id}")
-    public Consulta buscarById(@PathVariable Integer id) {
-        return consultaService.buscarById(id);
+    public ResponseEntity<Optional<Consulta>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(consultaService.buscarById(id));
     }
 
     @PutMapping("/atualizar")

@@ -1,10 +1,14 @@
 package br.com.dentalclinic.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
+@Entity
+@Table(name = "tb_consulta")
 public class Consulta implements Serializable {
     /** Attributes **/
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date dataConsulta;
     private String descricao, status;

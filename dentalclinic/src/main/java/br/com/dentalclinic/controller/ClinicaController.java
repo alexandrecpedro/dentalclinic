@@ -9,24 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/clinica")
 public class ClinicaController {
     /** Attribute **/
     @Autowired
-    private ClinicaService clinicaService = new ClinicaService(
-            new ClinicaDaoImpl(new ConfiguracaoJDBC())
-    );
+    private ClinicaService clinicaService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public Clinica salvar(@RequestBody Clinica clinica) {
-        return clinicaService.salvar(clinica);
+    public ResponseEntity<Clinica> salvar(@RequestBody Clinica clinica) {
+        return ResponseEntity.ok(clinicaService.salvar(clinica));
     }
 
     @GetMapping("/{id}")
-    public Clinica buscarById(@PathVariable Integer id) {
-        return clinicaService.buscarById(id);
+    public ResponseEntity<Optional<Clinica>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(clinicaService.buscarById(id));
     }
 
     @PutMapping("/atualizar")

@@ -1,9 +1,13 @@
 package br.com.dentalclinic.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
+@Entity
+@Table(name = "tb_dentista")
 public class Dentista implements Serializable {
     /** Attributes **/
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome, cro;
     private int fk_idUsuario;

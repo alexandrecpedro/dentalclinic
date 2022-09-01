@@ -9,24 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/endereco")
 public class EnderecoController {
     /** Attribute **/
     @Autowired
-    private EnderecoService enderecoService = new EnderecoService(
-            new EnderecoDaoImpl(new ConfiguracaoJDBC())
-    );
+    private EnderecoService enderecoService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public Endereco salvar(@RequestBody Endereco endereco) {
-        return enderecoService.salvar(endereco);
+    public ResponseEntity<Endereco> salvar(@RequestBody Endereco endereco) {
+        return ResponseEntity.ok(enderecoService.salvar(endereco));
     }
 
     @GetMapping("/{id}")
-    public Endereco buscarById(@PathVariable Integer id) {
-        return enderecoService.buscarById(id);
+    public ResponseEntity<Optional<Endereco>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(enderecoService.buscarById(id));
     }
 
     @PutMapping("/atualizar")

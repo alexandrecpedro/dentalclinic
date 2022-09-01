@@ -4,29 +4,30 @@ import br.com.dentalclinic.dao.ConfiguracaoJDBC;
 import br.com.dentalclinic.dao.impl.TipoUsuarioDaoImpl;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.service.TipoUsuarioService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tipoUsuario")
 public class TipoUsuarioController {
     /** Attribute **/
     @Autowired
-    private TipoUsuarioService tipoUsuarioService = new TipoUsuarioService(
-            new TipoUsuarioDaoImpl(new ConfiguracaoJDBC())
-    );
+    private TipoUsuarioService tipoUsuarioService;
 
     /** Methods **/
     @PostMapping("/salvar")
-    public TipoUsuario salvar(@RequestBody TipoUsuario tipoUsuario) {
-        return tipoUsuarioService.salvar(tipoUsuario);
+    public ResponseEntity<TipoUsuario> salvar(@RequestBody TipoUsuario tipoUsuario) {
+        return ResponseEntity.ok(tipoUsuarioService.salvar(tipoUsuario));
     }
 
     @GetMapping("/{id}")
-    public TipoUsuario buscarById(@PathVariable Integer id) {
-        return tipoUsuarioService.buscarById(id);
+    public ResponseEntity<Optional<TipoUsuario>> buscarById(@PathVariable Integer id) {
+        return ResponseEntity.ok(tipoUsuarioService.buscarById(id));
     }
 
     @PutMapping("/atualizar")
