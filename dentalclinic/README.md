@@ -64,3 +64,12 @@ camada de apresentação, ou seja, as telas HTML através de JavaScript.
 
 O mais simples é deixado para o final. Após a aula 43, você pode facilmente
 adicionar um login do Spring Security ao seu projeto.
+
+## ✒️ Autores
+
+* **Alexandre C. Pedro** - *Trabalho Inicial* - [Desenvolvedor](https://github.com/alexandrecpedro)
+* **Fábio Neres** - *Trabalho Inicial* - [Desenvolvedor](https://github.com/neresfabio)
+* **Tiago Vale** - *Trabalho Inicial* - [umdesenvolvedor]()
+* **SanKler** - *Trabalho Inicial* - [umdesenvolvedor]()
+* **Atef Chelaghma** - *Trabalho Inicial* - [umdesenvolvedor]()
+* **Bruno Furukawa** - *Documentação* - [fulanodetal]()
