@@ -1,14 +1,11 @@
 package br.com.dentalclinic.service;
 
-import br.com.dentalclinic.dao.ConfiguracaoJDBC;
-import br.com.dentalclinic.dao.impl.UsuarioDaoImpl;
+import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class UsuarioServiceTest {
+class EnderecoServiceImplTest {
     /** Attributes **/
-    UsuarioService usuarioService = new UsuarioService(new UsuarioDaoImpl(new ConfiguracaoJDBC()));
+    EnderecoServiceImpl enderecoServiceImpl;
 
     /** Tests **/
     @Test

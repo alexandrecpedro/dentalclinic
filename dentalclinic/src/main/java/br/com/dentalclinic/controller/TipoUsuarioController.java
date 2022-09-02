@@ -1,10 +1,7 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.dao.ConfiguracaoJDBC;
-import br.com.dentalclinic.dao.impl.TipoUsuarioDaoImpl;
 import br.com.dentalclinic.model.TipoUsuario;
-import br.com.dentalclinic.service.TipoUsuarioService;
-import org.apache.coyote.Response;
+import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +14,7 @@ import java.util.Optional;
 public class TipoUsuarioController {
     /** Attribute **/
     @Autowired
-    private TipoUsuarioService tipoUsuarioService;
+    private TipoUsuarioServiceImpl tipoUsuarioService;
 
     /** Methods **/
     @PostMapping("/salvar")

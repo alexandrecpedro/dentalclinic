@@ -1,9 +1,7 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.dao.ConfiguracaoJDBC;
-import br.com.dentalclinic.dao.impl.DentistaDaoImpl;
 import br.com.dentalclinic.model.Dentista;
-import br.com.dentalclinic.service.DentistaService;
+import br.com.dentalclinic.service.impl.DentistaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,7 @@ import java.util.Optional;
 public class DentistaController {
     /** Attribute **/
     @Autowired
-    private DentistaService dentistaService;
+    private DentistaServiceImpl dentistaService;
 
     /** Methods **/
     @PostMapping("/salvar")

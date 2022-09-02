@@ -1,9 +1,7 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.dao.ConfiguracaoJDBC;
-import br.com.dentalclinic.dao.impl.EnderecoDaoImpl;
 import br.com.dentalclinic.model.Endereco;
-import br.com.dentalclinic.service.EnderecoService;
+import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,7 @@ import java.util.Optional;
 public class EnderecoController {
     /** Attribute **/
     @Autowired
-    private EnderecoService enderecoService;
+    private EnderecoServiceImpl enderecoService;
 
     /** Methods **/
     @PostMapping("/salvar")

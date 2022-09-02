@@ -1,12 +1,11 @@
 package br.com.dentalclinic.service;
 
-import br.com.dentalclinic.dao.ConfiguracaoJDBC;
-import br.com.dentalclinic.dao.impl.DentistaDaoImpl;
+import br.com.dentalclinic.service.impl.DentistaServiceImpl;
 import org.junit.jupiter.api.Test;
 
-class DentistaServiceTest {
+class DentistaServiceImplTest {
     /** Attributes **/
-    DentistaService dentistaService = new DentistaService(new DentistaDaoImpl(new ConfiguracaoJDBC()));
+    DentistaServiceImpl dentistaServiceImpl;
 
     /** Tests **/
     @Test
