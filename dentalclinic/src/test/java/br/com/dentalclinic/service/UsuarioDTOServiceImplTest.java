@@ -3,7 +3,7 @@ package br.com.dentalclinic.service;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
 import org.junit.jupiter.api.Test;
 
-class UsuarioServiceImplTest {
+class UsuarioDTOServiceImplTest {
     /** Attributes **/
     UsuarioServiceImpl usuarioServiceImpl;
 
