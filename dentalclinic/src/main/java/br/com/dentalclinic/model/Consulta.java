@@ -1,14 +1,21 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
+import br.com.dentalclinic.dto.ConsultaDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 @Entity
 @Table(name = "tb_consulta")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Consulta implements Serializable {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
     private Date dataConsulta;
     private String descricao, status;
@@ -18,17 +25,10 @@ public class Consulta implements Serializable {
     public Consulta() {
     }
 
-    public Consulta(Date dataConsulta, String descricao, String status) {
-        this.dataConsulta = dataConsulta;
-        this.descricao = descricao;
-        this.status = status;
-    }
-
-    public Consulta(int id, Date dataConsulta, String descricao, String status) {
-        this.id = id;
-        this.dataConsulta = dataConsulta;
-        this.descricao = descricao;
-        this.status = status;
+    public Consulta(ConsultaDTO consultaDTO) {
+        this.dataConsulta = consultaDTO.getDataConsulta();
+        this.descricao = consultaDTO.getDescricao();
+        this.status = consultaDTO.getStatus();
     }
 
     /** Getters/Setters **/
