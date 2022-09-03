@@ -1,30 +1,31 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "tb_clinica")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Clinica implements Serializable {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
     private String nomeFantasia, razaoSocial;
+    @OneToOne(cascade = CascadeType.ALL)
     private int fk_idEndereco;
 
     /** Constructor **/
     public Clinica() {
     }
 
-    public Clinica(String nomeFantasia, String razaoSocial) {
-        this.nomeFantasia = nomeFantasia;
-        this.razaoSocial = razaoSocial;
-    }
-
-    public Clinica(int id, String nomeFantasia, String razaoSocial) {
-        this.id = id;
-        this.nomeFantasia = nomeFantasia;
-        this.razaoSocial = razaoSocial;
+    public Clinica(ClinicaDTO clinicaDTO) {
+        this.nomeFantasia = clinicaDTO.getNomeFantasia();
+        this.razaoSocial = clinicaDTO.getRazaoSocial();
     }
 
     /** Getters/Setters **/

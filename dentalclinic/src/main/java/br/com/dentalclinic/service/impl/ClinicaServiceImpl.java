@@ -40,4 +40,17 @@ public class ClinicaServiceImpl implements IService<Clinica> {
     public void deletar(Integer id) {
         clinicaRepository.deleteById(id);
     }
+//
+//    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO){
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        Clinica clinica = objectMapper.convertValue(clinicaDTO, Clinica.class);
+//        return clinica;
+//    }
+//
+//    public ClinicaDTO mapperEntityToDTO(Clinica clinica){
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        ClinicaDTO clinicaDTO = objectMapper.convertValue(clinica, ClinicaDTO.class);
+//        return clinicaDTO;
+//    }
+
 }
