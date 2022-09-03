@@ -15,9 +15,9 @@ public class EnderecoServiceImpl implements IService<Endereco> {
     private EnderecoRepository enderecoRepository;
 
     /** Constructor **/
-    public EnderecoServiceImpl(EnderecoRepository enderecoRepository) {
-        this.enderecoRepository = enderecoRepository;
-    }
+    //public EnderecoServiceImpl(EnderecoRepository enderecoRepository) {
+    //    this.enderecoRepository = enderecoRepository;
+    //}
 
     /** Methods **/
     @Override

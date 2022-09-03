@@ -16,7 +16,7 @@ public class Clinica implements Serializable {
     @JsonIgnore
     private int id;
     private String nomeFantasia, razaoSocial;
-    @OneToOne(cascade = CascadeType.ALL)
+    //@OneToOne(cascade = CascadeType.ALL)
     private int fk_idEndereco;
 
     /** Constructor **/

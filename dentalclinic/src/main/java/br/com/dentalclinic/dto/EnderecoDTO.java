@@ -7,7 +7,6 @@ public class EnderecoDTO {
     private String complemento;
     private String bairro;
     private String localidade;
-    private String estado;
     private String uf;
     private String cep;
 
@@ -20,7 +19,6 @@ public class EnderecoDTO {
         this.complemento = complemento;
         this.bairro = bairro;
         this.localidade = localidade;
-        this.estado = estado;
         this.uf = uf;
         this.cep = cep;
     }
@@ -65,13 +63,6 @@ public class EnderecoDTO {
         this.localidade = localidade;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     public String getUf() {
         return uf;
