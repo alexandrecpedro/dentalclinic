@@ -1,7 +1,9 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.Paciente;
+
 public class PacienteDTO {
-    private String nomel;
+    private String nome;
     private String sobrenome;
     private String cpf;
     private String telefone;
@@ -11,21 +13,21 @@ public class PacienteDTO {
     public PacienteDTO() {
     }
 
-    public PacienteDTO(String nomel, String sobrenome, String cpf, String telefone, int fk_idUsuario, int fk_idEndereco) {
-        this.nomel = nomel;
-        this.sobrenome = sobrenome;
-        this.cpf = cpf;
-        this.telefone = telefone;
-        this.fk_idUsuario = fk_idUsuario;
-        this.fk_idEndereco = fk_idEndereco;
+    public PacienteDTO(Paciente paciente) {
+        this.nome = paciente.getNome();
+        this.sobrenome = paciente.getSobrenome();
+        this.cpf = paciente.getCpf();
+        this.telefone = paciente.getTelefone();
+        this.fk_idUsuario = paciente.getFk_idUsuario();
+        this.fk_idEndereco = paciente.getFk_idEndereco();
     }
 
-    public String getNomel() {
-        return nomel;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomel(String nomel) {
-        this.nomel = nomel;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getSobrenome() {

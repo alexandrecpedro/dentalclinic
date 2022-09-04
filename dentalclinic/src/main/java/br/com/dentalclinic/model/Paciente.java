@@ -1,34 +1,35 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.PacienteDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "tb_paciente")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Paciente implements Serializable {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
     private String nome, sobrenome, cpf, telefone;
-    private int fk_idUsuario, fk_idEndereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    private int fk_idUsuario;
+    @OneToOne(cascade = CascadeType.ALL)
+    private int fk_idEndereco;
 
     /** Constructor **/
     public Paciente() {
     }
 
-    public Paciente(String nome, String sobrenome, String cpf, String telefone) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.cpf = cpf;
-        this.telefone = telefone;
-    }
-
-    public Paciente(int id, String nome, String sobrenome, String cpf, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.cpf = cpf;
-        this.telefone = telefone;
+    public Paciente(PacienteDTO pacienteDTO) {
+        this.nome = pacienteDTO.getNome();
+        this.sobrenome = pacienteDTO.getSobrenome();
+        this.cpf = pacienteDTO.getCpf();
+        this.telefone = pacienteDTO.getTelefone();
     }
 
     /** Getters/Setters **/

@@ -19,7 +19,10 @@ public class Consulta implements Serializable {
     private int id;
     private Date dataConsulta;
     private String descricao, status;
-    private int fk_idPaciente, fk_idDentista;
+    @OneToOne(cascade = CascadeType.ALL)
+    private int fk_idPaciente;
+    @OneToOne(cascade = CascadeType.ALL)
+    private int fk_idDentista;
 
     /** Constructor **/
     public Consulta() {

@@ -1,17 +1,22 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.Dentista;
+
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
+
 public class DentistaDTO {
-    private String nome;
-    private String cro;
+    private String nome, cro;
+    @OneToOne(cascade = CascadeType.ALL)
     private int fk_idUsuario;
 
     public DentistaDTO() {
     }
 
-    public DentistaDTO(String nome, String cro, int fk_idUsuario) {
-        this.nome = nome;
-        this.cro = cro;
-        this.fk_idUsuario = fk_idUsuario;
+    public DentistaDTO(Dentista dentista) {
+        this.nome = dentista.getNome();
+        this.cro = dentista.getCro();
+        this.fk_idUsuario = dentista.getFk_idUsuario();
     }
 
     public String getNome() {
