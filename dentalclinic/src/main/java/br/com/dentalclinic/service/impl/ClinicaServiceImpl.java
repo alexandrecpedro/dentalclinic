@@ -1,8 +1,11 @@
 package br.com.dentalclinic.service.impl;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.repository.ClinicaRepository;
+import br.com.dentalclinic.repository.EnderecoRepository;
 import br.com.dentalclinic.service.IService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +13,12 @@ import java.util.Optional;
 
 @Service
 public class ClinicaServiceImpl implements IService<Clinica> {
-    /** Attribute **/
+    /** Attributes **/
     @Autowired
     private ClinicaRepository clinicaRepository;
 
-    /** Constructor **/
-    public ClinicaServiceImpl(ClinicaRepository clinicaRepository) {
-        this.clinicaRepository = clinicaRepository;
-    }
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     /** Methods **/
     @Override
@@ -40,7 +41,7 @@ public class ClinicaServiceImpl implements IService<Clinica> {
     public void deletar(Integer id) {
         clinicaRepository.deleteById(id);
     }
-//
+
 //    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO){
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        Clinica clinica = objectMapper.convertValue(clinicaDTO, Clinica.class);
