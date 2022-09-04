@@ -16,8 +16,10 @@ public class Clinica implements Serializable {
     @JsonIgnore
     private int id;
     private String nomeFantasia, razaoSocial;
-    //@OneToOne(cascade = CascadeType.ALL)
-    private int fk_idEndereco;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="fk_idEndereco")
+    @PrimaryKeyJoinColumn
+    private Endereco endereco;
 
     /** Constructor **/
     public Clinica() {
@@ -26,6 +28,12 @@ public class Clinica implements Serializable {
     public Clinica(ClinicaDTO clinicaDTO) {
         this.nomeFantasia = clinicaDTO.getNomeFantasia();
         this.razaoSocial = clinicaDTO.getRazaoSocial();
+    }
+
+    public Clinica(String nomeFantasia, String razaoSocial, Endereco endereco) {
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.endereco = endereco;
     }
 
     /** Getters/Setters **/
@@ -53,12 +61,12 @@ public class Clinica implements Serializable {
         this.razaoSocial = razaoSocial;
     }
 
-    public int getFk_idEndereco() {
-        return fk_idEndereco;
+    public Endereco getFk_idEndereco() {
+        return endereco;
     }
 
-    public void setFk_idEndereco(int fk_idEndereco) {
-        this.fk_idEndereco = fk_idEndereco;
+    public void setFk_idEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     /** Methods **/
@@ -68,6 +76,7 @@ public class Clinica implements Serializable {
                 "id=" + id +
                 ", nomeFantasia='" + nomeFantasia + '\'' +
                 ", razaoSocial='" + razaoSocial + '\'' +
+                ", endereco='" + endereco.toString() + '\''+
                 '}';
     }
 }

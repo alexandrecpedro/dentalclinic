@@ -6,6 +6,7 @@ import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +40,10 @@ public class ClinicaServiceImpl implements IService<Clinica> {
     @Override
     public void deletar(Integer id) {
         clinicaRepository.deleteById(id);
+    }
+
+    public List<Clinica> buscarTodos() {
+        return clinicaRepository.findAll();
     }
 //
 //    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO){

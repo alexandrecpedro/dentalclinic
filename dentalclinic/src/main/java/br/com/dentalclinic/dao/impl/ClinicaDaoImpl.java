@@ -58,7 +58,7 @@ public class ClinicaDaoImpl implements IDao<Clinica> {
                 clinica.setId(resultSet.getInt(1));
                 clinica.setNomeFantasia(resultSet.getString(2));
                 clinica.setRazaoSocial(resultSet.getString(3));
-                clinica.setFk_idEndereco(resultSet.getInt(4));
+                //clinica.setFk_idEndereco(resultSet.getInt(4));
             }
         } catch (SQLException e) {
             e.printStackTrace();

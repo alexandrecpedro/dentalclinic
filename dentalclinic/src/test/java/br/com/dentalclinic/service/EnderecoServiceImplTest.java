@@ -8,6 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +27,11 @@ class EnderecoServiceImplTest {
 
     static ArrayList<Endereco> listaEndereco = new ArrayList<Endereco>();
 
-
+    //#######################################################
     //Funcao para comparar enderecos
-    public boolean comparaEndereco(Endereco e1, Endereco e2){
-        if(e1.toString().equals(e2.toString())){
+    //#######################################################
+    public boolean comparaObjetoToString(Object o1, Object o2){
+        if(o1.toString().equals(o2.toString())){
             return true;
         }
         return false;
@@ -33,7 +39,23 @@ class EnderecoServiceImplTest {
 
     @BeforeAll
     static public void init(){
-
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader("./Enderecos.txt"));
+            String line = reader.readLine();
+            while(line != null){
+                String[] atrArray;
+                atrArray = line.split(";");
+                Endereco end = new Endereco(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
+                listaEndereco.add(end);
+                line = reader.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*
         Endereco end1 = new Endereco("Rua Germano Vítor dos Santos", "598", "CASA 013", "Morumbi", "LOCALIDADE 1", "SP", "00000-001");
         Endereco end2 = new Endereco("Rua Glucínio", "598", "AP. 15", "Barra Funda‎", "LOCALIDADE 2", "MG", "00000-002");
         Endereco end3 = new Endereco("Rua Nelson Ferreira", "598", "bloco c. ap.15", "Bela Vista‎", "LOCALIDADE 3", "AC", "00000-003");
@@ -67,18 +89,19 @@ class EnderecoServiceImplTest {
         listaEndereco.add(end14);
         listaEndereco.add(end15);
         listaEndereco.add(end16);
-
+    */
     }
 
 
     /** Tests **/
     @Test
+    //#######################################################
     //Rotina teste insercao de enderecos
+    //#######################################################
     public void salvar() {
 
         for(Endereco e : listaEndereco){
             enderecoServiceImpl.salvar(e);
-            System.out.println(e.toString());
         }
     }
 
@@ -99,7 +122,7 @@ class EnderecoServiceImplTest {
                 fail("Falha buscando o endereco :"+e.toString());
             }
             else{
-                if(!comparaEndereco(e,dbEndereco.get())){
+                if(!comparaObjetoToString(e,dbEndereco.get())){
                     fail("Falha buscando o endereco :"+e.toString());
                 }
             }

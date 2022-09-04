@@ -1,11 +1,12 @@
 package br.com.dentalclinic.dto;
 
 import br.com.dentalclinic.model.Clinica;
+import br.com.dentalclinic.model.Endereco;
 
 public class ClinicaDTO {
 
     private String nomeFantasia, razaoSocial;
-    private int fk_idEndereco;
+    private Endereco endereco;
 
     public ClinicaDTO() {
     }
@@ -13,7 +14,7 @@ public class ClinicaDTO {
     public ClinicaDTO(Clinica clinica) {
         this.nomeFantasia = clinica.getNomeFantasia();
         this.razaoSocial = clinica.getRazaoSocial();
-        this.fk_idEndereco = clinica.getFk_idEndereco();
+        this.endereco = clinica.getFk_idEndereco();
     }
 
     public String getNomeFantasia() {
@@ -32,11 +33,11 @@ public class ClinicaDTO {
         this.razaoSocial = razaoSocial;
     }
 
-    public int getFk_idEndereco() {
-        return fk_idEndereco;
+    public Endereco getFk_idEndereco() {
+        return endereco;
     }
 
-    public void setFk_idEndereco(int fk_idEndereco) {
-        this.fk_idEndereco = fk_idEndereco;
+    public void setFk_idEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }
