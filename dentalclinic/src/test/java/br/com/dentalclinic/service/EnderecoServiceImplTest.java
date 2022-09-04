@@ -1,11 +1,18 @@
 package br.com.dentalclinic.service;
 
 import br.com.dentalclinic.model.Endereco;
-import br.com.dentalclinic.repository.EnderecoRepository;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Fail.fail;
 
 @SpringBootTest
 class EnderecoServiceImplTest {
@@ -13,12 +20,20 @@ class EnderecoServiceImplTest {
     @Autowired
     EnderecoServiceImpl enderecoServiceImpl;
 
-    //EnderecoServiceImpl enderecoServiceImpl = new EnderecoServiceImpl();
+    static ArrayList<Endereco> listaEndereco = new ArrayList<Endereco>();
 
-    /** Tests **/
-    @Test
-    //Rotina teste insercao de enderecos
-    public void salvar() {
+
+    //Funcao para comparar enderecos
+    public boolean comparaEndereco(Endereco e1, Endereco e2){
+        if(e1.toString().equals(e2.toString())){
+            return true;
+        }
+        return false;
+    }
+
+    @BeforeAll
+    static public void init(){
+
         Endereco end1 = new Endereco("Rua Germano Vítor dos Santos", "598", "CASA 013", "Morumbi", "LOCALIDADE 1", "SP", "00000-001");
         Endereco end2 = new Endereco("Rua Glucínio", "598", "AP. 15", "Barra Funda‎", "LOCALIDADE 2", "MG", "00000-002");
         Endereco end3 = new Endereco("Rua Nelson Ferreira", "598", "bloco c. ap.15", "Bela Vista‎", "LOCALIDADE 3", "AC", "00000-003");
@@ -36,32 +51,84 @@ class EnderecoServiceImplTest {
         Endereco end15 = new Endereco("Rua Acioli Monteiro", "598", "bloco c. ap.19", "Bela Vista‎", "LOCALIDADE 15", "AC", "00000-015");
         Endereco end16 = new Endereco("Rua Manuel Teles Vitancos", "598", "CASA 018", "Belém‎", "LOCALIDADE 16", "RJ", "00000-016");
 
-        enderecoServiceImpl.salvar(end1);
-        enderecoServiceImpl.salvar(end2);
-        enderecoServiceImpl.salvar(end3);
-        enderecoServiceImpl.salvar(end4);
-        enderecoServiceImpl.salvar(end5);
-        enderecoServiceImpl.salvar(end6);
-        enderecoServiceImpl.salvar(end7);
-        enderecoServiceImpl.salvar(end8);
-        enderecoServiceImpl.salvar(end9);
-        enderecoServiceImpl.salvar(end10);
-        enderecoServiceImpl.salvar(end11);
-        enderecoServiceImpl.salvar(end12);
-        enderecoServiceImpl.salvar(end13);
-        enderecoServiceImpl.salvar(end14);
-        enderecoServiceImpl.salvar(end15);
-        enderecoServiceImpl.salvar(end16);
-
+        listaEndereco.add(end1);
+        listaEndereco.add(end2);
+        listaEndereco.add(end3);
+        listaEndereco.add(end4);
+        listaEndereco.add(end5);
+        listaEndereco.add(end6);
+        listaEndereco.add(end7);
+        listaEndereco.add(end8);
+        listaEndereco.add(end9);
+        listaEndereco.add(end10);
+        listaEndereco.add(end11);
+        listaEndereco.add(end12);
+        listaEndereco.add(end13);
+        listaEndereco.add(end14);
+        listaEndereco.add(end15);
+        listaEndereco.add(end16);
 
     }
 
+
+    /** Tests **/
     @Test
-    public void buscarById() {}
+    //Rotina teste insercao de enderecos
+    public void salvar() {
+
+        for(Endereco e : listaEndereco){
+            enderecoServiceImpl.salvar(e);
+            System.out.println(e.toString());
+        }
+    }
 
     @Test
-    public void atualizar() {}
+    public void buscarTodos(){
+        List<Endereco> todosEnderecosDb = enderecoServiceImpl.buscarTodos();
+        if(todosEnderecosDb.size()<16){
+            fail("Falha ao inserir ou buscar todos enderecos");
+        }
+    }
 
     @Test
-    public void deletar() {}
+    public void buscarById() {
+        for(Endereco e : listaEndereco){
+            Optional<Endereco> dbEndereco;
+            dbEndereco = enderecoServiceImpl.buscarById(e.getId());
+            if(!Optional.empty().isEmpty()){
+                fail("Falha buscando o endereco :"+e.toString());
+            }
+            else{
+                if(!comparaEndereco(e,dbEndereco.get())){
+                    fail("Falha buscando o endereco :"+e.toString());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void atualizar() {
+        for(Endereco e1:listaEndereco){
+            Endereco e2 = new Endereco();
+            BeanUtils.copyProperties(e1,e2);
+            e2.setNumero("5");
+            enderecoServiceImpl.atualizar(e2);
+            Endereco e3 = new Endereco();
+            enderecoServiceImpl.buscarById(e2.getId());
+            if(e3.getNumero()==e1.getNumero()){
+                fail("Falha atualizar o numero");
+            }
+        }
+    }
+
+    @Test
+    public void deletar() {
+        for(Endereco e:listaEndereco){
+            enderecoServiceImpl.deletar(e.getId());
+        }
+        List<Endereco> enderecosDb = enderecoServiceImpl.buscarTodos();
+        if(enderecosDb.size()>0){
+            fail("Falha ao deletar entradas.");
+        }
+    }
 }

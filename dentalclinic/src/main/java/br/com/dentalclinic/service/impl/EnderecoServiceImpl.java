@@ -6,6 +6,7 @@ import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,9 @@ public class EnderecoServiceImpl implements IService<Endereco> {
 
     public void deletar(Integer id) {
         enderecoRepository.deleteById(id);
+    }
+
+    public List<Endereco> buscarTodos(){
+        return enderecoRepository.findAll();
     }
 }
