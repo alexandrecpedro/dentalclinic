@@ -80,7 +80,7 @@ Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as vers�
 * **Fábio Neres** - *Trabalho Inicial* - [Desenvolvedor](https://github.com/neresfabio)
 * **Tiago Vale** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
 * **SanKler** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
-* **Atef Chelaghma** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
+* **Atef Chelaghma** - *Trabalho Inicial* - [Desenvolvedor](https://github.com/josefcode)
 * **Bruno Furukawa** - *Documentação* - [fulanodetal](https://github.com/linkParaPerfil)
 
 Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
