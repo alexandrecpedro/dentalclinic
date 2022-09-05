@@ -92,8 +92,6 @@ class ClinicaServiceImplTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Test
@@ -139,7 +137,7 @@ class ClinicaServiceImplTest {
             clinicaServiceImpl.deletar(c.getId());
         }
         List<Clinica> listaClinica2 = clinicaServiceImpl.buscarTodos();
-        if(listaClinica2.size()>0){
+        if(listaClinica2.size()>0 || enderecoServiceImpl.buscarTodos().size()>0){
             fail("Falha ao deletar todas entradas");
         }
     }

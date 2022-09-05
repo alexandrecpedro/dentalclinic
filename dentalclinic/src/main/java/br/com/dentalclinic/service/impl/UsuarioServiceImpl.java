@@ -6,6 +6,7 @@ import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,8 @@ public class UsuarioServiceImpl implements IService<Usuario> {
     public Optional<Usuario> buscarById(Integer id) {
         return usuarioRepository.findById(id);
     }
+
+    public List<Usuario> buscarTodos(){return usuarioRepository.findAll();}
 
     public Usuario atualizar(Usuario usuario) {
         return usuarioRepository.saveAndFlush(usuario);

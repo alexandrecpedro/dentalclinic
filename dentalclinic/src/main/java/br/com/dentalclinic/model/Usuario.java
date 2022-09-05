@@ -10,21 +10,18 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String email, senha;
-    private int fk_idTipoUsuario;
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private TipoUsuario tipoUsuario;
 
     /** Constructor **/
     public Usuario() {
     }
 
-    public Usuario(String email, String senha) {
+    public Usuario(String email, String senha, TipoUsuario tipoUsuario) {
         this.email = email;
         this.senha = senha;
-    }
-
-    public Usuario(int id, String email, String senha) {
-        this.id = id;
-        this.email = email;
-        this.senha = senha;
+        this.tipoUsuario = tipoUsuario;
     }
 
     /** Getters/Setters **/
@@ -52,12 +49,12 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public int getFk_idTipoUsuario() {
-        return fk_idTipoUsuario;
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 
-    public void setFk_idTipoUsuario(int fk_idTipoUsuario) {
-        this.fk_idTipoUsuario = fk_idTipoUsuario;
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     /** Methods **/

@@ -49,6 +49,7 @@ class EnderecoServiceImplTest {
                 Endereco end = new Endereco(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
                 listaEndereco.add(end);
                 line = reader.readLine();
+                BufferedReader.nullReader();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -118,7 +119,8 @@ class EnderecoServiceImplTest {
         for(Endereco e : listaEndereco){
             Optional<Endereco> dbEndereco;
             dbEndereco = enderecoServiceImpl.buscarById(e.getId());
-            if(!Optional.empty().isEmpty()){
+
+            if(dbEndereco.isEmpty()){
                 fail("Falha buscando o endereco :"+e.toString());
             }
             else{
