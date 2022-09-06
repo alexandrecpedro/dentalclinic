@@ -1,23 +1,34 @@
 package br.com.dentalclinic.dto;
 
 import br.com.dentalclinic.model.Consulta;
+import br.com.dentalclinic.model.Dentista;
+import br.com.dentalclinic.model.Paciente;
 
 import java.util.Date;
 
 public class ConsultaDTO {
     private Date dataConsulta;
     private String descricao, status;
-    private int fk_idPaciente, fk_idDentista;
+    private Paciente paciente;
+    private Dentista dentista;
 
     public ConsultaDTO() {
+    }
+
+    public ConsultaDTO(Date dataConsulta, String descricao, String status, Paciente paciente, Dentista dentista) {
+        this.dataConsulta = dataConsulta;
+        this.descricao = descricao;
+        this.status = status;
+        this.paciente = paciente;
+        this.dentista = dentista;
     }
 
     public ConsultaDTO(Consulta consulta) {
         this.dataConsulta = consulta.getDataConsulta();
         this.descricao = consulta.getDescricao();
         this.status = consulta.getStatus();
-        this.fk_idPaciente = consulta.getFk_idPaciente();
-        this.fk_idDentista = consulta.getFk_idDentista();
+        this.paciente = consulta.getPaciente();
+        this.dentista = consulta.getDentista();
     }
 
     public Date getDataConsulta() {
@@ -44,19 +55,19 @@ public class ConsultaDTO {
         this.status = status;
     }
 
-    public int getFk_idPaciente() {
-        return fk_idPaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setFk_idPaciente(int fk_idPaciente) {
-        this.fk_idPaciente = fk_idPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
-    public int getFk_idDentista() {
-        return fk_idDentista;
+    public Dentista getDentista() {
+        return dentista;
     }
 
-    public void setFk_idDentista(int fk_idDentista) {
-        this.fk_idDentista = fk_idDentista;
+    public void setDentista(Dentista dentista) {
+        this.dentista = dentista;
     }
 }

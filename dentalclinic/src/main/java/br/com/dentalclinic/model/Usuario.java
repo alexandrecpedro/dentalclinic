@@ -1,5 +1,7 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.UsuarioDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
@@ -16,6 +18,12 @@ public class Usuario implements Serializable {
 
     /** Constructor **/
     public Usuario() {
+    }
+
+    public Usuario(UsuarioDTO usuarioDTO) {
+        this.email = usuarioDTO.getEmail();
+        this.senha = usuarioDTO.getSenha();
+        this.tipoUsuario = usuarioDTO.getTipoUsuario();
     }
 
     public Usuario(String email, String senha, TipoUsuario tipoUsuario) {

@@ -1,18 +1,27 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.TipoUsuario;
+import br.com.dentalclinic.model.Usuario;
+
 public class UsuarioDTO {
 
     private String email;
     private String senha;
-    private int fk_tipoUsuario;
+    private TipoUsuario tipoUsuario;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String email, String senha, int fk_tipoUsuario) {
+    public UsuarioDTO(String email, String senha, TipoUsuario tipoUsuario) {
         this.email = email;
         this.senha = senha;
-        this.fk_tipoUsuario = fk_tipoUsuario;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public UsuarioDTO(Usuario usuario){
+        this.email = usuario.getEmail();
+        this.senha = usuario.getSenha();
+        this.tipoUsuario = usuario.getTipoUsuario();
     }
 
     public String getEmail() {
@@ -31,11 +40,11 @@ public class UsuarioDTO {
         this.senha = senha;
     }
 
-    public int getFk_tipoUsuario() {
-        return fk_tipoUsuario;
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 
-    public void setFk_tipoUsuario(int fk_tipoUsuario) {
-        this.fk_tipoUsuario = fk_tipoUsuario;
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }

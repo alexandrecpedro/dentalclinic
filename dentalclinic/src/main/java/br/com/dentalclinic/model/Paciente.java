@@ -1,5 +1,7 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.PacienteDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
@@ -9,27 +11,37 @@ public class Paciente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nome, sobrenome, cpf, telefone;
-    private int fk_idUsuario, fk_idEndereco;
-
+    private String nome;
+    private String sobrenome;
+    private String cpf;
+    private String telefone;
+    @OneToOne
+    private Usuario usuario;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Endereco endereco;
     /** Constructor **/
     public Paciente() {
     }
 
-    public Paciente(String nome, String sobrenome, String cpf, String telefone) {
+    public Paciente(String nome, String sobrenome, String cpf, String telefone, Usuario usuario, Endereco endereco) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.telefone = telefone;
+        this.usuario = usuario;
+        this.endereco = endereco;
     }
 
-    public Paciente(int id, String nome, String sobrenome, String cpf, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.cpf = cpf;
-        this.telefone = telefone;
+    public Paciente(PacienteDTO pacienteDTO) {
+        this.nome = pacienteDTO.getNome();
+        this.sobrenome = pacienteDTO.getSobrenome();
+        this.cpf = pacienteDTO.getCpf();
+        this.telefone = pacienteDTO.getTelefone();
+        this.usuario = pacienteDTO.getUsuario();
+        this.endereco = pacienteDTO.getEndereco();
     }
+
 
     /** Getters/Setters **/
     public int getId() {
@@ -72,23 +84,22 @@ public class Paciente implements Serializable {
         this.telefone = telefone;
     }
 
-    public int getFk_idUsuario() {
-        return fk_idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setFk_idUsuario(int fk_idUsuario) {
-        this.fk_idUsuario = fk_idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public int getFk_idEndereco() {
-        return fk_idEndereco;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setFk_idEndereco(int fk_idEndereco) {
-        this.fk_idEndereco = fk_idEndereco;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
-    /** Methods **/
     @Override
     public String toString() {
         return "Paciente{" +
@@ -97,6 +108,8 @@ public class Paciente implements Serializable {
                 ", sobrenome='" + sobrenome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", telefone='" + telefone + '\'' +
+                ", usuario=" + usuario.toString() +
+                ", endereco=" + endereco.toString() +
                 '}';
     }
 }

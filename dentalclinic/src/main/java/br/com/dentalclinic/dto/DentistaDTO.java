@@ -1,17 +1,26 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.Dentista;
+import br.com.dentalclinic.model.Usuario;
+
 public class DentistaDTO {
     private String nome;
     private String cro;
-    private int fk_idUsuario;
+    private Usuario usuario;
 
     public DentistaDTO() {
     }
 
-    public DentistaDTO(String nome, String cro, int fk_idUsuario) {
+    public DentistaDTO(Dentista dentista) {
+        this.nome = dentista.getNome();
+        this.cro = dentista.getCro();
+        this.usuario = dentista.getUsuario();
+    }
+
+    public DentistaDTO(String nome, String cro, Usuario usuario) {
         this.nome = nome;
         this.cro = cro;
-        this.fk_idUsuario = fk_idUsuario;
+        this.usuario = usuario;
     }
 
     public String getNome() {
@@ -30,11 +39,11 @@ public class DentistaDTO {
         this.cro = cro;
     }
 
-    public int getFk_idUsuario() {
-        return fk_idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setFk_idUsuario(int fk_idUsuario) {
-        this.fk_idUsuario = fk_idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

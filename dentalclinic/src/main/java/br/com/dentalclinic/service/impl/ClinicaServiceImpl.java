@@ -49,6 +49,8 @@ public class ClinicaServiceImpl implements IService<Clinica> {
     public List<Clinica> buscarTodos() {
         return clinicaRepository.findAll();
     }
+
+    public Optional<Clinica> buscarByNomeFantasia(String nomeFantasia){return clinicaRepository.findByNomeFantasia(nomeFantasia);}
 //
 //    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO){
 //        ObjectMapper objectMapper = new ObjectMapper();

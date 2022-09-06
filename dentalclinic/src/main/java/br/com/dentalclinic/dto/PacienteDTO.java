@@ -1,31 +1,44 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.Endereco;
+import br.com.dentalclinic.model.Paciente;
+import br.com.dentalclinic.model.Usuario;
+
 public class PacienteDTO {
-    private String nomel;
+    private String nome;
     private String sobrenome;
     private String cpf;
     private String telefone;
-    private int fk_idUsuario;
-    private int fk_idEndereco;
+    private Usuario usuario;
+    private Endereco endereco;
 
     public PacienteDTO() {
     }
 
-    public PacienteDTO(String nomel, String sobrenome, String cpf, String telefone, int fk_idUsuario, int fk_idEndereco) {
-        this.nomel = nomel;
+    public PacienteDTO(String nome, String sobrenome, String cpf, String telefone, Usuario usuario, Endereco endereco) {
+        this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.telefone = telefone;
-        this.fk_idUsuario = fk_idUsuario;
-        this.fk_idEndereco = fk_idEndereco;
+        this.usuario = usuario;
+        this.endereco = endereco;
     }
 
-    public String getNomel() {
-        return nomel;
+    public PacienteDTO(Paciente paciente) {
+        this.nome = paciente.getNome();
+        this.sobrenome = paciente.getSobrenome();
+        this.cpf = paciente.getCpf();
+        this.telefone = paciente.getTelefone();
+        this.usuario = paciente.getUsuario();
+        this.endereco = paciente.getEndereco();
     }
 
-    public void setNomel(String nomel) {
-        this.nomel = nomel;
+    public String getnome() {
+        return nome;
+    }
+
+    public void setnome(String nome) {
+        this.nome = nome;
     }
 
     public String getSobrenome() {
@@ -52,19 +65,39 @@ public class PacienteDTO {
         this.telefone = telefone;
     }
 
-    public int getFk_idUsuario() {
-        return fk_idUsuario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setFk_idUsuario(int fk_idUsuario) {
-        this.fk_idUsuario = fk_idUsuario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public int getFk_idEndereco() {
-        return fk_idEndereco;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setFk_idEndereco(int fk_idEndereco) {
-        this.fk_idEndereco = fk_idEndereco;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    @Override
+    public String toString() {
+        return "PacienteDTO{" +
+                "nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", usuario=" + usuario.toString() +
+                ", endereco=" + endereco.toString() +
+                '}';
     }
 }

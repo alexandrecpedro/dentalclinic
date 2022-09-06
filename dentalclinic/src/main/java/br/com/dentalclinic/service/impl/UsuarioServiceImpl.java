@@ -33,6 +33,8 @@ public class UsuarioServiceImpl implements IService<Usuario> {
         return usuarioRepository.findById(id);
     }
 
+    public Optional<Usuario> buscarByEmail(String email){return usuarioRepository.findByEmail(email);}
+
     public List<Usuario> buscarTodos(){return usuarioRepository.findAll();}
 
     public Usuario atualizar(Usuario usuario) {

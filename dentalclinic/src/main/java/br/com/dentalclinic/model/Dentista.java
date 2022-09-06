@@ -9,22 +9,33 @@ public class Dentista implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nome, cro;
-    private int fk_idUsuario;
+    private String nome,sobrenome,cro;
+
+    @OneToOne
+    private Usuario usuario;
+
+    @ManyToOne
+    private Clinica clinica;
 
     /** Constructor **/
     public Dentista() {
     }
 
-    public Dentista(String nome, String cro) {
+    public Dentista(String nome, String sobrenome, String cro, Usuario usuario, Clinica clinica) {
         this.nome = nome;
+        this.sobrenome = sobrenome;
         this.cro = cro;
+        this.usuario = usuario;
+        this.clinica = clinica;
     }
 
-    public Dentista(int id, String nome, String cro) {
+    public Dentista(int id, String nome, String sobrenome, String cro, Usuario usuario) {
         this.id = id;
         this.nome = nome;
+        this.sobrenome = sobrenome;
         this.cro = cro;
+        this.usuario = usuario;
+        this.clinica = clinica;
     }
 
     /** Getters/Setters **/
@@ -52,12 +63,20 @@ public class Dentista implements Serializable {
         this.cro = cro;
     }
 
-    public int getFk_idUsuario() {
-        return fk_idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setFk_idUsuario(int fk_idUsuario) {
-        this.fk_idUsuario = fk_idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Clinica getClinica() {
+        return clinica;
+    }
+
+    public void setClinica(Clinica clinica) {
+        this.clinica = clinica;
     }
 
     /** Methods **/
@@ -66,7 +85,18 @@ public class Dentista implements Serializable {
         return "Dentista{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
                 ", cro='" + cro + '\'' +
+                ", usuario=" + usuario.toString() +
+                ", clinica=" + clinica.toString() +
                 '}';
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 }

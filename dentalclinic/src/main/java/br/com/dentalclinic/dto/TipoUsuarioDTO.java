@@ -1,10 +1,16 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.TipoUsuario;
+
 public class TipoUsuarioDTO {
 
     private String nome;
 
     public TipoUsuarioDTO() {
+    }
+
+    public TipoUsuarioDTO(TipoUsuario tipoUsuario) {
+        this.nome = tipoUsuario.getNome();
     }
 
     public TipoUsuarioDTO(String nome) {

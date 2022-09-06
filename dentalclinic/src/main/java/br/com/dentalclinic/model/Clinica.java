@@ -17,7 +17,6 @@ public class Clinica implements Serializable {
     private int id;
     private String nomeFantasia, razaoSocial;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="fk_idEndereco")
     @PrimaryKeyJoinColumn
     private Endereco endereco;
 
@@ -61,11 +60,11 @@ public class Clinica implements Serializable {
         this.razaoSocial = razaoSocial;
     }
 
-    public Endereco getFk_idEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setFk_idEndereco(Endereco endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 

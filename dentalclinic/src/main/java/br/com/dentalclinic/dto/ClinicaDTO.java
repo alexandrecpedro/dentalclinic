@@ -14,7 +14,7 @@ public class ClinicaDTO {
     public ClinicaDTO(Clinica clinica) {
         this.nomeFantasia = clinica.getNomeFantasia();
         this.razaoSocial = clinica.getRazaoSocial();
-        this.endereco = clinica.getFk_idEndereco();
+        this.endereco = clinica.getEndereco();
     }
 
     public String getNomeFantasia() {

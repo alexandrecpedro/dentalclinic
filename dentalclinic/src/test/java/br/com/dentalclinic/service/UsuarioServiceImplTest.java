@@ -108,6 +108,16 @@ class UsuarioServiceImplTest {
     }
 
     @Test
+    public void buscarByEmail() {
+        for(Usuario u : listaUsuario){
+            Optional<Usuario> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
+            if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
+                fail("Falha buscando usuario pelo id.");
+            }
+        }
+    }
+
+    @Test
     public void atualizar() {
         for(Usuario u : listaUsuario){
             u.setSenha("XXXX");

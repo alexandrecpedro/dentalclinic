@@ -18,8 +18,14 @@ public class Consulta implements Serializable {
     @JsonIgnore
     private int id;
     private Date dataConsulta;
-    private String descricao, status;
-    private int fk_idPaciente, fk_idDentista;
+    private String descricao;
+    private String status;
+
+    @OneToOne
+    private Paciente paciente;
+
+    @OneToOne
+    private Dentista dentista;
 
     /** Constructor **/
     public Consulta() {
@@ -29,6 +35,16 @@ public class Consulta implements Serializable {
         this.dataConsulta = consultaDTO.getDataConsulta();
         this.descricao = consultaDTO.getDescricao();
         this.status = consultaDTO.getStatus();
+        this.paciente = consultaDTO.getPaciente();
+        this.dentista = consultaDTO.getDentista();
+    }
+
+    public Consulta(Date dataConsulta, String descricao, String status, Paciente paciente, Dentista dentista) {
+        this.dataConsulta = dataConsulta;
+        this.descricao = descricao;
+        this.status = status;
+        this.paciente = paciente;
+        this.dentista = dentista;
     }
 
     /** Getters/Setters **/
@@ -64,20 +80,20 @@ public class Consulta implements Serializable {
         this.status = status;
     }
 
-    public int getFk_idPaciente() {
-        return fk_idPaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setFk_idPaciente(int fk_idPaciente) {
-        this.fk_idPaciente = fk_idPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
-    public int getFk_idDentista() {
-        return fk_idDentista;
+    public Dentista getDentista() {
+        return dentista;
     }
 
-    public void setFk_idDentista(int fk_idDentista) {
-        this.fk_idDentista = fk_idDentista;
+    public void setDentista(Dentista dentista) {
+        this.dentista = dentista;
     }
 
     /** Methods **/

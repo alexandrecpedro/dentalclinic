@@ -116,6 +116,19 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    public void buscarByNomeFantasia() {
+        for(Clinica c1 : listaClinica){
+            Optional<Clinica> c2 = clinicaServiceImpl.buscarByNomeFantasia(c1.getNomeFantasia());
+            if(c2.isEmpty()){
+                fail("Falha buiscando Clinica na BD.");
+            }
+            if(!comparaObjetoToString(c1, c2.get())){
+                fail("Falha buiscando Clinica na BD.");
+            }
+        }
+    }
+
+    @Test
     public void atualizar() {
         int i = 1;
         for(Clinica c : listaClinica){

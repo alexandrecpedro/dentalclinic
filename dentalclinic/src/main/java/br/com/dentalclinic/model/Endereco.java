@@ -1,5 +1,7 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.EnderecoDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
@@ -14,6 +16,16 @@ public class Endereco implements Serializable {
 
     /** Constructor **/
     public Endereco() {
+    }
+
+    public Endereco(EnderecoDTO enderecoDTO) {
+        this.logradouro = enderecoDTO.getLogradouro();
+        this.numero = enderecoDTO.getNumero();
+        this.complemento = enderecoDTO.getComplemento();
+        this.bairro = enderecoDTO.getBairro();
+        this.localidade = enderecoDTO.getLocalidade();
+        this.uf = enderecoDTO.getUf();
+        this.cep = enderecoDTO.getCep();
     }
 
     public Endereco(String logradouro, String numero, String complemento, String bairro, String localidade, String uf, String cep) {

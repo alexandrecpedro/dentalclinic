@@ -1,0 +1,24 @@
+Carlu;Dijkstra;229483;Carlu.Dijkstra@clinica.com.br;Consultorio Sorisso Feliz
+Ferid;Samara;285727;Ferid.Samara@clinica.com.br;Clinica Joseph Climber
+Berlin;Kumagai;982718;Berlin.Kumagai@clinica.com.br;Consultorio Dentes Brilhantes
+Tito;Nagy;168353;Tito.Nagy@clinica.com.br;Clinica do Manuel
+Péter;Laninga;110159;Péter.Laninga@clinica.com.br;Consultorio Sorridente
+Swaran;Petrović;716493;Swaran.Petrović@clinica.com.br;Clinica da Esquina
+Xenokrates;Lévêque;212470;Xenokrates.Lévêque@clinica.com.br;Consultorio Sorriso Maroto
+Sandeep;Schuster;508542;Sandeep.Schuster@clinica.com.br;Clinica Marota
+Naveen;Mah;470270;Naveen.Mah@clinica.com.br;Consultorio Sorriso Branquinho
+Ghayth;Nifterick;696960;Ghayth.Nifterick@clinica.com.br;Clinica Legal
+Urbanus;Whitney;637522;Urbanus.Whitney@clinica.com.br;Consultorio Dentes Brilhantes
+Theophylaktos;McCarthy;182270;Theophylaktos.McCarthy@clinica.com.br;Clinica Da Avenida
+Abidemi;D'Ambrosio;006404;Abidemi.D'Ambrosio@clinica.com.br;Consultorio Sorriso Contagiante
+Sohail;Genovese;658551;Sohail.Genovese@clinica.com.br;Clinica Popular
+Apoorva;Láník;898571;Apoorva.Láník@clinica.com.br;Consultorio Saudente
+Safa;Eliasson;058018;Safa.Eliasson@clinica.com.br;Clinica Mega Popular
+Dudda;Escamilla;664073;Dudda.Escamilla@clinica.com.br;Consultorio Sorisso Feliz
+Shyam;Norup;459388;Shyam.Norup@clinica.com.br;Clinica Joseph Climber
+Govinda;Constantin;814572;Govinda.Constantin@clinica.com.br;Consultorio Dentes Brilhantes
+Matej;Antonescu;104538;Matej.Antonescu@clinica.com.br;Clinica do Manuel
+Zevulun;Greer;825438;Zevulun.Greer@clinica.com.br;Consultorio Sorridente
+Elbert;Coburn;468426;Elbert.Coburn@clinica.com.br;Clinica da Esquina
+Gilad;Mehmedović;843000;Gilad.Mehmedović@clinica.com.br;Consultorio Sorriso Maroto
+Branko;Hansen;465870;Branko.Hansen@clinica.com.br;Clinica Marota

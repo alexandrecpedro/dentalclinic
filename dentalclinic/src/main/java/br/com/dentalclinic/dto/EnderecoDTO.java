@@ -1,5 +1,7 @@
 package br.com.dentalclinic.dto;
 
+import br.com.dentalclinic.model.Endereco;
+
 public class EnderecoDTO {
 
     private String logradouro;
@@ -12,6 +14,17 @@ public class EnderecoDTO {
 
     public EnderecoDTO() {
     }
+
+    public EnderecoDTO(Endereco endereco) {
+        this.logradouro = endereco.getLogradouro();
+        this.numero = endereco.getNumero();
+        this.complemento = endereco.getComplemento();
+        this.bairro = endereco.getBairro();
+        this.localidade = endereco.getLocalidade();
+        this.uf = endereco.getUf();
+        this.cep = endereco.getCep();
+    }
+
 
     public EnderecoDTO(String logradouro, String numero, String complemento, String bairro, String localidade, String estado, String uf, String cep) {
         this.logradouro = logradouro;
