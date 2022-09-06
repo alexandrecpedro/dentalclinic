@@ -1,7 +1,7 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.model.Usuario;
-import br.com.dentalclinic.repository.UsuarioRepository;
+import br.com.dentalclinic.repository.IUsuarioRepository;
 import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,35 +13,35 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements IService<Usuario> {
     /** Attribute **/
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private IUsuarioRepository IUsuarioRepository;
 
     /** Constructor **/
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioServiceImpl(IUsuarioRepository IUsuarioRepository) {
+        this.IUsuarioRepository = IUsuarioRepository;
     }
 
     /** Methods **/
     @Override
     public Usuario salvar(Usuario usuario) {
         if (!usuario.equals(null)) {
-            usuarioRepository.save(usuario);
+            IUsuarioRepository.save(usuario);
         }
         return usuario;
     }
 
     public Optional<Usuario> buscarById(Integer id) {
-        return usuarioRepository.findById(id);
+        return IUsuarioRepository.findById(id);
     }
 
-    public Optional<Usuario> buscarByEmail(String email){return usuarioRepository.findByEmail(email);}
+    public Optional<Usuario> buscarByEmail(String email){return IUsuarioRepository.findByEmail(email);}
 
-    public List<Usuario> buscarTodos(){return usuarioRepository.findAll();}
+    public List<Usuario> buscarTodos(){return IUsuarioRepository.findAll();}
 
     public Usuario atualizar(Usuario usuario) {
-        return usuarioRepository.saveAndFlush(usuario);
+        return IUsuarioRepository.saveAndFlush(usuario);
     }
 
     public void deletar(Integer id) {
-        usuarioRepository.deleteById(id);
+        IUsuarioRepository.deleteById(id);
     }
 }

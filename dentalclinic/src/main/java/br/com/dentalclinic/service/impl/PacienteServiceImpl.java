@@ -1,7 +1,7 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.model.Paciente;
-import br.com.dentalclinic.repository.PacienteRepository;
+import br.com.dentalclinic.repository.IPacienteRepository;
 import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,10 @@ import java.util.Optional;
 public class PacienteServiceImpl implements IService<Paciente> {
     /** Attribute **/
     @Autowired
-    private PacienteRepository pacienterepository;
+    private IPacienteRepository pacienterepository;
 
     /** Constructor **/
-    public PacienteServiceImpl(PacienteRepository pacienterepository) {
+    public PacienteServiceImpl(IPacienteRepository pacienterepository) {
         this.pacienterepository = pacienterepository;
     }
 

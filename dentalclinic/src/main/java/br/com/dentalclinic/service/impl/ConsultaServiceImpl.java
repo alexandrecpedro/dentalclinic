@@ -1,7 +1,7 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.model.Consulta;
-import br.com.dentalclinic.repository.ConsultaRepository;
+import br.com.dentalclinic.repository.IConsultaRepository;
 import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,34 +12,34 @@ import java.util.Optional;
 public class ConsultaServiceImpl implements IService<Consulta> {
     /** Attribute **/
     @Autowired
-    private ConsultaRepository consultaRepository;
+    private IConsultaRepository IConsultaRepository;
 
     /** Constructor **/
-    public ConsultaServiceImpl(ConsultaRepository consultaRepository) {
-        this.consultaRepository = consultaRepository;
+    public ConsultaServiceImpl(IConsultaRepository IConsultaRepository) {
+        this.IConsultaRepository = IConsultaRepository;
     }
 
     /** Methods **/
     @Override
     public Consulta salvar(Consulta consulta) {
         if (!consulta.equals(null)) {
-            consultaRepository.save(consulta);
+            IConsultaRepository.save(consulta);
         }
         return consulta;
     }
 
     @Override
     public Optional<Consulta> buscarById(Integer id) {
-        return consultaRepository.findById(id);
+        return IConsultaRepository.findById(id);
     }
 
     @Override
     public Consulta atualizar(Consulta consulta) {
-        return consultaRepository.saveAndFlush(consulta);
+        return IConsultaRepository.saveAndFlush(consulta);
     }
 
     @Override
     public void deletar(Integer id) {
-        consultaRepository.deleteById(id);
+        IConsultaRepository.deleteById(id);
     }
 }

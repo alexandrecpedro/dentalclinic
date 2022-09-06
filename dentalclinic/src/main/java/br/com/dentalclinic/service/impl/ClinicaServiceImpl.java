@@ -1,8 +1,8 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.model.Clinica;
-import br.com.dentalclinic.repository.ClinicaRepository;
-import br.com.dentalclinic.repository.EnderecoRepository;
+import br.com.dentalclinic.repository.IClinicaRepository;
+import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,43 +14,43 @@ import java.util.Optional;
 public class ClinicaServiceImpl implements IService<Clinica> {
     /** Attribute **/
     @Autowired
-    private ClinicaRepository clinicaRepository;
+    private IClinicaRepository IClinicaRepository;
 
     @Autowired
-    private EnderecoRepository enderecoRepository;
+    private IEnderecoRepository IEnderecoRepository;
 
     /** Constructor **/
-    public ClinicaServiceImpl(ClinicaRepository clinicaRepository) {
-        this.clinicaRepository = clinicaRepository;
+    public ClinicaServiceImpl(IClinicaRepository IClinicaRepository) {
+        this.IClinicaRepository = IClinicaRepository;
     }
 
     /** Methods **/
     @Override
     public Clinica salvar(Clinica clinica) {
         if (!clinica.equals(null)) {
-            clinicaRepository.save(clinica);
+            IClinicaRepository.save(clinica);
         }
         return clinica;
     }
     @Override
     public Optional<Clinica> buscarById(Integer id) {
-        return clinicaRepository.findById(id);
+        return IClinicaRepository.findById(id);
     }
     @Override
     public Clinica atualizar(Clinica clinica) {
-        return clinicaRepository.saveAndFlush(clinica);
+        return IClinicaRepository.saveAndFlush(clinica);
     }
 
     @Override
     public void deletar(Integer id) {
-        clinicaRepository.deleteById(id);
+        IClinicaRepository.deleteById(id);
     }
 
     public List<Clinica> buscarTodos() {
-        return clinicaRepository.findAll();
+        return IClinicaRepository.findAll();
     }
 
-    public Optional<Clinica> buscarByNomeFantasia(String nomeFantasia){return clinicaRepository.findByNomeFantasia(nomeFantasia);}
+    public Optional<Clinica> buscarByNomeFantasia(String nomeFantasia){return IClinicaRepository.findByNomeFantasia(nomeFantasia);}
 //
 //    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO){
 //        ObjectMapper objectMapper = new ObjectMapper();

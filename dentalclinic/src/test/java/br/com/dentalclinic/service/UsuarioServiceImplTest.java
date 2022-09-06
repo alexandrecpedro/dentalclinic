@@ -2,7 +2,6 @@ package br.com.dentalclinic.service;
 
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.model.Usuario;
-import br.com.dentalclinic.repository.TipoUsuarioRepository;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
 import org.junit.jupiter.api.BeforeAll;

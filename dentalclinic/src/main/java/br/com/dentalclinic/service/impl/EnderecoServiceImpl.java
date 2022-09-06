@@ -1,7 +1,7 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.model.Endereco;
-import br.com.dentalclinic.repository.EnderecoRepository;
+import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class EnderecoServiceImpl implements IService<Endereco> {
     /** Attribute **/
     @Autowired
-    private EnderecoRepository enderecoRepository;
+    private IEnderecoRepository IEnderecoRepository;
 
     /** Constructor **/
     //public EnderecoServiceImpl(EnderecoRepository enderecoRepository) {
@@ -24,24 +24,24 @@ public class EnderecoServiceImpl implements IService<Endereco> {
     @Override
     public Endereco salvar(Endereco endereco) {
         if (!endereco.equals(null)) {
-            enderecoRepository.save(endereco);
+            IEnderecoRepository.save(endereco);
         }
         return endereco;
     }
 
     public Optional<Endereco> buscarById(Integer id) {
-        return enderecoRepository.findById(id);
+        return IEnderecoRepository.findById(id);
     }
 
     public Endereco atualizar(Endereco endereco) {
-        return enderecoRepository.saveAndFlush(endereco);
+        return IEnderecoRepository.saveAndFlush(endereco);
     }
 
     public void deletar(Integer id) {
-        enderecoRepository.deleteById(id);
+        IEnderecoRepository.deleteById(id);
     }
 
     public List<Endereco> buscarTodos(){
-        return enderecoRepository.findAll();
+        return IEnderecoRepository.findAll();
     }
 }
