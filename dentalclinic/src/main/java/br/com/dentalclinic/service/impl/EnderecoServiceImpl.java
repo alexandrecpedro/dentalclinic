@@ -1,8 +1,10 @@
 package br.com.dentalclinic.service.impl;
 
+import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.service.IService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,38 +12,58 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EnderecoServiceImpl implements IService<Endereco> {
+public class EnderecoServiceImpl implements IService<EnderecoDTO> {
     /** Attribute **/
     @Autowired
-    private IEnderecoRepository IEnderecoRepository;
-
-    /** Constructor **/
-    //public EnderecoServiceImpl(EnderecoRepository enderecoRepository) {
-    //    this.enderecoRepository = enderecoRepository;
-    //}
+    private IEnderecoRepository enderecoRepository;
 
     /** Methods **/
     @Override
-    public Endereco salvar(Endereco endereco) {
-        if (!endereco.equals(null)) {
-            IEnderecoRepository.save(endereco);
+    public EnderecoDTO salvar(EnderecoDTO enderecoDTO) {
+        Endereco endereco = mapperDTOToEntity(enderecoDTO);
+        if (!enderecoDTO.equals(null)) {
+            endereco = enderecoRepository.save(endereco);
         }
+        EnderecoDTO enderecoDTO1 = mapperEntityToDTO(endereco);
+        return enderecoDTO1;
+    }
+
+    @Override
+    public Optional<EnderecoDTO> buscarById(Integer id) {
+        Endereco endereco = enderecoRepository.findById(id).get();
+        EnderecoDTO enderecoDTO = mapperEntityToDTO(endereco);
+        return enderecoDTO;
+    }
+
+    @Override
+    public EnderecoDTO atualizar(EnderecoDTO enderecoDTO) {
+        return enderecoRepository.saveAndFlush(enderecoDTO);
+    }
+
+    @Override
+    public void deletar(Integer id) {
+        enderecoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<EnderecoDTO> buscarTodos() {
+        return enderecoRepository.findAll();
+    }
+
+    public Boolean ifEnderecoExists(int id) {
+        return enderecoRepository.existsById(id);
+    }
+
+    public Endereco mapperDTOToEntity(EnderecoDTO enderecoDTO) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Endereco endereco = objectMapper.convertValue(enderecoDTO, Endereco.class);
         return endereco;
     }
 
-    public Optional<Endereco> buscarById(Integer id) {
-        return IEnderecoRepository.findById(id);
+    public EnderecoDTO mapperEntityToDTO(Endereco endereco) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        EnderecoDTO enderecoDTO = objectMapper.convertValue(endereco, EnderecoDTO.class);
+        return enderecoDTO;
     }
 
-    public Endereco atualizar(Endereco endereco) {
-        return IEnderecoRepository.saveAndFlush(endereco);
-    }
-
-    public void deletar(Integer id) {
-        IEnderecoRepository.deleteById(id);
-    }
-
-    public List<Endereco> buscarTodos(){
-        return IEnderecoRepository.findAll();
-    }
 }

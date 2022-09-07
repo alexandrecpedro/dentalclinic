@@ -78,6 +78,14 @@ public class Dentista implements Serializable {
         this.clinica = clinica;
     }
 
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
     /** Methods **/
     @Override
     public String toString() {
@@ -91,11 +99,4 @@ public class Dentista implements Serializable {
                 '}';
     }
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
 }
