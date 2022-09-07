@@ -1,0 +1,16 @@
+Rua Germano Vítor dos Santos;598;CASA 013;Morumbi;LOCALIDADE 1;SP;00000-001
+Rua Glucínio;598;AP. 15;Barra Funda‎;LOCALIDADE 2;MG;00000-002
+Rua Nelson Ferreira;598;bloco c. ap.15;Bela Vista‎;LOCALIDADE 3;AC;00000-003
+Rua Clodomiro Pinheiro;598;CASA 014;Belém‎;LOCALIDADE 4;RJ;00000-004
+Rua Emí­lio Retrosi;598;AP. 16;Bom Retiro‎;LOCALIDADE 5;PR;00000-005
+Praça Antônio Pereira Martins;598;bloco c. ap.16;Brasilândia‎;LOCALIDADE 6;RS;00000-006
+Rua Comendador Assad Abdalla;598;CASA 015;Butantã‎;LOCALIDADE 7;SP;00000-007
+Rua Ouro Verde;598;AP. 17;Barra Funda‎;LOCALIDADE 8;MG;00000-008
+Rua Casa da Boavista;598;bloco c. ap.17;Bela Vista‎;LOCALIDADE 9;AC;00000-009
+Rua John Redford;598;CASA 016;Belém‎;LOCALIDADE 10;RJ;00000-010
+Avenida Nazaré;598;AP. 18;Bom Retiro‎;LOCALIDADE 11;PR;00000-011
+Avenida Adelino Jorge Montenegro;598;bloco c. ap.18;Brasilândia‎;LOCALIDADE 12;RS;00000-012
+Rua Rynaldo Borgianni;598;CASA 017;Butantã‎;LOCALIDADE 13;SP;00000-013
+Rua Arvore da Cera;598;AP. 19;Barra Funda‎;LOCALIDADE 14;MG;00000-014
+Rua Acioli Monteiro;598;bloco c. ap.19;Bela Vista‎;LOCALIDADE 15;AC;00000-015
+Rua Manuel Teles Vitancos;598;CASA 018;Belém‎;LOCALIDADE 16;RJ;00000-016
