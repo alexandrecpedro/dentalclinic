@@ -4,6 +4,7 @@ import br.com.dentalclinic.model.TipoUsuario;
 
 public class TipoUsuarioDTO {
 
+    private int id;
     private String nome;
 
     public TipoUsuarioDTO() {
@@ -15,6 +16,10 @@ public class TipoUsuarioDTO {
 
     public TipoUsuarioDTO(String nome) {
         this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome() {

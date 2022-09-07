@@ -5,6 +5,7 @@ import br.com.dentalclinic.model.Usuario;
 
 public class UsuarioDTO {
 
+    private int id;
     private String email;
     private String senha;
     private TipoUsuario tipoUsuario;
@@ -22,6 +23,10 @@ public class UsuarioDTO {
         this.email = usuario.getEmail();
         this.senha = usuario.getSenha();
         this.tipoUsuario = usuario.getTipoUsuario();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getEmail() {

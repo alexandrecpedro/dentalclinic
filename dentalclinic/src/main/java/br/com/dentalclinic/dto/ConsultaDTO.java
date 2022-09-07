@@ -7,6 +7,8 @@ import br.com.dentalclinic.model.Paciente;
 import java.util.Date;
 
 public class ConsultaDTO {
+
+    private int id;
     private Date dataConsulta;
     private String descricao, status;
     private Paciente paciente;
@@ -29,6 +31,10 @@ public class ConsultaDTO {
         this.status = consulta.getStatus();
         this.paciente = consulta.getPaciente();
         this.dentista = consulta.getDentista();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Date getDataConsulta() {

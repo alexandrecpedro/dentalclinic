@@ -5,6 +5,7 @@ import br.com.dentalclinic.model.Endereco;
 
 public class ClinicaDTO {
 
+    private int id;
     private String nomeFantasia, razaoSocial;
     private Endereco endereco;
 
@@ -15,6 +16,10 @@ public class ClinicaDTO {
         this.nomeFantasia = clinica.getNomeFantasia();
         this.razaoSocial = clinica.getRazaoSocial();
         this.endereco = clinica.getEndereco();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNomeFantasia() {
@@ -33,11 +38,11 @@ public class ClinicaDTO {
         this.razaoSocial = razaoSocial;
     }
 
-    public Endereco getFk_idEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setFk_idEndereco(Endereco endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 }

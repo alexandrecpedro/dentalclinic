@@ -5,6 +5,8 @@ import br.com.dentalclinic.model.Paciente;
 import br.com.dentalclinic.model.Usuario;
 
 public class PacienteDTO {
+
+    private int id;
     private String nome;
     private String sobrenome;
     private String cpf;
@@ -31,6 +33,10 @@ public class PacienteDTO {
         this.telefone = paciente.getTelefone();
         this.usuario = paciente.getUsuario();
         this.endereco = paciente.getEndereco();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getnome() {

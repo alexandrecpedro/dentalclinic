@@ -1,12 +1,12 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "tb_tipo_usuario")
-
 public class TipoUsuario implements Serializable {
     /** Attributes **/
     @Id
@@ -34,10 +34,6 @@ public class TipoUsuario implements Serializable {
     /** Getters/Setters **/
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {

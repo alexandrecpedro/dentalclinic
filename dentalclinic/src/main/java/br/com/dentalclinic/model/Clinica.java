@@ -8,15 +8,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "tb_clinica")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Clinica implements Serializable {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private int id;
     private String nomeFantasia, razaoSocial;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Endereco.class)
     @PrimaryKeyJoinColumn
     private Endereco endereco;
 
@@ -38,10 +37,6 @@ public class Clinica implements Serializable {
     /** Getters/Setters **/
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNomeFantasia() {

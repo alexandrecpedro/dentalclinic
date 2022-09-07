@@ -10,21 +10,20 @@ import java.io.Serializable;
 import java.util.Date;
 @Entity
 @Table(name = "tb_consulta")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Consulta implements Serializable {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private int id;
     private Date dataConsulta;
     private String descricao;
     private String status;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Paciente.class)
     private Paciente paciente;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Dentista.class)
     private Dentista dentista;
 
     /** Constructor **/
@@ -50,10 +49,6 @@ public class Consulta implements Serializable {
     /** Getters/Setters **/
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Date getDataConsulta() {

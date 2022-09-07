@@ -1,9 +1,12 @@
 package br.com.dentalclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "tb_dentista")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Dentista implements Serializable {
     /** Attributes **/
     @Id
@@ -11,10 +14,10 @@ public class Dentista implements Serializable {
     private int id;
     private String nome,sobrenome,cro;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Usuario.class)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Clinica.class)
     private Clinica clinica;
 
     /** Constructor **/
@@ -41,10 +44,6 @@ public class Dentista implements Serializable {
     /** Getters/Setters **/
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {

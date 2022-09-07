@@ -4,6 +4,7 @@ import br.com.dentalclinic.model.Endereco;
 
 public class EnderecoDTO {
 
+    private int id;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -34,6 +35,10 @@ public class EnderecoDTO {
         this.localidade = localidade;
         this.uf = uf;
         this.cep = cep;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getLogradouro() {
