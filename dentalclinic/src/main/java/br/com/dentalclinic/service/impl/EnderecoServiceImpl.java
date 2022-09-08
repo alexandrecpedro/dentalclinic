@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,30 +25,42 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
         if (!enderecoDTO.equals(null)) {
             endereco = enderecoRepository.save(endereco);
         }
-        EnderecoDTO enderecoDTO1 = mapperEntityToDTO(endereco);
-        return enderecoDTO1;
+        enderecoDTO = mapperEntityToDTO(endereco);
+        return enderecoDTO;
     }
 
     @Override
     public Optional<EnderecoDTO> buscarById(Integer id) {
         Endereco endereco = enderecoRepository.findById(id).get();
         EnderecoDTO enderecoDTO = mapperEntityToDTO(endereco);
-        return enderecoDTO;
+        return Optional.ofNullable(enderecoDTO);
     }
 
     @Override
     public EnderecoDTO atualizar(EnderecoDTO enderecoDTO) {
-        return enderecoRepository.saveAndFlush(enderecoDTO);
+        Endereco endereco = mapperDTOToEntity(enderecoDTO);
+        endereco = enderecoRepository.saveAndFlush(endereco);
+        enderecoDTO = mapperEntityToDTO(endereco);
+        return enderecoDTO;
     }
 
     @Override
     public void deletar(Integer id) {
-        enderecoRepository.deleteById(id);
+        if (enderecoRepository.existsById(id)) {
+            enderecoRepository.deleteById(id);
+        }
     }
 
     @Override
     public List<EnderecoDTO> buscarTodos() {
-        return enderecoRepository.findAll();
+        List<Endereco> enderecos = enderecoRepository.findAll();
+        List<EnderecoDTO> enderecoDTOS = new ArrayList<>();
+
+        for (Endereco endereco: enderecos) {
+            EnderecoDTO enderecoDTO = mapperEntityToDTO(endereco);
+            enderecoDTOS.add(enderecoDTO);
+        }
+        return enderecoDTOS;
     }
 
     public Boolean ifEnderecoExists(int id) {
