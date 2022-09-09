@@ -37,6 +37,18 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
     }
 
     @Override
+    public List<EnderecoDTO> buscarTodos() {
+        List<Endereco> enderecos = enderecoRepository.findAll();
+        List<EnderecoDTO> enderecoDTOS = new ArrayList<>();
+
+        for (Endereco endereco: enderecos) {
+            EnderecoDTO enderecoDTO = mapperEntityToDTO(endereco);
+            enderecoDTOS.add(enderecoDTO);
+        }
+        return enderecoDTOS;
+    }
+
+    @Override
     public EnderecoDTO atualizar(EnderecoDTO enderecoDTO) {
         Endereco endereco = mapperDTOToEntity(enderecoDTO);
         endereco = enderecoRepository.saveAndFlush(endereco);
@@ -49,18 +61,6 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
         if (enderecoRepository.existsById(id)) {
             enderecoRepository.deleteById(id);
         }
-    }
-
-    @Override
-    public List<EnderecoDTO> buscarTodos() {
-        List<Endereco> enderecos = enderecoRepository.findAll();
-        List<EnderecoDTO> enderecoDTOS = new ArrayList<>();
-
-        for (Endereco endereco: enderecos) {
-            EnderecoDTO enderecoDTO = mapperEntityToDTO(endereco);
-            enderecoDTOS.add(enderecoDTO);
-        }
-        return enderecoDTOS;
     }
 
     public Boolean ifEnderecoExists(int id) {

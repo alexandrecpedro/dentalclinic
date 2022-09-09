@@ -1,7 +1,6 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.ClinicaDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;

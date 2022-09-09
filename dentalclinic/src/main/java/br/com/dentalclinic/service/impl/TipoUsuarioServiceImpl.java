@@ -1,8 +1,6 @@
 package br.com.dentalclinic.service.impl;
 
-import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
-import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.repository.ITipoUsuarioRepository;
 import br.com.dentalclinic.service.IService;
@@ -31,7 +29,15 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
         return tipoUsuarioDTO;
     }
 
-    public List<TipoUsuarioDTO> buscarTodos(){
+    @Override
+    public Optional<TipoUsuarioDTO> buscarById(Integer id) {
+        TipoUsuario tipoUsuario = tipoUsuarioRepository.findById(id).get();
+        TipoUsuarioDTO tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
+        return Optional.ofNullable(tipoUsuarioDTO);
+    }
+
+    @Override
+    public List<TipoUsuarioDTO> buscarTodos() {
         List<TipoUsuario> tipoUsuarioList = tipoUsuarioRepository.findAll();
         List<TipoUsuarioDTO> tipoUsuarioDTOS = new ArrayList<>();
 
@@ -42,20 +48,29 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
         return tipoUsuarioDTOS;
     }
 
-    public Optional<TipoUsuarioDTO> buscarById(Integer id) {
-        TipoUsuario tipoUsuario = tipoUsuarioRepository.findById(id).get();
-        TipoUsuarioDTO tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
-        return Optional.ofNullable(tipoUsuarioDTO);
+    @Override
+    public TipoUsuarioDTO atualizar(TipoUsuarioDTO tipoUsuarioDTO) {
+        TipoUsuario tipoUsuario = mapperDTOToEntity(tipoUsuarioDTO);
+        tipoUsuario = tipoUsuarioRepository.saveAndFlush(tipoUsuario);
+        tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
+        return tipoUsuarioDTO;
     }
 
-    public TipoUsuario buscarByNome(String nome) {return ITipoUsuarioRepository.findByNome(nome);}
-
-    public TipoUsuario atualizar(TipoUsuario tipoUsuario) {
-        return ITipoUsuarioRepository.saveAndFlush(tipoUsuario);
-    }
-
+    @Override
     public void deletar(Integer id) {
-        ITipoUsuarioRepository.deleteById(id);
+        if (tipoUsuarioRepository.existsById(id)) {
+            tipoUsuarioRepository.deleteById(id);
+        }
+    }
+
+    public TipoUsuarioDTO buscarByNome(String nome) {
+        TipoUsuario tipoUsuario = tipoUsuarioRepository.findByNome(nome);
+        TipoUsuarioDTO tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
+        return tipoUsuarioDTO;
+    }
+
+    public Boolean ifTipoUsuarioExists(int id) {
+        return tipoUsuarioRepository.existsById(id);
     }
 
     public TipoUsuario mapperDTOToEntity(TipoUsuarioDTO tipoUsuarioDTO) {
