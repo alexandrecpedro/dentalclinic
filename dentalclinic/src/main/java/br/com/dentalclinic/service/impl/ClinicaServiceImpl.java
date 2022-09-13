@@ -77,6 +77,10 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
         return clinicaRepository.findByNomeFantasia(nomeFantasia);
     }
 
+    public boolean ifClinicaExists(int id){
+        return clinicaRepository.existsById(id);
+    }
+
     public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO) {
         ObjectMapper objectMapper = new ObjectMapper();
         Clinica clinica = objectMapper.convertValue(clinicaDTO, Clinica.class);
@@ -88,5 +92,6 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
         ClinicaDTO clinicaDTO = objectMapper.convertValue(clinica, ClinicaDTO.class);
         return clinicaDTO;
     }
+
 
 }
