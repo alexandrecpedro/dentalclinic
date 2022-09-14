@@ -1,7 +1,6 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;

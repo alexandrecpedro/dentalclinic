@@ -1,16 +1,12 @@
 package br.com.dentalclinic.service.impl;
 
-import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.dto.PacienteDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
-import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.model.Paciente;
 import br.com.dentalclinic.model.Usuario;
-import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.repository.IPacienteRepository;
-import br.com.dentalclinic.repository.IUsuarioRepository;
 import br.com.dentalclinic.service.IService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

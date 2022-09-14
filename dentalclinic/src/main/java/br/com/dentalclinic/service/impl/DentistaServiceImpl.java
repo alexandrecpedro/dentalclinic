@@ -2,11 +2,9 @@ package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.dto.DentistaDTO;
-import br.com.dentalclinic.dto.PacienteDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Dentista;
-import br.com.dentalclinic.model.Paciente;
 import br.com.dentalclinic.model.Usuario;
 import br.com.dentalclinic.repository.IDentistaRepository;
 import br.com.dentalclinic.service.IService;

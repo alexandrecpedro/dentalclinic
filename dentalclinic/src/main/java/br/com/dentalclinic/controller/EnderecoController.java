@@ -1,6 +1,6 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.model.Endereco;
+import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,20 +18,20 @@ public class EnderecoController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<Endereco> salvar(@RequestBody Endereco endereco) {
-        return ResponseEntity.ok(enderecoService.salvar(endereco));
+    public ResponseEntity<EnderecoDTO> salvar(@RequestBody EnderecoDTO enderecoDTO) {
+        return ResponseEntity.ok(enderecoService.salvar(enderecoDTO));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Endereco>> buscarById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<EnderecoDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(enderecoService.buscarById(id));
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<Endereco> atualizar(@RequestBody Endereco endereco) {
-        return (enderecoService.buscarById(endereco.getId()).equals(null)) ?
+    public ResponseEntity<EnderecoDTO> atualizar(@RequestBody EnderecoDTO enderecoDTO) {
+        return (enderecoService.buscarById(enderecoDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
-                : ResponseEntity.ok(enderecoService.atualizar(endereco));
+                : ResponseEntity.ok(enderecoService.atualizar(enderecoDTO));
     }
 
     @DeleteMapping("/{id}")

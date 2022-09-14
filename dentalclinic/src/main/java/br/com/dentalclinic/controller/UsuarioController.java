@@ -1,6 +1,6 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.model.Usuario;
+import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,20 +18,20 @@ public class UsuarioController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok(usuarioService.salvar(usuario));
+    public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO usuarioDTO) {
+        return ResponseEntity.ok(usuarioService.salvar(usuarioDTO));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Usuario>> buscarById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<UsuarioDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(usuarioService.buscarById(id));
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<Usuario> atualizar(@RequestBody Usuario usuario) {
-        return (usuarioService.buscarById(usuario.getId()).equals(null)) ?
+    public ResponseEntity<UsuarioDTO> atualizar(@RequestBody UsuarioDTO usuarioDTO) {
+        return (usuarioService.buscarById(usuarioDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
-                : ResponseEntity.ok(usuarioService.atualizar(usuario));
+                : ResponseEntity.ok(usuarioService.atualizar(usuarioDTO));
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,6 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.model.Consulta;
+import br.com.dentalclinic.dto.ConsultaDTO;
 import br.com.dentalclinic.service.impl.ConsultaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,20 +18,20 @@ public class ConsultaController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<Consulta> salvar(@RequestBody Consulta consulta) {
-        return ResponseEntity.ok(consultaService.salvar(consulta));
+    public ResponseEntity<ConsultaDTO> salvar(@RequestBody ConsultaDTO consultaDTO) {
+        return ResponseEntity.ok(consultaService.salvar(consultaDTO));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Consulta>> buscarById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<ConsultaDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(consultaService.buscarById(id));
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<Consulta> atualizar(@RequestBody Consulta consulta) {
-        return (consultaService.buscarById(consulta.getId()).equals(null)) ?
+    public ResponseEntity<ConsultaDTO> atualizar(@RequestBody ConsultaDTO consultaDTO) {
+        return (consultaService.buscarById(consultaDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
-                : ResponseEntity.ok(consultaService.atualizar(consulta));
+                : ResponseEntity.ok(consultaService.atualizar(consultaDTO));
     }
 
     @DeleteMapping("/{id}")
