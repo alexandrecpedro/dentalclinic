@@ -1,45 +1,97 @@
 package br.com.dentalclinic.service.impl;
 
+import br.com.dentalclinic.dto.ConsultaDTO;
+import br.com.dentalclinic.dto.DentistaDTO;
+import br.com.dentalclinic.dto.PacienteDTO;
 import br.com.dentalclinic.model.Consulta;
+import br.com.dentalclinic.model.Dentista;
+import br.com.dentalclinic.model.Paciente;
 import br.com.dentalclinic.repository.IConsultaRepository;
 import br.com.dentalclinic.service.IService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ConsultaServiceImpl implements IService<Consulta> {
+public class ConsultaServiceImpl implements IService<ConsultaDTO> {
     /** Attribute **/
     @Autowired
-    private IConsultaRepository IConsultaRepository;
+    private IConsultaRepository consultaRepository;
 
-    /** Constructor **/
-    public ConsultaServiceImpl(IConsultaRepository IConsultaRepository) {
-        this.IConsultaRepository = IConsultaRepository;
-    }
+    @Autowired
+    private PacienteServiceImpl pacienteService;
 
+    @Autowired
+    private DentistaServiceImpl dentistaService;
     /** Methods **/
     @Override
-    public Consulta salvar(Consulta consulta) {
-        if (!consulta.equals(null)) {
-            IConsultaRepository.save(consulta);
+    public ConsultaDTO salvar(ConsultaDTO consultaDTO) {
+        Consulta consulta = mapperDTOToEntity(consultaDTO);
+        int idPaciente = consulta.getPaciente().getId();
+        int idDentista = consulta.getDentista().getId();
+
+        if (pacienteService.ifPacienteExists(idPaciente) && dentistaService.ifDentistaExists(idDentista)) {
+            PacienteDTO pacienteDTO = pacienteService.buscarById(idPaciente).get();
+            Paciente paciente = new Paciente(pacienteDTO);
+            DentistaDTO dentistaDTO = dentistaService.buscarById(idDentista).get();
+            Dentista dentista = new Dentista(dentistaDTO);
+
+            consulta.setPaciente(paciente);
+            consulta.setDentista(dentista);
         }
-        return consulta;
+
+        consultaDTO = mapperEntityToDTO(consulta);
+        return consultaDTO;
     }
 
     @Override
-    public Optional<Consulta> buscarById(Integer id) {
-        return IConsultaRepository.findById(id);
+    public Optional<ConsultaDTO> buscarById(Integer id) {
+        Consulta consulta = consultaRepository.findById(id).get();
+        ConsultaDTO consultaDTO = mapperEntityToDTO(consulta);
+        return Optional.ofNullable(consultaDTO);
     }
 
     @Override
-    public Consulta atualizar(Consulta consulta) {
-        return IConsultaRepository.saveAndFlush(consulta);
+    public List<ConsultaDTO> buscarTodos(){
+        List<Consulta> consultas = consultaRepository.findAll();
+        List<ConsultaDTO> consultaDTOS = new ArrayList<>();
+
+        for (Consulta consulta : consultas){
+            ConsultaDTO consultaDTO = mapperEntityToDTO(consulta);
+            consultaDTOS.add(consultaDTO);
+        }
+        return consultaDTOS;
+    }
+
+    @Override
+    public ConsultaDTO atualizar(ConsultaDTO consultaDTO) {
+        Consulta consulta = mapperDTOToEntity(consultaDTO);
+        consulta = consultaRepository.saveAndFlush(consulta);
+        consultaDTO = mapperEntityToDTO(consulta);
+        return consultaDTO;
     }
 
     @Override
     public void deletar(Integer id) {
-        IConsultaRepository.deleteById(id);
+        if (consultaRepository.existsById(id)) {
+            consultaRepository.deleteById(id);
+        }
     }
+
+    public Consulta mapperDTOToEntity(ConsultaDTO consultaDTO) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Consulta consulta = objectMapper.convertValue(consultaDTO, Consulta.class);
+        return consulta;
+    }
+
+    public ConsultaDTO mapperEntityToDTO(Consulta consulta) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ConsultaDTO consultaDTO = objectMapper.convertValue(consulta, ConsultaDTO.class);
+        return consultaDTO;
+    }
+
 }

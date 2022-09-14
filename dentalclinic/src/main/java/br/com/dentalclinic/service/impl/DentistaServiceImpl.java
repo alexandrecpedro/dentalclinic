@@ -2,14 +2,20 @@ package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.dto.DentistaDTO;
+import br.com.dentalclinic.dto.PacienteDTO;
+import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Dentista;
+import br.com.dentalclinic.model.Paciente;
+import br.com.dentalclinic.model.Usuario;
 import br.com.dentalclinic.repository.IDentistaRepository;
 import br.com.dentalclinic.service.IService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,25 +37,59 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
         int idUsuario = dentista.getUsuario().getId();
         int idClinica = dentista.getClinica().getId();
 
-        if (clinicaService.ifClinicaExists(idClinica) && usuarioService.) {
-            IDentistaRepository.save(dentista);
+        if (clinicaService.ifClinicaExists(idClinica) && usuarioService.ifUsuarioExists(idUsuario)) {
+            ClinicaDTO clinicaDTO = clinicaService.buscarById(idClinica).get();
+            Clinica clinica = new Clinica(clinicaDTO);
+            UsuarioDTO usuarioDTO = usuarioService.buscarById(idUsuario).get();
+            Usuario usuario = new Usuario(usuarioDTO);
+
+            dentista.setClinica(clinica);
+            dentista.setUsuario(usuario);
+
+            dentista = dentistaRepository.save(dentista);
         }
-        return dentista;
+
+        dentistaDTO = mapperEntityToDTO(dentista);
+        return dentistaDTO;
+
     }
 
     @Override
-    public Optional<Dentista> buscarById(Integer id) {
-        return IDentistaRepository.findById(id);
+    public Optional<DentistaDTO> buscarById(Integer id) {
+        Dentista dentista = dentistaRepository.findById(id).get();
+        DentistaDTO dentistaDTO = mapperEntityToDTO(dentista);
+        return Optional.ofNullable(dentistaDTO);
     }
 
     @Override
-    public Dentista atualizar(Dentista dentista) {
-        return IDentistaRepository.saveAndFlush(dentista);
+    public List<DentistaDTO> buscarTodos(){
+        List<Dentista> dentistas = dentistaRepository.findAll();
+        List<DentistaDTO> dentistaDTOS = new ArrayList<>();
+
+        for (Dentista dentista : dentistas){
+            DentistaDTO dentistaDTO = mapperEntityToDTO(dentista);
+            dentistaDTOS.add(dentistaDTO);
+        }
+        return dentistaDTOS;
+    }
+
+    @Override
+    public DentistaDTO atualizar(DentistaDTO dentistaDTO) {
+        Dentista dentista = mapperDTOToEntity(dentistaDTO);
+        dentista = dentistaRepository.saveAndFlush(dentista);
+        dentistaDTO = mapperEntityToDTO(dentista);
+        return dentistaDTO;
     }
 
     @Override
     public void deletar(Integer id) {
-        IDentistaRepository.deleteById(id);
+        if (dentistaRepository.existsById(id)) {
+            dentistaRepository.deleteById(id);
+        }
+    }
+
+    public boolean ifDentistaExists(int id){
+        return dentistaRepository.existsById(id);
     }
 
     public Dentista mapperDTOToEntity(DentistaDTO dentistaDTO) {

@@ -1,5 +1,6 @@
 package br.com.dentalclinic.model;
 
+import br.com.dentalclinic.dto.DentistaDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -24,12 +25,12 @@ public class Dentista implements Serializable {
     public Dentista() {
     }
 
-    public Dentista(String nome, String sobrenome, String cro, Usuario usuario, Clinica clinica) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.cro = cro;
-        this.usuario = usuario;
-        this.clinica = clinica;
+    public Dentista(DentistaDTO dentistaDTO) {
+        this.nome = dentistaDTO.getNome();
+        this.sobrenome = dentistaDTO.getSobrenome();
+        this.cro = dentistaDTO.getCro();
+        this.usuario = dentistaDTO.getUsuario();
+        this.clinica = dentistaDTO.getClinica();
     }
 
     public Dentista(int id, String nome, String sobrenome, String cro, Usuario usuario) {
