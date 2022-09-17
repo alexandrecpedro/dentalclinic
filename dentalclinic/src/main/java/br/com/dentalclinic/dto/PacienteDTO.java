@@ -3,7 +3,15 @@ package br.com.dentalclinic.dto;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.model.Paciente;
 import br.com.dentalclinic.model.Usuario;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PacienteDTO {
 
     private int id;
@@ -13,9 +21,6 @@ public class PacienteDTO {
     private String telefone;
     private Usuario usuario;
     private Endereco endereco;
-
-    public PacienteDTO() {
-    }
 
     public PacienteDTO(String nome, String sobrenome, String cpf, String telefone, Usuario usuario, Endereco endereco) {
         this.nome = nome;
@@ -33,66 +38,6 @@ public class PacienteDTO {
         this.telefone = paciente.getTelefone();
         this.usuario = paciente.getUsuario();
         this.endereco = paciente.getEndereco();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getnome() {
-        return nome;
-    }
-
-    public void setnome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     @Override

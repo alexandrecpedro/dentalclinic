@@ -1,9 +1,16 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_tipo_usuario")
 public class TipoUsuario implements Serializable {
@@ -14,33 +21,12 @@ public class TipoUsuario implements Serializable {
     private String nome;
 
     /** Constructor **/
-    public TipoUsuario() {
-    }
-
     public TipoUsuario(String nome) {
-        this.nome = nome;
-    }
-
-    public TipoUsuario(int id, String nome) {
-        this.id = id;
         this.nome = nome;
     }
 
     public TipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) {
         this.nome = tipoUsuarioDTO.getNome();
-    }
-
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     /** Methods **/

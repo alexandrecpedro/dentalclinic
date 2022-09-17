@@ -2,9 +2,16 @@ package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.PacienteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_paciente")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -24,9 +31,6 @@ public class Paciente implements Serializable {
     private Endereco endereco;
 
     /** Constructor **/
-    public Paciente() {
-    }
-
     public Paciente(String nome, String sobrenome, String cpf, String telefone, Usuario usuario, Endereco endereco) {
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -45,60 +49,7 @@ public class Paciente implements Serializable {
         this.endereco = pacienteDTO.getEndereco();
     }
 
-
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
+    /** Method **/
     @Override
     public String toString() {
         return "Paciente{" +

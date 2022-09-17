@@ -2,9 +2,16 @@ package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.DentistaDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_dentista")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -22,9 +29,6 @@ public class Dentista implements Serializable {
     private Clinica clinica;
 
     /** Constructor **/
-    public Dentista() {
-    }
-
     public Dentista(DentistaDTO dentistaDTO) {
         this.nome = dentistaDTO.getNome();
         this.sobrenome = dentistaDTO.getSobrenome();
@@ -40,51 +44,6 @@ public class Dentista implements Serializable {
         this.cro = cro;
         this.usuario = usuario;
         this.clinica = clinica;
-    }
-
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCro() {
-        return cro;
-    }
-
-    public void setCro(String cro) {
-        this.cro = cro;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Clinica getClinica() {
-        return clinica;
-    }
-
-    public void setClinica(Clinica clinica) {
-        this.clinica = clinica;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
     }
 
     /** Methods **/

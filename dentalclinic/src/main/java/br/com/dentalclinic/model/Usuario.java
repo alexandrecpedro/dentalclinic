@@ -2,9 +2,16 @@ package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_usuario")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -19,9 +26,6 @@ public class Usuario implements Serializable {
     private TipoUsuario tipoUsuario;
 
     /** Constructor **/
-    public Usuario() {
-    }
-
     public Usuario(UsuarioDTO usuarioDTO) {
         this.email = usuarioDTO.getEmail();
         this.senha = usuarioDTO.getSenha();
@@ -31,35 +35,6 @@ public class Usuario implements Serializable {
     public Usuario(String email, String senha, TipoUsuario tipoUsuario) {
         this.email = email;
         this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
