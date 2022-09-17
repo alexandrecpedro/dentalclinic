@@ -1,8 +1,8 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.EnderecoDTO;
-import br.com.dentalclinic.exceptions.BadRequestException;
-import br.com.dentalclinic.exceptions.ResourceNotFoundException;
+import br.com.dentalclinic.exception.BadRequestException;
+import br.com.dentalclinic.exception.ResourceNotFoundException;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.service.IService;
