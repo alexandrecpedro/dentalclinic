@@ -2,6 +2,8 @@ package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.dto.EnderecoDTO;
+import br.com.dentalclinic.exceptions.BadRequestException;
+import br.com.dentalclinic.exceptions.ResourceNotFoundException;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.repository.IClinicaRepository;
@@ -30,7 +32,9 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
         int idEndereco = clinica.getEndereco().getId();
 
         if (enderecoService.ifEnderecoExists(idEndereco)) {
-            EnderecoDTO enderecoDTO = enderecoService.buscarById(idEndereco).get();
+            EnderecoDTO enderecoDTO = enderecoService.buscarById(idEndereco).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Endereço não encontrado!");
+            });
             Endereco endereco = new Endereco(enderecoDTO);
             clinica.setEndereco(endereco);
             clinica = clinicaRepository.save(clinica);
@@ -41,7 +45,9 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
 
     @Override
     public Optional<ClinicaDTO> buscarById(Integer id) {
-        Clinica clinica = clinicaRepository.findById(id).get();
+        Clinica clinica = clinicaRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Clínica não encontrada!");
+        });
         ClinicaDTO clinicaDTO = mapperEntityToDTO(clinica);
         return Optional.ofNullable(clinicaDTO);
     }
@@ -70,6 +76,8 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
     public void deletar(Integer id) {
         if (clinicaRepository.existsById(id)) {
             clinicaRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Clínica inexistente!");
         }
     }
 

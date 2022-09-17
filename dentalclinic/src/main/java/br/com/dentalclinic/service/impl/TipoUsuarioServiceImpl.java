@@ -1,6 +1,8 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
+import br.com.dentalclinic.exceptions.BadRequestException;
+import br.com.dentalclinic.exceptions.ResourceNotFoundException;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.repository.ITipoUsuarioRepository;
 import br.com.dentalclinic.service.IService;
@@ -24,6 +26,8 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
         TipoUsuario tipoUsuario = mapperDTOToEntity(tipoUsuarioDTO);
         if (!tipoUsuario.equals(null)) {
             tipoUsuario = tipoUsuarioRepository.save(tipoUsuario);
+        } else {
+            throw new BadRequestException("Tipo de Usuário já cadastrado!");
         }
         tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
         return tipoUsuarioDTO;
@@ -31,7 +35,9 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
 
     @Override
     public Optional<TipoUsuarioDTO> buscarById(Integer id) {
-        TipoUsuario tipoUsuario = tipoUsuarioRepository.findById(id).get();
+        TipoUsuario tipoUsuario = tipoUsuarioRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Tipo de Usuário não encontrado");
+        });
         TipoUsuarioDTO tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
         return Optional.ofNullable(tipoUsuarioDTO);
     }
@@ -60,6 +66,8 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
     public void deletar(Integer id) {
         if (tipoUsuarioRepository.existsById(id)) {
             tipoUsuarioRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Tipo de Usuário inexistente!");
         }
     }
 

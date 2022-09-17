@@ -3,6 +3,8 @@ package br.com.dentalclinic.service.impl;
 import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.dto.DentistaDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
+import br.com.dentalclinic.exceptions.BadRequestException;
+import br.com.dentalclinic.exceptions.ResourceNotFoundException;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Dentista;
 import br.com.dentalclinic.model.Usuario;
@@ -36,9 +38,13 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
         int idClinica = dentista.getClinica().getId();
 
         if (clinicaService.ifClinicaExists(idClinica) && usuarioService.ifUsuarioExists(idUsuario)) {
-            ClinicaDTO clinicaDTO = clinicaService.buscarById(idClinica).get();
+            ClinicaDTO clinicaDTO = clinicaService.buscarById(idClinica).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Clínica não encontrada");
+            });
             Clinica clinica = new Clinica(clinicaDTO);
-            UsuarioDTO usuarioDTO = usuarioService.buscarById(idUsuario).get();
+            UsuarioDTO usuarioDTO = usuarioService.buscarById(idUsuario).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Usuário não encontrado");
+            });
             Usuario usuario = new Usuario(usuarioDTO);
 
             dentista.setClinica(clinica);
@@ -54,7 +60,9 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
 
     @Override
     public Optional<DentistaDTO> buscarById(Integer id) {
-        Dentista dentista = dentistaRepository.findById(id).get();
+        Dentista dentista = dentistaRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Dentista não encontrado");
+        });
         DentistaDTO dentistaDTO = mapperEntityToDTO(dentista);
         return Optional.ofNullable(dentistaDTO);
     }
@@ -83,6 +91,8 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
     public void deletar(Integer id) {
         if (dentistaRepository.existsById(id)) {
             dentistaRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Dentista inexistente!");
         }
     }
 

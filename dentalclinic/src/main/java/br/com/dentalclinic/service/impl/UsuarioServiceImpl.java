@@ -2,6 +2,8 @@ package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
+import br.com.dentalclinic.exceptions.BadRequestException;
+import br.com.dentalclinic.exceptions.ResourceNotFoundException;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.model.Usuario;
 import br.com.dentalclinic.repository.IUsuarioRepository;
@@ -30,7 +32,9 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO> {
         int idTipoUsuario = usuario.getTipoUsuario().getId();
 
         if (tipoUsuarioService.ifTipoUsuarioExists(idTipoUsuario)) {
-            TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarById(idTipoUsuario).get();
+            TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarById(idTipoUsuario).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Tipo de Usuário não encontrado");
+            });
             TipoUsuario tipoUsuario = new TipoUsuario(tipoUsuarioDTO);
             usuario.setTipoUsuario(tipoUsuario);
             usuario = usuarioRepository.save(usuario);
@@ -47,7 +51,14 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO> {
         return Optional.ofNullable(usuarioDTO);
     }
 
-    public Optional<Usuario> buscarByEmail(String email){return usuarioRepository.findByEmail(email);}
+    public Optional<UsuarioDTO> buscarByEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        });
+        UsuarioDTO usuarioDTO = mapperEntityToDTO(usuario);
+        return Optional.ofNullable(usuarioDTO);
+    }
+
     @Override
     public List<UsuarioDTO> buscarTodos(){
         List<Usuario> usuarios = usuarioRepository.findAll();
@@ -70,6 +81,8 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO> {
     public void deletar(Integer id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Usuário inexistente!");
         }
     }
 

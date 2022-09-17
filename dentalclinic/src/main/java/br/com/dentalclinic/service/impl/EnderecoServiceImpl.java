@@ -1,6 +1,8 @@
 package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.EnderecoDTO;
+import br.com.dentalclinic.exceptions.BadRequestException;
+import br.com.dentalclinic.exceptions.ResourceNotFoundException;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.service.IService;
@@ -24,6 +26,8 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
         Endereco endereco = mapperDTOToEntity(enderecoDTO);
         if (!enderecoDTO.equals(null)) {
             endereco = enderecoRepository.save(endereco);
+        } else {
+            throw new BadRequestException("Endereço já cadastrado!");
         }
         enderecoDTO = mapperEntityToDTO(endereco);
         return enderecoDTO;
@@ -31,7 +35,9 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
 
     @Override
     public Optional<EnderecoDTO> buscarById(Integer id) {
-        Endereco endereco = enderecoRepository.findById(id).get();
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Endereço não encontrado");
+        });
         EnderecoDTO enderecoDTO = mapperEntityToDTO(endereco);
         return Optional.ofNullable(enderecoDTO);
     }
@@ -60,6 +66,8 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
     public void deletar(Integer id) {
         if (enderecoRepository.existsById(id)) {
             enderecoRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Endereço inexistente!");
         }
     }
 

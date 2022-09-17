@@ -3,6 +3,8 @@ package br.com.dentalclinic.service.impl;
 import br.com.dentalclinic.dto.ConsultaDTO;
 import br.com.dentalclinic.dto.DentistaDTO;
 import br.com.dentalclinic.dto.PacienteDTO;
+import br.com.dentalclinic.exceptions.BadRequestException;
+import br.com.dentalclinic.exceptions.ResourceNotFoundException;
 import br.com.dentalclinic.model.Consulta;
 import br.com.dentalclinic.model.Dentista;
 import br.com.dentalclinic.model.Paciente;
@@ -27,6 +29,7 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
 
     @Autowired
     private DentistaServiceImpl dentistaService;
+
     /** Methods **/
     @Override
     public ConsultaDTO salvar(ConsultaDTO consultaDTO) {
@@ -35,9 +38,13 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
         int idDentista = consulta.getDentista().getId();
 
         if (pacienteService.ifPacienteExists(idPaciente) && dentistaService.ifDentistaExists(idDentista)) {
-            PacienteDTO pacienteDTO = pacienteService.buscarById(idPaciente).get();
+            PacienteDTO pacienteDTO = pacienteService.buscarById(idPaciente).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Paciente não encontrado!");
+            });
             Paciente paciente = new Paciente(pacienteDTO);
-            DentistaDTO dentistaDTO = dentistaService.buscarById(idDentista).get();
+            DentistaDTO dentistaDTO = dentistaService.buscarById(idDentista).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Dentista não encontrado!");
+            });
             Dentista dentista = new Dentista(dentistaDTO);
 
             consulta.setPaciente(paciente);
@@ -50,7 +57,9 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
 
     @Override
     public Optional<ConsultaDTO> buscarById(Integer id) {
-        Consulta consulta = consultaRepository.findById(id).get();
+        Consulta consulta = consultaRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Consulta não encontrada");
+        });
         ConsultaDTO consultaDTO = mapperEntityToDTO(consulta);
         return Optional.ofNullable(consultaDTO);
     }
@@ -79,6 +88,8 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
     public void deletar(Integer id) {
         if (consultaRepository.existsById(id)) {
             consultaRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Consulta inexistente!");
         }
     }
 
