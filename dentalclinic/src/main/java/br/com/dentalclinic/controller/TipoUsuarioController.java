@@ -5,6 +5,7 @@ import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class TipoUsuarioController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<TipoUsuarioDTO> salvar(@RequestBody TipoUsuarioDTO tipoUsuarioDTO) {
+    public ResponseEntity<TipoUsuarioDTO> salvar(@RequestBody @Validated TipoUsuarioDTO tipoUsuarioDTO) {
         return ResponseEntity.ok(tipoUsuarioService.salvar(tipoUsuarioDTO));
     }
 
@@ -28,7 +29,7 @@ public class TipoUsuarioController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<TipoUsuarioDTO> atualizar(@RequestBody TipoUsuarioDTO tipoUsuarioDTO) {
+    public ResponseEntity<TipoUsuarioDTO> atualizar(@RequestBody @Validated TipoUsuarioDTO tipoUsuarioDTO) {
         return (tipoUsuarioService.buscarById(tipoUsuarioDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
                 : ResponseEntity.ok(tipoUsuarioService.atualizar(tipoUsuarioDTO));

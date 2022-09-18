@@ -7,8 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,7 +19,9 @@ public class Clinica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String nomeFantasia;
+    @Column(nullable = false)
     private String razaoSocial;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Endereco.class)
     @PrimaryKeyJoinColumn
@@ -30,22 +31,12 @@ public class Clinica implements Serializable {
     public Clinica(ClinicaDTO clinicaDTO) {
         this.nomeFantasia = clinicaDTO.getNomeFantasia();
         this.razaoSocial = clinicaDTO.getRazaoSocial();
+        this.endereco = clinicaDTO.getEndereco();
     }
 
     public Clinica(String nomeFantasia, String razaoSocial, Endereco endereco) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.endereco = endereco;
-    }
-
-    /** Methods **/
-    @Override
-    public String toString() {
-        return "Clinica{" +
-                "id=" + id +
-                ", nomeFantasia='" + nomeFantasia + '\'' +
-                ", razaoSocial='" + razaoSocial + '\'' +
-                ", endereco='" + endereco.toString() + '\''+
-                '}';
     }
 }

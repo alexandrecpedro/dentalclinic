@@ -5,6 +5,7 @@ import br.com.dentalclinic.service.impl.ConsultaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class ConsultaController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<ConsultaDTO> salvar(@RequestBody ConsultaDTO consultaDTO) {
+    public ResponseEntity<ConsultaDTO> salvar(@RequestBody @Validated ConsultaDTO consultaDTO) {
         return ResponseEntity.ok(consultaService.salvar(consultaDTO));
     }
 
@@ -28,7 +29,7 @@ public class ConsultaController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<ConsultaDTO> atualizar(@RequestBody ConsultaDTO consultaDTO) {
+    public ResponseEntity<ConsultaDTO> atualizar(@RequestBody @Validated ConsultaDTO consultaDTO) {
         return (consultaService.buscarById(consultaDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
                 : ResponseEntity.ok(consultaService.atualizar(consultaDTO));

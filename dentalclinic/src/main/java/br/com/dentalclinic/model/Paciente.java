@@ -7,8 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,9 +19,17 @@ public class Paciente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private String sobrenome;
+
+    @Column(nullable = false, unique = true)
     private String cpf;
+
+    @Column(nullable = false)
     private String telefone;
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Usuario.class)
     private Usuario usuario;
@@ -47,19 +54,5 @@ public class Paciente implements Serializable {
         this.telefone = pacienteDTO.getTelefone();
         this.usuario = pacienteDTO.getUsuario();
         this.endereco = pacienteDTO.getEndereco();
-    }
-
-    /** Method **/
-    @Override
-    public String toString() {
-        return "Paciente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", sobrenome='" + sobrenome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", usuario=" + usuario.toString() +
-                ", endereco=" + endereco.toString() +
-                '}';
     }
 }

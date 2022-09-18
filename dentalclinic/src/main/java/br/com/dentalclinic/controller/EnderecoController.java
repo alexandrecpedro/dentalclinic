@@ -5,6 +5,7 @@ import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class EnderecoController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<EnderecoDTO> salvar(@RequestBody EnderecoDTO enderecoDTO) {
+    public ResponseEntity<EnderecoDTO> salvar(@RequestBody @Validated EnderecoDTO enderecoDTO) {
         return ResponseEntity.ok(enderecoService.salvar(enderecoDTO));
     }
 
@@ -28,7 +29,7 @@ public class EnderecoController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<EnderecoDTO> atualizar(@RequestBody EnderecoDTO enderecoDTO) {
+    public ResponseEntity<EnderecoDTO> atualizar(@RequestBody @Validated EnderecoDTO enderecoDTO) {
         return (enderecoService.buscarById(enderecoDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
                 : ResponseEntity.ok(enderecoService.atualizar(enderecoDTO));

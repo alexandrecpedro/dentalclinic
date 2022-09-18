@@ -6,8 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,8 +17,27 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String logradouro, numero, complemento,
-            bairro, localidade, uf, cep;
+
+    @Column(nullable = false)
+    private String logradouro;
+
+    @Column(nullable = false)
+    private String numero;
+
+    @Column(nullable = false)
+    private String complemento;
+
+    @Column(nullable = false)
+    private String bairro;
+
+    @Column(nullable = false)
+    private String localidade;
+
+    @Column(nullable = false)
+    private String uf;
+
+    @Column(nullable = false)
+    private String cep;
 
     /** Constructor **/
     public Endereco(EnderecoDTO enderecoDTO) {
@@ -40,20 +58,5 @@ public class Endereco implements Serializable {
         this.localidade = localidade;
         this.uf = uf;
         this.cep = cep;
-    }
-
-    /** Methods **/
-    @Override
-    public String toString() {
-        return "Endereco{" +
-                "id=" + id +
-                ", logradouro='" + logradouro + '\'' +
-                ", numero='" + numero + '\'' +
-                ", complemento='" + complemento + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", localidade='" + localidade + '\'' +
-                ", uf='" + uf + '\'' +
-                ", cep='" + cep + '\'' +
-                '}';
     }
 }

@@ -5,6 +5,7 @@ import br.com.dentalclinic.service.impl.PacienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class PacienteController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<PacienteDTO> salvar(@RequestBody PacienteDTO pacienteDTO) {
+    public ResponseEntity<PacienteDTO> salvar(@RequestBody @Validated PacienteDTO pacienteDTO) {
         return ResponseEntity.ok(pacienteService.salvar(pacienteDTO));
     }
 
@@ -28,7 +29,7 @@ public class PacienteController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<PacienteDTO> atualizar(@RequestBody PacienteDTO pacienteDTO) {
+    public ResponseEntity<PacienteDTO> atualizar(@RequestBody @Validated PacienteDTO pacienteDTO) {
         return (pacienteService.buscarById(pacienteDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
                 : ResponseEntity.ok(pacienteService.atualizar(pacienteDTO));

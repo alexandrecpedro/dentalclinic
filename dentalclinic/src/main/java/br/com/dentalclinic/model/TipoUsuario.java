@@ -6,8 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,6 +17,8 @@ public class TipoUsuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String nome;
 
     /** Constructor **/
@@ -27,14 +28,5 @@ public class TipoUsuario implements Serializable {
 
     public TipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) {
         this.nome = tipoUsuarioDTO.getNome();
-    }
-
-    /** Methods **/
-    @Override
-    public String toString() {
-        return "TipoUsuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
     }
 }

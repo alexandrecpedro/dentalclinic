@@ -7,8 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,7 +19,13 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String email, senha;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = TipoUsuario.class)
     @PrimaryKeyJoinColumn
     private TipoUsuario tipoUsuario;
@@ -36,15 +41,5 @@ public class Usuario implements Serializable {
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
-    }
-
-    /** Methods **/
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
     }
 }

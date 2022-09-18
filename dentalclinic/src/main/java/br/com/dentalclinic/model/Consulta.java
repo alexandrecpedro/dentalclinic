@@ -9,8 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,7 +21,11 @@ public class Consulta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String descricao;
+
+    @Column(nullable = false)
     private String status;
 
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Paciente.class)
@@ -51,16 +54,5 @@ public class Consulta implements Serializable {
         this.dentista = dentista;
         this.data = data;
         this.hora = hora;
-    }
-
-    /** Methods **/
-    @Override
-    public String toString() {
-        return "Consulta{" +
-                "id=" + id +
-                ", dataConsulta=" + data +
-                ", descricao='" + descricao + '\'' +
-                ", status='" + status + '\'' +
-                '}';
     }
 }
