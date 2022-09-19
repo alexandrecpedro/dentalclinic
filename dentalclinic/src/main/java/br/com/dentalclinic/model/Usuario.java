@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tb_usuario")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Usuario implements Serializable {
+public class  Usuario implements Serializable {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

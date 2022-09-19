@@ -31,7 +31,7 @@ public class EnderecoDTO {
         this.cep = endereco.getCep();
     }
 
-    public EnderecoDTO(String logradouro, String numero, String complemento, String bairro, String localidade, String estado, String uf, String cep) {
+    public EnderecoDTO(String logradouro, String numero, String complemento, String bairro, String localidade, String uf, String cep) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -40,4 +40,5 @@ public class EnderecoDTO {
         this.uf = uf;
         this.cep = cep;
     }
+
 }

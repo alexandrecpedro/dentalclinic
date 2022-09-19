@@ -1,5 +1,6 @@
 package br.com.dentalclinic.service;
 
+import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ class EnderecoServiceImplTest {
     @Autowired
     EnderecoServiceImpl enderecoServiceImpl;
 
-    static ArrayList<Endereco> listaEndereco = new ArrayList<Endereco>();
+    static ArrayList<EnderecoDTO> listaEnderecoDTO = new ArrayList<>();
 
     //#######################################################
     //Funcao para comparar enderecos
@@ -46,8 +46,8 @@ class EnderecoServiceImplTest {
             while(line != null){
                 String[] atrArray;
                 atrArray = line.split(";");
-                Endereco end = new Endereco(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
-                listaEndereco.add(end);
+                EnderecoDTO end = new EnderecoDTO(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
+                listaEnderecoDTO.add(end);
                 line = reader.readLine();
                 BufferedReader.nullReader();
             }
@@ -101,14 +101,14 @@ class EnderecoServiceImplTest {
     //#######################################################
     public void salvar() {
 
-        for(Endereco e : listaEndereco){
+        for(EnderecoDTO e : listaEnderecoDTO){
             enderecoServiceImpl.salvar(e);
         }
     }
 
     @Test
     public void buscarTodos(){
-        List<Endereco> todosEnderecosDb = enderecoServiceImpl.buscarTodos();
+        List<EnderecoDTO> todosEnderecosDb = enderecoServiceImpl.buscarTodos();
         if(todosEnderecosDb.size()<16){
             fail("Falha ao inserir ou buscar todos enderecos");
         }
@@ -116,8 +116,8 @@ class EnderecoServiceImplTest {
 
     @Test
     public void buscarById() {
-        for(Endereco e : listaEndereco){
-            Optional<Endereco> dbEndereco;
+        for(EnderecoDTO e : listaEnderecoDTO){
+            Optional<EnderecoDTO> dbEndereco;
             dbEndereco = enderecoServiceImpl.buscarById(e.getId());
 
             if(dbEndereco.isEmpty()){
@@ -133,8 +133,8 @@ class EnderecoServiceImplTest {
 
     @Test
     public void atualizar() {
-        for(Endereco e1:listaEndereco){
-            Endereco e2 = new Endereco();
+        for(EnderecoDTO e1: listaEnderecoDTO){
+            EnderecoDTO e2 = new EnderecoDTO();
             BeanUtils.copyProperties(e1,e2);
             e2.setNumero("5");
             enderecoServiceImpl.atualizar(e2);
@@ -148,10 +148,10 @@ class EnderecoServiceImplTest {
 
     @Test
     public void deletar() {
-        for(Endereco e:listaEndereco){
+        for(EnderecoDTO e: listaEnderecoDTO){
             enderecoServiceImpl.deletar(e.getId());
         }
-        List<Endereco> enderecosDb = enderecoServiceImpl.buscarTodos();
+        List<EnderecoDTO> enderecosDb = enderecoServiceImpl.buscarTodos();
         if(enderecosDb.size()>0){
             fail("Falha ao deletar entradas.");
         }
