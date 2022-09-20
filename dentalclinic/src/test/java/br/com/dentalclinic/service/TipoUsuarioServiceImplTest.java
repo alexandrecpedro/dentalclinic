@@ -1,8 +1,7 @@
 package br.com.dentalclinic.service;
 
-import br.com.dentalclinic.model.Endereco;
+import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.model.TipoUsuario;
-import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ public class TipoUsuarioServiceImplTest {
     @Autowired
     TipoUsuarioServiceImpl tipoUsuarioServiceImpl;
 
-    static ArrayList<TipoUsuario> listaTipoUsuario = new ArrayList<TipoUsuario>();
+    static ArrayList<TipoUsuarioDTO> listaTipoUsuarioDTO = new ArrayList<>();
 
     public boolean comparaObjetoToString(Object o1, Object o2){
         System.out.println(o1.toString());
@@ -44,7 +43,7 @@ public class TipoUsuarioServiceImplTest {
             reader = new BufferedReader(new FileReader("./TipoUsuarios.txt"));
             String line = reader.readLine();
             while(line != null){
-                listaTipoUsuario.add(new TipoUsuario(line));
+                listaTipoUsuarioDTO.add(new TipoUsuarioDTO(line));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -56,14 +55,14 @@ public class TipoUsuarioServiceImplTest {
 
     @Test
     public void salvar(){
-        for(TipoUsuario t : listaTipoUsuario){
+        for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
             tipoUsuarioServiceImpl.salvar(t);
         }
     }
 
     @Test
     public void buscarTodos(){
-        List<TipoUsuario> todosTiposUsuario = tipoUsuarioServiceImpl.buscarTodos();
+        List<TipoUsuarioDTO> todosTiposUsuario = tipoUsuarioServiceImpl.buscarTodos();
         if(todosTiposUsuario.size()<3){
             fail("Falha ao inserir ou buscar todos enderecos");
         }
@@ -71,8 +70,8 @@ public class TipoUsuarioServiceImplTest {
 
     @Test
     public void buscarById(){
-        for(TipoUsuario t : listaTipoUsuario){
-            Optional<TipoUsuario> tipoUsuario2 = tipoUsuarioServiceImpl.buscarById(t.getId());
+        for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
+            Optional<TipoUsuarioDTO> tipoUsuario2 = tipoUsuarioServiceImpl.buscarById(t.getId());
             if(tipoUsuario2.isEmpty()){
                 fail("Falha buscando tipo usuario pelo id.");
             }
@@ -85,8 +84,8 @@ public class TipoUsuarioServiceImplTest {
 
     @Test
     public void findByNome(){
-        for(TipoUsuario t : listaTipoUsuario){
-            TipoUsuario tipoUsuarioBuscado = tipoUsuarioServiceImpl.buscarByNome(t.getNome());
+        for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
+            TipoUsuarioDTO tipoUsuarioBuscado = tipoUsuarioServiceImpl.buscarByNome(t.getNome());
             if(tipoUsuarioBuscado.getId()!=t.getId()){
                 fail("Falha buscando tipo de usuario pelo nome.");
             }
@@ -95,10 +94,10 @@ public class TipoUsuarioServiceImplTest {
 
     @Test
     public void atualizar() {
-        for(TipoUsuario tipoUsuario : listaTipoUsuario){
+        for(TipoUsuarioDTO tipoUsuario : listaTipoUsuarioDTO){
             tipoUsuario.setNome("Novo "+tipoUsuario.getNome());
             tipoUsuarioServiceImpl.atualizar(tipoUsuario);
-            Optional<TipoUsuario> tipousuarioLido = tipoUsuarioServiceImpl.buscarById(tipoUsuario.getId());
+            Optional<TipoUsuarioDTO> tipousuarioLido = tipoUsuarioServiceImpl.buscarById(tipoUsuario.getId());
             if(tipousuarioLido.isEmpty()){
                 fail("Falha atualizando tipo usuario, retornou um objeto vazio.");
             }
@@ -110,7 +109,7 @@ public class TipoUsuarioServiceImplTest {
 
     @Test
     public void deletar(){
-        for(TipoUsuario tipoUusario : listaTipoUsuario){
+        for(TipoUsuarioDTO tipoUusario : listaTipoUsuarioDTO){
             tipoUsuarioServiceImpl.deletar(tipoUusario.getId());
         }
         if(tipoUsuarioServiceImpl.buscarTodos().size()>0){
