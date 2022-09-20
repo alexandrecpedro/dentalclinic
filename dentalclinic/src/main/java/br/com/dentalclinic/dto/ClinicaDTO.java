@@ -18,9 +18,27 @@ public class ClinicaDTO {
     private String razaoSocial;
     private Endereco endereco;
 
+    public ClinicaDTO(String nomeFantasia, String razaoSocial, Endereco endereco) {
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.endereco = endereco;
+    }
+
     public ClinicaDTO(Clinica clinica) {
         this.nomeFantasia = clinica.getNomeFantasia();
         this.razaoSocial = clinica.getRazaoSocial();
         this.endereco = clinica.getEndereco();
+    }
+
+    public ClinicaDTO(String nomeFantasia, String razaoSocial, EnderecoDTO enderecoDTO) {
+    }
+
+    @Override
+    public String toString() {
+        return "ClinicaDTO{" +
+                "nomeFantasia='" + nomeFantasia + '\'' +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", endereco=" + endereco +
+                '}';
     }
 }

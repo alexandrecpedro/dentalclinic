@@ -18,10 +18,9 @@ public class UsuarioDTO {
     private String senha;
     private TipoUsuario tipoUsuario;
 
-    public UsuarioDTO(String email, String senha, TipoUsuario tipoUsuario) {
+    public UsuarioDTO(String email, String senha, TipoUsuarioDTO tipoUsuario) {
         this.email = email;
         this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
     }
 
     public UsuarioDTO(Usuario usuario){

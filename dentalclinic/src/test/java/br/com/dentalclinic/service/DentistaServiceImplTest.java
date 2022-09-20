@@ -1,5 +1,9 @@
 package br.com.dentalclinic.service;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
+import br.com.dentalclinic.dto.EnderecoDTO;
+import br.com.dentalclinic.dto.TipoUsuarioDTO;
+import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.model.*;
 import br.com.dentalclinic.service.impl.*;
 import org.junit.jupiter.api.Test;
@@ -132,7 +136,7 @@ class DentistaServiceImplTest {
             reader = new BufferedReader(new FileReader("./TipoUsuarios.txt"));
             String line = reader.readLine();
             while(line!=null){
-                tipoUsuarioServiceImpl.salvar(new TipoUsuario(line));
+                tipoUsuarioServiceImpl.salvar(new TipoUsuarioDTO(line));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -152,7 +156,7 @@ class DentistaServiceImplTest {
             String line = reader.readLine();
             while(line!=null){
                 String[] arrayLineSplit = line.split(";");
-                usuarioServiceImpl.salvar(new Usuario(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioServiceImpl.buscarByNome(arrayLineSplit[2])));
+                usuarioServiceImpl.salvar(new UsuarioDTO(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioServiceImpl.buscarByNome(arrayLineSplit[2])));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -172,7 +176,7 @@ class DentistaServiceImplTest {
                 String[] atrArray;
                 atrArray = line.split(";");
                 //Endereco end = new Endereco(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
-                enderecoServiceImpl.salvar(new Endereco(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]));
+                enderecoServiceImpl.salvar(new EnderecoDTO(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -190,10 +194,10 @@ class DentistaServiceImplTest {
             reader = new BufferedReader(new FileReader("./Clinicas.txt"));
             String line = reader.readLine();
             String[] atrArray;
-            List<Endereco> listaEnderecos = enderecoServiceImpl.buscarTodos();
-            for(Endereco e : listaEnderecos){
+            List<EnderecoDTO> listaEnderecos = enderecoServiceImpl.buscarTodos();
+            for(EnderecoDTO e : listaEnderecos){
                 atrArray = line.split(";");
-                clinicaServiceImpl.salvar(new Clinica(atrArray[0],atrArray[1],enderecoServiceImpl.buscarById(e.getId()).get()));
+                clinicaServiceImpl.salvar(new ClinicaDTO(atrArray[0],atrArray[1],enderecoServiceImpl.buscarById(e.getId()).get()));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
