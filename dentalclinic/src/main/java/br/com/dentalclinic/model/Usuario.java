@@ -3,9 +3,14 @@ package br.com.dentalclinic.model;
 import br.com.dentalclinic.dto.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 
 @Data
 @NoArgsConstructor
@@ -14,13 +19,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tb_usuario")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class  Usuario implements Serializable {
+public class  Usuario implements UserDetails {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -41,5 +46,41 @@ public class  Usuario implements Serializable {
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(tipoUsuario.getNome());
+        return Collections.singleton(grantedAuthority);
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

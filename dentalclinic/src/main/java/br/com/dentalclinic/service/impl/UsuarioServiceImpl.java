@@ -10,6 +10,9 @@ import br.com.dentalclinic.repository.IUsuarioRepository;
 import br.com.dentalclinic.service.IService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioServiceImpl implements IService<UsuarioDTO> {
+public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsService {
     /** Attribute **/
     @Autowired
     private IUsuarioRepository usuarioRepository;
@@ -46,7 +49,9 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO> {
 
     @Override
     public Optional<UsuarioDTO> buscarById(Integer id) {
-        Usuario usuario = usuarioRepository.findById(id).get();
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        });
         UsuarioDTO usuarioDTO = mapperEntityToDTO(usuario);
         return Optional.ofNullable(usuarioDTO);
     }
@@ -102,4 +107,8 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO> {
         return usuarioDTO;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return usuarioRepository.findByEmail(username).orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado!"));
+    }
 }

@@ -1,5 +1,7 @@
 package br.com.dentalclinic.service;
 
+import br.com.dentalclinic.dto.TipoUsuarioDTO;
+import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.model.Usuario;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
@@ -28,8 +30,8 @@ class UsuarioServiceImplTest {
     @Autowired
     TipoUsuarioServiceImpl tipoUsuarioService;
 
-    static ArrayList<Usuario> listaUsuario = new ArrayList();
-    static ArrayList<TipoUsuario> listaTipoUsuario = new ArrayList();
+    static ArrayList<UsuarioDTO> listaUsuario = new ArrayList();
+    static ArrayList<TipoUsuarioDTO> listaTipoUsuario = new ArrayList();
 
     public boolean ComparaObjetoToString(Object o1, Object o2){
         System.out.println(o1.toString());
