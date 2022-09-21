@@ -24,7 +24,7 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
     @Override
     public TipoUsuarioDTO salvar(TipoUsuarioDTO tipoUsuarioDTO) {
         TipoUsuario tipoUsuario = mapperDTOToEntity(tipoUsuarioDTO);
-        if (!tipoUsuario.equals(null)) {
+        if (tipoUsuario != null) {
             tipoUsuario = tipoUsuarioRepository.save(tipoUsuario);
         } else {
             throw new BadRequestException("Tipo de Usuário já cadastrado!");

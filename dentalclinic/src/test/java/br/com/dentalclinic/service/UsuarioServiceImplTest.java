@@ -2,8 +2,6 @@ package br.com.dentalclinic.service;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
-import br.com.dentalclinic.model.TipoUsuario;
-import br.com.dentalclinic.model.Usuario;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,8 +55,8 @@ class UsuarioServiceImplTest {
             reader = new BufferedReader(new FileReader("./TipoUsuarios.txt"));
             String line = reader.readLine();
             while(line != null){
-                listaTipoUsuario.add(new TipoUsuario(line));
-                tipoUsuarioService.salvar(new TipoUsuario(line));
+                listaTipoUsuario.add(new TipoUsuarioDTO(line));
+                tipoUsuarioService.salvar(new TipoUsuarioDTO(line));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -77,7 +75,7 @@ class UsuarioServiceImplTest {
             String line = reader.readLine();
             while(line!=null){
                 String[] arrayLineSplit = line.split(";");
-                listaUsuario.add(new Usuario(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioService.buscarByNome(arrayLineSplit[2])));
+                listaUsuario.add(new UsuarioDTO(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioService.buscarByNome(arrayLineSplit[2])));
                 line = reader.readLine();
             }
         }catch (FileNotFoundException e) {
@@ -85,14 +83,14 @@ class UsuarioServiceImplTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(Usuario user : listaUsuario){
+        for(UsuarioDTO user : listaUsuario){
             usuarioServiceImpl.salvar(user);
         }
     }
 
     @Test
     public void buscarTodos(){
-        List<Usuario> listaUsuariosBuscados = usuarioServiceImpl.buscarTodos();
+        List<UsuarioDTO> listaUsuariosBuscados = usuarioServiceImpl.buscarTodos();
         if(listaUsuariosBuscados.size()!=listaUsuario.size()){
             fail("Falha Buscando Todos Usuarios.");
         }
@@ -100,8 +98,8 @@ class UsuarioServiceImplTest {
 
     @Test
     public void buscarById() {
-        for(Usuario u : listaUsuario){
-            Optional<Usuario> u2 = usuarioServiceImpl.buscarById(u.getId());
+        for(UsuarioDTO u : listaUsuario){
+            Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarById(u.getId());
             if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
                 fail("Falha buscando usuario pelo id.");
             }
@@ -110,8 +108,8 @@ class UsuarioServiceImplTest {
 
     @Test
     public void buscarByEmail() {
-        for(Usuario u : listaUsuario){
-            Optional<Usuario> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
+        for(UsuarioDTO u : listaUsuario){
+            Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
             if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
                 fail("Falha buscando usuario pelo id.");
             }
@@ -120,11 +118,11 @@ class UsuarioServiceImplTest {
 
     @Test
     public void atualizar() {
-        for(Usuario u : listaUsuario){
+        for(UsuarioDTO u : listaUsuario){
             u.setSenha("XXXX");
             usuarioServiceImpl.atualizar(u);
         }
-        for(Usuario u : listaUsuario){
+        for(UsuarioDTO u : listaUsuario){
             if(!ComparaObjetoToString(u,usuarioServiceImpl.buscarById(u.getId()))){
                 fail("Falha Atualizando Usuario.");
             }
@@ -133,7 +131,7 @@ class UsuarioServiceImplTest {
 
     @Test
     public void deletar() {
-        for(Usuario u : listaUsuario){
+        for(UsuarioDTO u : listaUsuario){
             usuarioServiceImpl.deletar(u.getId());
         }
         if(usuarioServiceImpl.buscarTodos().size()>0){

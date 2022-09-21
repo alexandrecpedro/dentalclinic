@@ -30,4 +30,12 @@ public class DentistaDTO {
         this.usuario = dentista.getUsuario();
         this.clinica = dentista.getClinica();
     }
+
+    public DentistaDTO(String nome, String sobrenome, String cro, Usuario usuario, Clinica clinica) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.cro = cro;
+        this.usuario = usuario;
+        this.clinica = clinica;
+    }
 }

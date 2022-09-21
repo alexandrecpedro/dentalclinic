@@ -31,7 +31,7 @@ public class  Usuario implements UserDetails {
     @Column(nullable = false)
     private String senha;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = TipoUsuario.class)
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = TipoUsuario.class)
     @PrimaryKeyJoinColumn
     private TipoUsuario tipoUsuario;
 

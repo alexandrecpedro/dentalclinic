@@ -81,8 +81,10 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
         }
     }
 
-    public Optional<Clinica> buscarByNomeFantasia(String nomeFantasia) {
-        return clinicaRepository.findByNomeFantasia(nomeFantasia);
+    public Optional<ClinicaDTO> buscarByNomeFantasia(String nomeFantasia) {
+        Clinica clinica = clinicaRepository.findByNomeFantasia(nomeFantasia).orElseThrow(()-> new BadRequestException("Clínica inexistente!"));
+        ClinicaDTO clinicaDTO = mapperEntityToDTO(clinica);
+        return Optional.ofNullable(clinicaDTO);
     }
 
     public boolean ifClinicaExists(int id){
