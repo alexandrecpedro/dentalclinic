@@ -1,10 +1,16 @@
 package br.com.dentalclinic.controller;
 
 import br.com.dentalclinic.dto.UsuarioDTO;
+import br.com.dentalclinic.security.AuthenticationResponse;
+import br.com.dentalclinic.security.utils.JwtUtil;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +19,32 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
-    /** Attribute **/
+    /** Attributes **/
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /** Methods **/
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody UsuarioDTO usuarioDTO)
+            throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    usuarioDTO.getEmail(), usuarioDTO.getSenha()));
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect", e);
+        }
+        final UserDetails userDetails = usuarioService.loadUserByUsername(usuarioDTO.getEmail());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse((jwt)));
+    }
+
     @PostMapping("/salvar")
     public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Validated UsuarioDTO usuarioDTO) {
         return ResponseEntity.ok(usuarioService.salvar(usuarioDTO));

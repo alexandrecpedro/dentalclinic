@@ -2,30 +2,28 @@ package br.com.dentalclinic.dto;
 
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.model.Usuario;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UsuarioDTO {
 
     private int id;
     private String email;
     private String senha;
-    private TipoUsuario tipoUsuario;
+    private TipoUsuarioDTO tipoUsuarioDTO;
 
-    public UsuarioDTO(String email, String senha, TipoUsuarioDTO tipoUsuario) {
+    public UsuarioDTO(String email, String senha, TipoUsuarioDTO tipoUsuarioDTO) {
         this.email = email;
         this.senha = senha;
+        this.tipoUsuarioDTO = tipoUsuarioDTO;
     }
 
     public UsuarioDTO(Usuario usuario){
         this.email = usuario.getEmail();
         this.senha = usuario.getSenha();
-        this.tipoUsuario = usuario.getTipoUsuario();
+        this.tipoUsuarioDTO = new TipoUsuarioDTO(usuario.getTipoUsuario());
     }
 }
