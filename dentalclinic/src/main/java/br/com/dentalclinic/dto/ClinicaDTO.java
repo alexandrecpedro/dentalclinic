@@ -32,13 +32,4 @@ public class ClinicaDTO {
 
     public ClinicaDTO(String nomeFantasia, String razaoSocial, EnderecoDTO enderecoDTO) {
     }
-
-    @Override
-    public String toString() {
-        return "ClinicaDTO{" +
-                "nomeFantasia='" + nomeFantasia + '\'' +
-                ", razaoSocial='" + razaoSocial + '\'' +
-                ", endereco=" + endereco +
-                '}';
-    }
 }

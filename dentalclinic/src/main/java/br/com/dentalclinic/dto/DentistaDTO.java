@@ -2,27 +2,25 @@ package br.com.dentalclinic.dto;
 
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Dentista;
+import br.com.dentalclinic.model.Paciente;
 import br.com.dentalclinic.model.Usuario;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class DentistaDTO {
-
+    /** Attributes **/
     private int id;
     private String nome;
 
     private String sobrenome;
     private String cro;
-    private Usuario usuario;
+    private  Usuario usuario;
 
     private Clinica clinica;
-
+    /** Construtores **/
     public DentistaDTO(Dentista dentista) {
         this.nome = dentista.getNome();
         this.sobrenome = dentista.getSobrenome();
@@ -38,4 +36,5 @@ public class DentistaDTO {
         this.usuario = usuario;
         this.clinica = clinica;
     }
+
 }

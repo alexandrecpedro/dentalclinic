@@ -39,7 +39,7 @@ public class  Usuario implements UserDetails {
     public Usuario(UsuarioDTO usuarioDTO) {
         this.email = usuarioDTO.getEmail();
         this.senha = usuarioDTO.getSenha();
-        this.tipoUsuario = usuarioDTO.getTipoUsuario();
+        this.tipoUsuario = new TipoUsuario(usuarioDTO.getTipoUsuarioDTO());
     }
 
     public Usuario(String email, String senha, TipoUsuario tipoUsuario) {

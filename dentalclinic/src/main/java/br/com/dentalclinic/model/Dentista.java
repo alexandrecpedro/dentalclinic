@@ -43,4 +43,12 @@ public class Dentista implements Serializable {
         this.usuario = dentistaDTO.getUsuario();
         this.clinica = dentistaDTO.getClinica();
     }
+
+    public Dentista(String nome, String sobrenome, String cro, Usuario usuario, Clinica clinica) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.cro = cro;
+        this.usuario = usuario;
+        this.clinica = clinica;
+    }
 }

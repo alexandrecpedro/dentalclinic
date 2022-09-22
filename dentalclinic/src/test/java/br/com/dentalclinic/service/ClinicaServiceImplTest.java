@@ -84,9 +84,9 @@ class ClinicaServiceImplTest {
             while(line != null){
                 String[] atrArray;
                 atrArray = line.split(";");
-                ClinicaDTO clinica = new ClinicaDTO(atrArray[0],atrArray[1],listaEndereco.get(i++));
-                clinicaServiceImpl.salvar(clinica);
-                listaClinica.add(clinica);
+                ClinicaDTO clinicaDTO = new ClinicaDTO(atrArray[0],atrArray[1],listaEndereco.get(i++));
+                clinicaServiceImpl.salvar(clinicaDTO);
+                listaClinica.add(clinicaDTO);
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
