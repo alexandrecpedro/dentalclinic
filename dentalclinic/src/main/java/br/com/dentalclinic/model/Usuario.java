@@ -1,6 +1,7 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.UsuarioDTO;
+import br.com.dentalclinic.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

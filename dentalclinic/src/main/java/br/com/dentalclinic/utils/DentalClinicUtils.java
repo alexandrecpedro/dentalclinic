@@ -19,6 +19,5 @@ public class DentalClinicUtils {
             } catch (Exception e) {
                 throw new RuntimeException();
             }
-        }
-    }
+       }
 }
