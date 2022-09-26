@@ -16,20 +16,23 @@ public class ClinicaDTO {
     private int id;
     private String nomeFantasia;
     private String razaoSocial;
-    private Endereco endereco;
+    private EnderecoDTO enderecoDTO;
 
     public ClinicaDTO(String nomeFantasia, String razaoSocial, Endereco endereco) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
-        this.endereco = endereco;
+        this.enderecoDTO = new EnderecoDTO(endereco);
     }
 
     public ClinicaDTO(Clinica clinica) {
         this.nomeFantasia = clinica.getNomeFantasia();
         this.razaoSocial = clinica.getRazaoSocial();
-        this.endereco = clinica.getEndereco();
+        this.enderecoDTO = new EnderecoDTO(clinica.getEndereco());
     }
 
     public ClinicaDTO(String nomeFantasia, String razaoSocial, EnderecoDTO enderecoDTO) {
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.enderecoDTO = enderecoDTO;
     }
 }

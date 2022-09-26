@@ -41,4 +41,17 @@ public class EnderecoDTO {
         this.cep = cep;
     }
 
+    @Override
+    public String toString() {
+        return "EnderecoDTO{" +
+                "id=" + id +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero='" + numero + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", localidade='" + localidade + '\'' +
+                ", uf='" + uf + '\'' +
+                ", cep='" + cep + '\'' +
+                '}';
+    }
 }

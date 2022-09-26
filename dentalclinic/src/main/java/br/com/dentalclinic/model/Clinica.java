@@ -1,6 +1,7 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.ClinicaDTO;
+import br.com.dentalclinic.dto.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -27,11 +28,12 @@ public class Clinica implements Serializable {
     @PrimaryKeyJoinColumn
     private Endereco endereco;
 
+
     /** Constructor **/
     public Clinica(ClinicaDTO clinicaDTO) {
         this.nomeFantasia = clinicaDTO.getNomeFantasia();
         this.razaoSocial = clinicaDTO.getRazaoSocial();
-        this.endereco = clinicaDTO.getEndereco();
+        this.endereco = new Endereco(clinicaDTO.getEnderecoDTO());
     }
 
     public Clinica(String nomeFantasia, String razaoSocial, Endereco endereco) {

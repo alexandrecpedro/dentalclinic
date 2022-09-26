@@ -1,9 +1,6 @@
 package br.com.dentalclinic.service;
 
-import br.com.dentalclinic.dto.ClinicaDTO;
-import br.com.dentalclinic.dto.EnderecoDTO;
-import br.com.dentalclinic.dto.TipoUsuarioDTO;
-import br.com.dentalclinic.dto.UsuarioDTO;
+import br.com.dentalclinic.dto.*;
 import br.com.dentalclinic.model.*;
 import br.com.dentalclinic.service.impl.*;
 import org.junit.jupiter.api.Test;
@@ -222,15 +219,15 @@ class DentistaServiceImplTest {
             String[] atrArray;
             while(line!=null){
                 atrArray = line.split(";");
-                Optional<Usuario> usuario = usuarioServiceImpl.buscarByEmail(atrArray[3]);
+                Optional<UsuarioDTO> usuario = usuarioServiceImpl.buscarByEmail(atrArray[3]);
                 System.out.println(atrArray[3] + " - " + usuario.isEmpty());
-                Optional<Clinica> clinica = clinicaServiceImpl.buscarByNomeFantasia(atrArray[4]);
+                Optional<ClinicaDTO> clinica = clinicaServiceImpl.buscarByNomeFantasia(atrArray[4]);
                 System.out.println(atrArray[4] + " - " + clinica.isEmpty());
                 if(usuario.isEmpty() || clinica.isEmpty()){
                     fail("Falha Salvando Dentistas.");
                 }
                 else{
-                    dentistaServiceImpl.salvar(new Dentista(atrArray[0],atrArray[1],atrArray[2],usuario.get(),clinica.get()));
+                    dentistaServiceImpl.salvar(new DentistaDTO(atrArray[0],atrArray[1],atrArray[2],new Usuario(usuario.get()),new Clinica(clinica.get())));
                 }
                 line = reader.readLine();
             }

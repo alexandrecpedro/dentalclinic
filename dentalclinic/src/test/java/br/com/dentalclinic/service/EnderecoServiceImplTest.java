@@ -101,9 +101,14 @@ class EnderecoServiceImplTest {
     //#######################################################
     public void salvar() {
 
-        for(EnderecoDTO e : listaEnderecoDTO){
-            enderecoServiceImpl.salvar(e);
+        for(int i=0;i<listaEnderecoDTO.size();i++){
+            listaEnderecoDTO.set(i,enderecoServiceImpl.salvar(listaEnderecoDTO.get(i)));
         }
+
+    //    for(EnderecoDTO e : listaEnderecoDTO){
+    //        enderecoServiceImpl.salvar(e);
+    //    }
+
     }
 
     @Test

@@ -24,7 +24,7 @@ public class EnderecoServiceImpl implements IService<EnderecoDTO> {
     @Override
     public EnderecoDTO salvar(EnderecoDTO enderecoDTO) {
         Endereco endereco = mapperDTOToEntity(enderecoDTO);
-        if (!enderecoDTO.equals(null)) {
+        if(endereco.getId()==0){
             endereco = enderecoRepository.save(endereco);
         } else {
             throw new BadRequestException("Endereço já cadastrado!");
