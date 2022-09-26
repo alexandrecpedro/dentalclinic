@@ -22,6 +22,11 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO(Usuario usuario){
+        if(usuario.getId()!=0){
+            this.id=usuario.getId();
+        }else{
+            this.id=0;
+        }
         this.email = usuario.getEmail();
         this.senha = usuario.getSenha();
         this.tipoUsuarioDTO = new TipoUsuarioDTO(usuario.getTipoUsuario());

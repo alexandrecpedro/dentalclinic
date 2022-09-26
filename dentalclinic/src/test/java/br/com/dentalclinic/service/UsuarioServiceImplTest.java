@@ -4,8 +4,7 @@ import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,6 +19,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Fail.fail;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UsuarioServiceImplTest {
     /** Attributes **/
     @Autowired
@@ -47,16 +47,19 @@ class UsuarioServiceImplTest {
 
     }
 
+    /** Tests **/
     @Test
-    public void SalvarTipoUsuarios(){
+    @Order(1)
+    public void salvarUsuarios() {
         BufferedReader reader;
-
         try{
             reader = new BufferedReader(new FileReader("./TipoUsuarios.txt"));
             String line = reader.readLine();
+            int i = 0;
             while(line != null){
                 listaTipoUsuario.add(new TipoUsuarioDTO(line));
-                tipoUsuarioService.salvar(new TipoUsuarioDTO(line));
+                listaTipoUsuario.set(i,tipoUsuarioService.salvar(listaTipoUsuario.get(i)));
+                i++;
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -64,17 +67,12 @@ class UsuarioServiceImplTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /** Tests **/
-    @Test
-    public void salvarUsuarios() {
-        BufferedReader reader;
         try{
             reader = new BufferedReader(new FileReader("./Usuario.txt"));
             String line = reader.readLine();
             while(line!=null){
                 String[] arrayLineSplit = line.split(";");
+                TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarByNome(arrayLineSplit[2]);
                 listaUsuario.add(new UsuarioDTO(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioService.buscarByNome(arrayLineSplit[2])));
                 line = reader.readLine();
             }
@@ -83,12 +81,13 @@ class UsuarioServiceImplTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(UsuarioDTO user : listaUsuario){
-            usuarioServiceImpl.salvar(user);
+        for(int i = 0;i<listaUsuario.size();i++){
+            listaUsuario.set(i,usuarioServiceImpl.salvar(listaUsuario.get(i)));
         }
     }
 
     @Test
+    @Order(2)
     public void buscarTodos(){
         List<UsuarioDTO> listaUsuariosBuscados = usuarioServiceImpl.buscarTodos();
         if(listaUsuariosBuscados.size()!=listaUsuario.size()){
@@ -97,6 +96,7 @@ class UsuarioServiceImplTest {
     }
 
     @Test
+    @Order(3)
     public void buscarById() {
         for(UsuarioDTO u : listaUsuario){
             Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarById(u.getId());
@@ -107,6 +107,7 @@ class UsuarioServiceImplTest {
     }
 
     @Test
+    @Order(4)
     public void buscarByEmail() {
         for(UsuarioDTO u : listaUsuario){
             Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
@@ -117,6 +118,7 @@ class UsuarioServiceImplTest {
     }
 
     @Test
+    @Order(5)
     public void atualizar() {
         for(UsuarioDTO u : listaUsuario){
             u.setSenha("XXXX");
@@ -130,6 +132,7 @@ class UsuarioServiceImplTest {
     }
 
     @Test
+    @Order(6)
     public void deletar() {
         for(UsuarioDTO u : listaUsuario){
             usuarioServiceImpl.deletar(u.getId());

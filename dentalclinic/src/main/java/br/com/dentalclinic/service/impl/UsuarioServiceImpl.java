@@ -31,7 +31,7 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
     /** Methods **/
     @Override
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
-        Usuario usuario = mapperDTOToEntity(usuarioDTO);
+        Usuario usuario = new Usuario(usuarioDTO);
         int idTipoUsuario = usuario.getTipoUsuario().getId();
 
         if (tipoUsuarioService.ifTipoUsuarioExists(idTipoUsuario)) {
@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
             usuario = usuarioRepository.save(usuario);
         }
 
-        usuarioDTO = mapperEntityToDTO(usuario);
+        usuarioDTO = new UsuarioDTO(usuario);
         return usuarioDTO;
     }
 
@@ -70,10 +70,11 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
         List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
 
         for (Usuario usuario : usuarios){
-            UsuarioDTO usuarioDTO = mapperEntityToDTO(usuario);
+            //UsuarioDTO usuarioDTO = mapperEntityToDTO(usuario);
+            UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
             usuarioDTOS.add(usuarioDTO);
         }
-        return usuarioDTOS;
+         return usuarioDTOS;
     }
     @Override
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {

@@ -32,7 +32,7 @@ public class  Usuario implements UserDetails {
     @Column(nullable = false)
     private String senha;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = TipoUsuario.class)
+    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = TipoUsuario.class)
     @PrimaryKeyJoinColumn
     private TipoUsuario tipoUsuario;
 

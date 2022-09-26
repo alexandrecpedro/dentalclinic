@@ -55,9 +55,12 @@ public class TipoUsuarioServiceImplTest {
 
     @Test
     public void salvar(){
-        for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
-            tipoUsuarioServiceImpl.salvar(t);
+        for(int i =0;i<listaTipoUsuarioDTO.size();i++){
+            listaTipoUsuarioDTO.set(i,tipoUsuarioServiceImpl.salvar(listaTipoUsuarioDTO.get(i)));
         }
+    //    for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
+    //        tipoUsuarioServiceImpl.salvar(t);
+    //    }
     }
 
     @Test

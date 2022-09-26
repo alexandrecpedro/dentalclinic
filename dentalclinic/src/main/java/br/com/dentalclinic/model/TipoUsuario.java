@@ -31,6 +31,19 @@ public class TipoUsuario implements Serializable {
     }
 
     public TipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) {
+        if(tipoUsuarioDTO.getId()!=0){
+            this.id = tipoUsuarioDTO.getId();
+        } else{
+            this.id=0;
+        }
         this.nome = tipoUsuarioDTO.getNome();
+    }
+
+    @Override
+    public String toString() {
+        return "TipoUsuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
     }
 }

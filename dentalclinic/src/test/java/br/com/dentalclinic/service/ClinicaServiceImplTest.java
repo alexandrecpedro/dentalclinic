@@ -6,8 +6,7 @@ import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.service.impl.ClinicaServiceImpl;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,6 +21,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Fail.fail;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ClinicaServiceImplTest {
     /** Attributes **/
     @Autowired
@@ -66,6 +66,7 @@ class ClinicaServiceImplTest {
         }
     }
     @Test
+    @Order(1)
     public void salvar() {
         //#######################################################
         //Salvando os 16 Enderecos na base de dados para criacao das Clinicas
@@ -97,6 +98,7 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(2)
     public void buscarTodos(){
         List<ClinicaDTO> todasClinicasDb = clinicaServiceImpl.buscarTodos();
         if(todasClinicasDb.size()<16){
@@ -105,6 +107,7 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(3)
     public void buscarById() {
         for(ClinicaDTO c1 : listaClinica){
             Optional<ClinicaDTO> c2 = clinicaServiceImpl.buscarById(c1.getId());
@@ -118,6 +121,7 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(4)
     public void buscarByNomeFantasia() {
         for(ClinicaDTO c1 : listaClinica){
             Optional<ClinicaDTO> c2 = clinicaServiceImpl.buscarByNomeFantasia(c1.getNomeFantasia());
@@ -131,6 +135,7 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(5)
     public void atualizar() {
         int i = 1;
         for(ClinicaDTO c : listaClinica){
@@ -147,6 +152,7 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(6)
     public void deletar() {
         for(ClinicaDTO c : listaClinica){
             clinicaServiceImpl.deletar(c.getId());

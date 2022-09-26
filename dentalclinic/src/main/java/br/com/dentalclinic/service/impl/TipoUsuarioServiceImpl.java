@@ -2,6 +2,7 @@ package br.com.dentalclinic.service.impl;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.exception.BadRequestException;
+import br.com.dentalclinic.exception.ExceptionDetails;
 import br.com.dentalclinic.exception.ResourceNotFoundException;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.repository.ITipoUsuarioRepository;
@@ -71,10 +72,16 @@ public class TipoUsuarioServiceImpl implements IService<TipoUsuarioDTO> {
         }
     }
 
-    public TipoUsuarioDTO buscarByNome(String nome) {
-        TipoUsuario tipoUsuario = tipoUsuarioRepository.findByNome(nome);
-        TipoUsuarioDTO tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario);
-        return tipoUsuarioDTO;
+    public TipoUsuarioDTO buscarByNome(String nome) throws ResourceNotFoundException{
+        List<TipoUsuario> tipoUsuario = tipoUsuarioRepository.findByNome(nome);
+        if(tipoUsuario.size()!=1){
+            throw new ResourceNotFoundException("Busca retornou mais de um ou nenhum resultado");
+        }
+        else{
+            TipoUsuarioDTO tipoUsuarioDTO = mapperEntityToDTO(tipoUsuario.get(0));
+            return tipoUsuarioDTO;
+        }
+
     }
 
     public Boolean ifTipoUsuarioExists(int id) {
