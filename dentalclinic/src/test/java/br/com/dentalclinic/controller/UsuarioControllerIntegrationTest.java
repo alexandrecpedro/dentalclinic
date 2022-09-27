@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+//import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static br.com.dentalclinic.utils.DentalClinicUtils.objectFromString;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+//import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,49 +30,49 @@ class UsuarioControllerIntegrationTest {
     @Autowired
     private WebApplicationContext context;
 
-    @BeforeEach
-    void init() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-    }
-
-    @Test
-    @WithMockUser
-    void createAuthenticationTokenTest() throws Exception {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setEmail("teste@email.com");
-        usuarioDTO.setSenha("1234Teste");
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuario/authenticate")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(String.valueOf(usuarioDTO)))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-    }
-
-    @Test
-    @WithMockUser
-    void salvarTest() throws Exception {
-        TipoUsuarioDTO tipoUsuarioDTO = new TipoUsuarioDTO();
-        tipoUsuarioDTO.setNome("ROLE_ADMIN");
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setEmail("teste@email.com");
-        usuarioDTO.setSenha("1234Teste");
-        usuarioDTO.setTipoUsuarioDTO(tipoUsuarioDTO);
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuario/salvar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(usuarioDTO)))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String responseBody = mvcResult.getResponse().getContentAsString();
-        usuarioDTO = objectFromString(UsuarioDTO.class, responseBody);
-        assertNotNull(usuarioDTO.getId());
-    }
+//    @BeforeEach
+//    void init() {
+//        mockMvc = MockMvcBuilders.webAppContextSetup(context)
+//                .apply(springSecurity())
+//                .build();
+//    }
+//
+//    @Test
+//    @WithMockUser
+//    void createAuthenticationTokenTest() throws Exception {
+//        UsuarioDTO usuarioDTO = new UsuarioDTO();
+//        usuarioDTO.setEmail("teste@email.com");
+//        usuarioDTO.setSenha("1234Teste");
+//
+//        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuario/authenticate")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON)
+//                .content(String.valueOf(usuarioDTO)))
+//                .andDo(MockMvcResultHandlers.print())
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andReturn();
+//    }
+//
+//    @Test
+//    @WithMockUser
+//    void salvarTest() throws Exception {
+//        TipoUsuarioDTO tipoUsuarioDTO = new TipoUsuarioDTO();
+//        tipoUsuarioDTO.setNome("ROLE_ADMIN");
+//        UsuarioDTO usuarioDTO = new UsuarioDTO();
+//        usuarioDTO.setEmail("teste@email.com");
+//        usuarioDTO.setSenha("1234Teste");
+//        usuarioDTO.setTipoUsuarioDTO(tipoUsuarioDTO);
+//
+//        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuario/salvar")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON)
+//                        .content(String.valueOf(usuarioDTO)))
+//                .andDo(MockMvcResultHandlers.print())
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andReturn();
+//
+//        String responseBody = mvcResult.getResponse().getContentAsString();
+//        usuarioDTO = objectFromString(UsuarioDTO.class, responseBody);
+//        assertNotNull(usuarioDTO.getId());
+//    }
 }

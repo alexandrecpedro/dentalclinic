@@ -1,12 +1,12 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.UsuarioDTO;
-import br.com.dentalclinic.enums.UserRoles;
+//import br.com.dentalclinic.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @Entity
 @Table(name = "tb_usuario")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class  Usuario implements UserDetails {
+public class  Usuario {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,42 +52,6 @@ public class  Usuario implements UserDetails {
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(tipoUsuario.getNome());
-        return Collections.singleton(grantedAuthority);
-    }
-
-    @Override
-    public String getPassword() {
-        return senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
     @Override
