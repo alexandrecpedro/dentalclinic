@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,7 +33,12 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
     @Override
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
         Usuario usuario = new Usuario(usuarioDTO);
-        int idTipoUsuario = usuario.getTipoUsuario().getId();
+        int idTipoUsuario;
+        if(usuario.getTipoUsuario().getId()!=0) {
+            idTipoUsuario = usuario.getTipoUsuario().getId();
+        }else{
+            idTipoUsuario = tipoUsuarioService.salvar(usuarioDTO.getTipoUsuarioDTO()).getId();
+        }
 
         if (tipoUsuarioService.ifTipoUsuarioExists(idTipoUsuario)) {
             TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarById(idTipoUsuario).orElseThrow(() -> {
@@ -41,6 +47,8 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
             TipoUsuario tipoUsuario = new TipoUsuario(tipoUsuarioDTO);
             usuario.setTipoUsuario(tipoUsuario);
             usuario = usuarioRepository.save(usuario);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            usuario.setSenha(passwordEncoder.encode(usuario.getPassword()+usuario.getId()));
         }
 
         usuarioDTO = new UsuarioDTO(usuario);

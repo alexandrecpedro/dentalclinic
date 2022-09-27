@@ -36,7 +36,6 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
                 throw new ResourceNotFoundException("Endereço não encontrado!");
             });
             Endereco endereco = new Endereco(enderecoDTO);
-            //clinica.setEndereco(endereco);
             clinica = clinicaRepository.save(clinica);
         }
         clinicaDTO = new ClinicaDTO(clinica);

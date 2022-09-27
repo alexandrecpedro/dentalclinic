@@ -20,6 +20,7 @@ public class EnderecoController {
     /** Methods **/
     @PostMapping("/salvar")
     public ResponseEntity<EnderecoDTO> salvar(@RequestBody @Validated EnderecoDTO enderecoDTO) {
+        System.out.println(enderecoDTO.toString());
         return ResponseEntity.ok(enderecoService.salvar(enderecoDTO));
     }
 

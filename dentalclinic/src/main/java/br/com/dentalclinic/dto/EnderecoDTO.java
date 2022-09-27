@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONObject;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class EnderecoDTO {
 
     private int id;
@@ -42,6 +43,16 @@ public class EnderecoDTO {
         this.localidade = localidade;
         this.uf = uf;
         this.cep = cep;
+    }
+
+    public EnderecoDTO(JSONObject jsonEndereco) {
+        this.logradouro = jsonEndereco.getString("logradouro");
+        this.numero = jsonEndereco.getString("numero");
+        this.complemento = jsonEndereco.getString("complemento");
+        this.bairro = jsonEndereco.getString("bairro");
+        this.localidade = jsonEndereco.getString("localidade");
+        this.uf = jsonEndereco.getString("uf");
+        this.cep = jsonEndereco.getString("cep");
     }
 
     @Override
