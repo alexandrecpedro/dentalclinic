@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,7 +28,10 @@ public class ConsultaController {
     public ResponseEntity<Optional<ConsultaDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(consultaService.buscarById(id));
     }
-
+    @GetMapping("/buscarTodos")
+    public List<ConsultaDTO> buscarTodos() {
+        return ResponseEntity.ok(consultaService.buscarTodos()).getBody();
+    }
     @PutMapping("/atualizar")
     public ResponseEntity<ConsultaDTO> atualizar(@RequestBody @Validated ConsultaDTO consultaDTO) {
         return (consultaService.buscarById(consultaDTO.getId()).equals(null)) ?

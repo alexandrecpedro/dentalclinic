@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +27,11 @@ public class EnderecoController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<EnderecoDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(enderecoService.buscarById(id));
+    }
+
+    @GetMapping("/buscarTodos")
+    public List<EnderecoDTO> buscarTodos() {
+        return ResponseEntity.ok(enderecoService.buscarTodos()).getBody();
     }
 
     @PutMapping("/atualizar")
