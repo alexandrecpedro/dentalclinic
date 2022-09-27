@@ -79,6 +79,13 @@ class ClinicaServiceImplTest {
         //#######################################################
         BufferedReader reader;
         try {
+            for(int i=0;i<listaEndereco.size();i++){
+                listaEndereco.set(i,enderecoServiceImpl.salvar(listaEndereco.get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
             reader = new BufferedReader(new FileReader("./Clinicas.txt"));
             String line = reader.readLine();
             int i = 0;
@@ -86,8 +93,7 @@ class ClinicaServiceImplTest {
                 String[] atrArray;
                 atrArray = line.split(";");
                 ClinicaDTO clinicaDTO = new ClinicaDTO(atrArray[0],atrArray[1],listaEndereco.get(i++));
-                clinicaServiceImpl.salvar(clinicaDTO);
-                listaClinica.add(clinicaDTO);
+                listaClinica.add(clinicaServiceImpl.salvar(clinicaDTO));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -101,7 +107,7 @@ class ClinicaServiceImplTest {
     @Order(2)
     public void buscarTodos(){
         List<ClinicaDTO> todasClinicasDb = clinicaServiceImpl.buscarTodos();
-        if(todasClinicasDb.size()<16){
+        if(todasClinicasDb.size()<listaClinica.size()){
             fail("Falha ao inserir ou buscar todos enderecos");
         }
     }

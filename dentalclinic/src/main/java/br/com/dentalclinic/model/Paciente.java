@@ -31,9 +31,9 @@ public class Paciente implements Serializable {
 
     @Column(nullable = false)
     private String telefone;
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Usuario.class)
+    @OneToOne(cascade = CascadeType.REMOVE, targetEntity = Usuario.class)
     private Usuario usuario;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Endereco.class)
+    @OneToOne(cascade = CascadeType.REMOVE, targetEntity = Endereco.class)
     @PrimaryKeyJoinColumn
     private Endereco endereco;
 
@@ -48,11 +48,27 @@ public class Paciente implements Serializable {
     }
 
     public Paciente(PacienteDTO pacienteDTO) {
+        if(pacienteDTO.getId()!=0){
+            this.id= pacienteDTO.getId();
+        }
         this.nome = pacienteDTO.getNome();
         this.sobrenome = pacienteDTO.getSobrenome();
         this.cpf = pacienteDTO.getCpf();
         this.telefone = pacienteDTO.getTelefone();
         this.usuario = pacienteDTO.getUsuario();
         this.endereco = pacienteDTO.getEndereco();
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", usuario=" + usuario.toString() +
+                ", endereco=" + endereco.toString() +
+                '}';
     }
 }

@@ -28,17 +28,22 @@ public class Consulta implements Serializable {
     @Column(nullable = false)
     private String status;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Paciente.class)
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = Paciente.class)
     private Paciente paciente;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Dentista.class)
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = Dentista.class)
     private Dentista dentista;
-    
+
+    @Column(nullable = false)
     private LocalDate data;
+    @Column(nullable = false)
     private LocalTime hora;
 
     /** Constructor **/
     public Consulta(ConsultaDTO consultaDTO) {
+        if(consultaDTO.getId()!=0){
+            this.id=consultaDTO.getId();
+        }
         this.descricao = consultaDTO.getDescricao();
         this.status = consultaDTO.getStatus();
         this.paciente = consultaDTO.getPaciente();
@@ -54,5 +59,18 @@ public class Consulta implements Serializable {
         this.dentista = dentista;
         this.data = data;
         this.hora = hora;
+    }
+
+    @Override
+    public String toString() {
+        return "Consulta{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", status='" + status + '\'' +
+                ", paciente=" + paciente.toString() +
+                ", dentista=" + dentista.toString() +
+                ", data=" + data +
+                ", hora=" + hora +
+                '}';
     }
 }

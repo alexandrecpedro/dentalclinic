@@ -38,6 +38,11 @@ public class  Usuario implements UserDetails {
 
     /** Constructor **/
     public Usuario(UsuarioDTO usuarioDTO) {
+        if(usuarioDTO.getId()!=0){
+            this.id = usuarioDTO.getId();
+        }else{
+            this.id = 0;
+        }
         this.email = usuarioDTO.getEmail();
         this.senha = usuarioDTO.getSenha();
         this.tipoUsuario = new TipoUsuario(usuarioDTO.getTipoUsuarioDTO());
@@ -83,5 +88,15 @@ public class  Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", tipoUsuario=" + tipoUsuario.toString() +
+                '}';
     }
 }

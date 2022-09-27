@@ -41,6 +41,9 @@ public class Endereco implements Serializable {
 
     /** Constructor **/
     public Endereco(EnderecoDTO enderecoDTO) {
+        if(enderecoDTO.getId()!=0){
+            this.id=enderecoDTO.getId();
+        }
         this.logradouro = enderecoDTO.getLogradouro();
         this.numero = enderecoDTO.getNumero();
         this.complemento = enderecoDTO.getComplemento();

@@ -31,4 +31,14 @@ public class UsuarioDTO {
         this.senha = usuario.getSenha();
         this.tipoUsuarioDTO = new TipoUsuarioDTO(usuario.getTipoUsuario());
     }
+
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", tipoUsuarioDTO=" + tipoUsuarioDTO.toString() +
+                '}';
+    }
 }

@@ -72,7 +72,7 @@ class UsuarioServiceImplTest {
             String line = reader.readLine();
             while(line!=null){
                 String[] arrayLineSplit = line.split(";");
-                TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarByNome(arrayLineSplit[2]);
+                //TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarByNome(arrayLineSplit[2]);
                 listaUsuario.add(new UsuarioDTO(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioService.buscarByNome(arrayLineSplit[2])));
                 line = reader.readLine();
             }
@@ -100,7 +100,7 @@ class UsuarioServiceImplTest {
     public void buscarById() {
         for(UsuarioDTO u : listaUsuario){
             Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarById(u.getId());
-            if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
+            if(u2.isEmpty() || !ComparaObjetoToString(u,u2.get())){
                 fail("Falha buscando usuario pelo id.");
             }
         }
@@ -111,7 +111,7 @@ class UsuarioServiceImplTest {
     public void buscarByEmail() {
         for(UsuarioDTO u : listaUsuario){
             Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
-            if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
+            if(u2.isEmpty() || !ComparaObjetoToString(u,u2.get())){
                 fail("Falha buscando usuario pelo id.");
             }
         }
@@ -125,7 +125,7 @@ class UsuarioServiceImplTest {
             usuarioServiceImpl.atualizar(u);
         }
         for(UsuarioDTO u : listaUsuario){
-            if(!ComparaObjetoToString(u,usuarioServiceImpl.buscarById(u.getId()))){
+            if(!ComparaObjetoToString(u,usuarioServiceImpl.buscarById(u.getId()).get())){
                 fail("Falha Atualizando Usuario.");
             }
         }

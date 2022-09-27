@@ -33,7 +33,7 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
     /** Methods **/
     @Override
     public PacienteDTO salvar(PacienteDTO pacienteDTO) {
-        Paciente paciente = mapperDTOToEntity(pacienteDTO);
+        Paciente paciente = new Paciente(pacienteDTO);
         int idEndereco = paciente.getEndereco().getId();
         int idUsuario = paciente.getUsuario().getId();
 
@@ -53,7 +53,7 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
             paciente = pacienteRepository.save(paciente);
         }
 
-        pacienteDTO = mapperEntityToDTO(paciente);
+        pacienteDTO = new PacienteDTO(paciente);
 
         return pacienteDTO;
     }
@@ -63,7 +63,7 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
         Paciente paciente = pacienteRepository.findById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Paciente não encontrado");
         });
-        PacienteDTO pacienteDTO = mapperEntityToDTO(paciente);
+        PacienteDTO pacienteDTO = new PacienteDTO(paciente);
         return Optional.ofNullable(pacienteDTO);
     }
 
@@ -73,7 +73,7 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
         List<PacienteDTO> pacienteDTOS = new ArrayList<>();
 
         for (Paciente paciente : pacientes){
-            PacienteDTO pacienteDTO = mapperEntityToDTO(paciente);
+            PacienteDTO pacienteDTO = new PacienteDTO(paciente);
             pacienteDTOS.add(pacienteDTO);
         }
         return pacienteDTOS;
@@ -81,9 +81,9 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
 
     @Override
     public PacienteDTO atualizar(PacienteDTO pacienteDTO) {
-        Paciente paciente = mapperDTOToEntity(pacienteDTO);
+        Paciente paciente = new Paciente(pacienteDTO);
         paciente = pacienteRepository.saveAndFlush(paciente);
-        pacienteDTO = mapperEntityToDTO(paciente);
+        pacienteDTO = new PacienteDTO(paciente);
         return pacienteDTO;
     }
 
@@ -98,18 +98,6 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
 
     public boolean ifPacienteExists(int id){
         return pacienteRepository.existsById(id);
-    }
-
-    public Paciente mapperDTOToEntity(PacienteDTO pacienteDTO) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Paciente paciente = objectMapper.convertValue(pacienteDTO, Paciente.class);
-        return paciente;
-    }
-
-    public PacienteDTO mapperEntityToDTO(Paciente paciente) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        PacienteDTO pacienteDTO = objectMapper.convertValue(paciente, PacienteDTO.class);
-        return pacienteDTO;
     }
 
 }

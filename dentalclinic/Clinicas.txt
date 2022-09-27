@@ -8,9 +8,9 @@ Consultorio Sorriso Maroto;Consultorio Sorriso Maroto
 Clinica Marota;Clinica Marota
 Consultorio Sorriso Branquinho;Consultorio Sorriso Branquinho
 Clinica Legal;Clinica Legal
-Consultorio Dentes Brilhantes;Consultorio Dentes Brilhantes
 Clinica Da Avenida;Clinica Da Avenida
 Consultorio Sorriso Contagiante;Consultorio Sorriso Contagiante
 Clinica Popular;Clinica Popular
 Consultorio Saudente;Consultorio Saudente
 Clinica Mega Popular;Clinica Mega Popular
+Clinica Mega Bolada;Clinica Mega Bolada

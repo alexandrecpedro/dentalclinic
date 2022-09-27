@@ -33,7 +33,7 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
     /** Methods **/
     @Override
     public ConsultaDTO salvar(ConsultaDTO consultaDTO) {
-        Consulta consulta = mapperDTOToEntity(consultaDTO);
+        Consulta consulta = new Consulta(consultaDTO);
         int idPaciente = consulta.getPaciente().getId();
         int idDentista = consulta.getDentista().getId();
 
@@ -51,7 +51,7 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
             consulta.setDentista(dentista);
         }
 
-        consultaDTO = mapperEntityToDTO(consulta);
+        consultaDTO = new ConsultaDTO(consultaRepository.save(new Consulta(consultaDTO)));
         return consultaDTO;
     }
 
@@ -60,7 +60,7 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
         Consulta consulta = consultaRepository.findById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Consulta não encontrada");
         });
-        ConsultaDTO consultaDTO = mapperEntityToDTO(consulta);
+        ConsultaDTO consultaDTO = new ConsultaDTO(consulta);
         return Optional.ofNullable(consultaDTO);
     }
 
@@ -70,7 +70,7 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
         List<ConsultaDTO> consultaDTOS = new ArrayList<>();
 
         for (Consulta consulta : consultas){
-            ConsultaDTO consultaDTO = mapperEntityToDTO(consulta);
+            ConsultaDTO consultaDTO = new ConsultaDTO(consulta);
             consultaDTOS.add(consultaDTO);
         }
         return consultaDTOS;
@@ -78,9 +78,9 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
 
     @Override
     public ConsultaDTO atualizar(ConsultaDTO consultaDTO) {
-        Consulta consulta = mapperDTOToEntity(consultaDTO);
+        Consulta consulta = new Consulta(consultaDTO);
         consulta = consultaRepository.saveAndFlush(consulta);
-        consultaDTO = mapperEntityToDTO(consulta);
+        consultaDTO = new ConsultaDTO(consulta);
         return consultaDTO;
     }
 
@@ -91,18 +91,6 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
         } else {
             throw new BadRequestException("Consulta inexistente!");
         }
-    }
-
-    public Consulta mapperDTOToEntity(ConsultaDTO consultaDTO) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Consulta consulta = objectMapper.convertValue(consultaDTO, Consulta.class);
-        return consulta;
-    }
-
-    public ConsultaDTO mapperEntityToDTO(Consulta consulta) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ConsultaDTO consultaDTO = objectMapper.convertValue(consulta, ConsultaDTO.class);
-        return consultaDTO;
     }
 
 }

@@ -22,6 +22,9 @@ public class EnderecoDTO {
     private String cep;
 
     public EnderecoDTO(Endereco endereco) {
+        if(endereco.getId()!=0){
+            this.id= endereco.getId();
+        }
         this.logradouro = endereco.getLogradouro();
         this.numero = endereco.getNumero();
         this.complemento = endereco.getComplemento();

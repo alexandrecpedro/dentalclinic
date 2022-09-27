@@ -52,7 +52,7 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Usuário não encontrado");
         });
-        UsuarioDTO usuarioDTO = mapperEntityToDTO(usuario);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
         return Optional.ofNullable(usuarioDTO);
     }
 
@@ -60,7 +60,7 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> {
             throw new ResourceNotFoundException("Usuário não encontrado");
         });
-        UsuarioDTO usuarioDTO = mapperEntityToDTO(usuario);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
         return Optional.ofNullable(usuarioDTO);
     }
 
@@ -78,9 +78,9 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
     }
     @Override
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
-        Usuario usuario = mapperDTOToEntity(usuarioDTO);
-        usuario = usuarioRepository.saveAndFlush(usuario);
-        usuarioDTO = mapperEntityToDTO(usuario);
+        Usuario usuario = new Usuario(usuarioDTO);
+        usuario = usuarioRepository.save(usuario);
+        usuarioDTO = new UsuarioDTO(usuario);
         return usuarioDTO;
     }
     @Override

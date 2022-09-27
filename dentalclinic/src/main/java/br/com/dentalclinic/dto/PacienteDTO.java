@@ -31,7 +31,19 @@ public class PacienteDTO {
         this.endereco = endereco;
     }
 
+    public PacienteDTO(String nome, String sobrenome, String cpf, String telefone, UsuarioDTO usuarioDTO, EnderecoDTO enderecoDTO) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.usuario = new Usuario(usuarioDTO);
+        this.endereco = new Endereco(enderecoDTO);
+    }
+
     public PacienteDTO(Paciente paciente) {
+        if(paciente.getId()!=0){
+            this.id= paciente.getId();
+        }
         this.nome = paciente.getNome();
         this.sobrenome = paciente.getSobrenome();
         this.cpf = paciente.getCpf();

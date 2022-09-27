@@ -20,17 +20,20 @@ public class Clinica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String nomeFantasia;
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String razaoSocial;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Endereco.class)
+    @OneToOne(cascade = CascadeType.REMOVE, targetEntity = Endereco.class)
     @PrimaryKeyJoinColumn
     private Endereco endereco;
 
 
     /** Constructor **/
     public Clinica(ClinicaDTO clinicaDTO) {
+        if(clinicaDTO.getId()!=0){
+            this.id=clinicaDTO.getId();
+        }
         this.nomeFantasia = clinicaDTO.getNomeFantasia();
         this.razaoSocial = clinicaDTO.getRazaoSocial();
         this.endereco = new Endereco(clinicaDTO.getEnderecoDTO());
@@ -40,5 +43,15 @@ public class Clinica implements Serializable {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.endereco = endereco;
+    }
+
+    @Override
+    public String toString() {
+        return "Clinica{" +
+                "id=" + id +
+                ", nomeFantasia='" + nomeFantasia + '\'' +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", endereco=" + endereco.toString() +
+                '}';
     }
 }

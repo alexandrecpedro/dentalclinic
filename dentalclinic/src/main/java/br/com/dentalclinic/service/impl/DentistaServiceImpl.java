@@ -33,7 +33,7 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
     /** Methods **/
     @Override
     public DentistaDTO salvar(DentistaDTO dentistaDTO) {
-        Dentista dentista = mapperDTOToEntity(dentistaDTO);
+        Dentista dentista = new Dentista(dentistaDTO);
         int idUsuario = dentista.getUsuario().getId();
         int idClinica = dentista.getClinica().getId();
 
@@ -53,7 +53,7 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
             dentista = dentistaRepository.save(dentista);
         }
 
-        dentistaDTO = mapperEntityToDTO(dentista);
+        dentistaDTO = new DentistaDTO(dentista);
         return dentistaDTO;
 
     }
@@ -63,7 +63,7 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
         Dentista dentista = dentistaRepository.findById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Dentista não encontrado");
         });
-        DentistaDTO dentistaDTO = mapperEntityToDTO(dentista);
+        DentistaDTO dentistaDTO = new DentistaDTO(dentista);
         return Optional.ofNullable(dentistaDTO);
     }
 
@@ -73,7 +73,7 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
         List<DentistaDTO> dentistaDTOS = new ArrayList<>();
 
         for (Dentista dentista : dentistas){
-            DentistaDTO dentistaDTO = mapperEntityToDTO(dentista);
+            DentistaDTO dentistaDTO = new DentistaDTO(dentista);
             dentistaDTOS.add(dentistaDTO);
         }
         return dentistaDTOS;
@@ -81,9 +81,9 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
 
     @Override
     public DentistaDTO atualizar(DentistaDTO dentistaDTO) {
-        Dentista dentista = mapperDTOToEntity(dentistaDTO);
+        Dentista dentista = new Dentista(dentistaDTO);
         dentista = dentistaRepository.saveAndFlush(dentista);
-        dentistaDTO = mapperEntityToDTO(dentista);
+        dentistaDTO = new DentistaDTO(dentista);
         return dentistaDTO;
     }
 
@@ -98,17 +98,5 @@ public class DentistaServiceImpl implements IService<DentistaDTO> {
 
     public boolean ifDentistaExists(int id){
         return dentistaRepository.existsById(id);
-    }
-
-    public Dentista mapperDTOToEntity(DentistaDTO dentistaDTO) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Dentista dentista = objectMapper.convertValue(dentistaDTO, Dentista.class);
-        return dentista;
-    }
-
-    public DentistaDTO mapperEntityToDTO(Dentista dentista) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        DentistaDTO dentistaDTO = objectMapper.convertValue(dentista, DentistaDTO.class);
-        return dentistaDTO;
     }
 }

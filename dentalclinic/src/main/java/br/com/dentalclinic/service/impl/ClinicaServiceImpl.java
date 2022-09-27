@@ -28,7 +28,7 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
     /** Methods **/
     @Override
     public ClinicaDTO salvar(ClinicaDTO clinicaDTO) {
-        Clinica clinica = mapperDTOToEntity(clinicaDTO);
+        Clinica clinica = new Clinica(clinicaDTO);
         int idEndereco = clinica.getEndereco().getId();
 
         if (enderecoService.ifEnderecoExists(idEndereco)) {
@@ -36,10 +36,10 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
                 throw new ResourceNotFoundException("Endereço não encontrado!");
             });
             Endereco endereco = new Endereco(enderecoDTO);
-            clinica.setEndereco(endereco);
+            //clinica.setEndereco(endereco);
             clinica = clinicaRepository.save(clinica);
         }
-        clinicaDTO = mapperEntityToDTO(clinica);
+        clinicaDTO = new ClinicaDTO(clinica);
         return clinicaDTO;
     }
 
@@ -48,7 +48,7 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
         Clinica clinica = clinicaRepository.findById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Clínica não encontrada!");
         });
-        ClinicaDTO clinicaDTO = mapperEntityToDTO(clinica);
+        ClinicaDTO clinicaDTO = new ClinicaDTO(clinica);
         return Optional.ofNullable(clinicaDTO);
     }
 
@@ -58,7 +58,7 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
         List<ClinicaDTO> clinicaDTOS = new ArrayList<>();
 
         for (Clinica clinica : clinicas) {
-            ClinicaDTO clinicaDTO = mapperEntityToDTO(clinica);
+            ClinicaDTO clinicaDTO = new ClinicaDTO(clinica);
             clinicaDTOS.add(clinicaDTO);
         }
         return clinicaDTOS;
@@ -66,9 +66,9 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
 
     @Override
     public ClinicaDTO atualizar(ClinicaDTO clinicaDTO) {
-        Clinica clinica = mapperDTOToEntity(clinicaDTO);
+        Clinica clinica = new Clinica(clinicaDTO);
         clinica = clinicaRepository.saveAndFlush(clinica);
-        clinicaDTO = mapperEntityToDTO(clinica);
+        clinicaDTO = new ClinicaDTO(clinica);
         return clinicaDTO;
     }
 
@@ -83,7 +83,7 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
 
     public Optional<ClinicaDTO> buscarByNomeFantasia(String nomeFantasia) {
         Clinica clinica = clinicaRepository.findByNomeFantasia(nomeFantasia).orElseThrow(()-> new BadRequestException("Clínica inexistente!"));
-        ClinicaDTO clinicaDTO = mapperEntityToDTO(clinica);
+        ClinicaDTO clinicaDTO = new ClinicaDTO(clinica);
         return Optional.ofNullable(clinicaDTO);
     }
 

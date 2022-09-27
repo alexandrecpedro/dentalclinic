@@ -29,14 +29,17 @@ public class Dentista implements Serializable {
     @Column(nullable = false)
     private String cro;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Usuario.class)
+    @OneToOne(cascade = CascadeType.REMOVE, targetEntity = Usuario.class)
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Clinica.class)
+    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = Clinica.class)
     private Clinica clinica;
 
     /** Constructor **/
     public Dentista(DentistaDTO dentistaDTO) {
+        if(dentistaDTO.getId()!=0){
+            this.id= dentistaDTO.getId();
+        }
         this.nome = dentistaDTO.getNome();
         this.sobrenome = dentistaDTO.getSobrenome();
         this.cro = dentistaDTO.getCro();
@@ -50,5 +53,17 @@ public class Dentista implements Serializable {
         this.cro = cro;
         this.usuario = usuario;
         this.clinica = clinica;
+    }
+
+    @Override
+    public String toString() {
+        return "Dentista{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", cro='" + cro + '\'' +
+                ", usuario=" + usuario.toString() +
+                ", clinica=" + clinica.toString() +
+                '}';
     }
 }

@@ -25,6 +25,9 @@ public class ClinicaDTO {
     }
 
     public ClinicaDTO(Clinica clinica) {
+        if(clinica.getId()!=0){
+            this.id= clinica.getId();
+        }
         this.nomeFantasia = clinica.getNomeFantasia();
         this.razaoSocial = clinica.getRazaoSocial();
         this.enderecoDTO = new EnderecoDTO(clinica.getEndereco());
@@ -34,5 +37,15 @@ public class ClinicaDTO {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.enderecoDTO = enderecoDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "ClinicaDTO{" +
+                "id=" + id +
+                ", nomeFantasia='" + nomeFantasia + '\'' +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", enderecoDTO=" + enderecoDTO.toString() +
+                '}';
     }
 }
