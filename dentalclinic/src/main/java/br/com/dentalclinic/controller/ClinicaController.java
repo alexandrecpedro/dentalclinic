@@ -2,6 +2,7 @@ package br.com.dentalclinic.controller;
 
 import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.service.impl.ClinicaServiceImpl;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,10 @@ public class ClinicaController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<ClinicaDTO> salvar(@RequestBody @Validated ClinicaDTO clinicaDTO) {
+    public ResponseEntity<ClinicaDTO> salvar(@RequestBody ClinicaDTO clinicaDTO) {
+
+        //return ResponseEntity.ok(new ClinicaDTO(clinicaDTO.getString("nomeFantasia"),clinicaDTO.getString("razaoSocial"),clinicaDTO.getJSONObject("endereco")));
+
         return ResponseEntity.ok(clinicaService.salvar(clinicaDTO));
     }
 

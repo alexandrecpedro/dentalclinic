@@ -2,10 +2,13 @@ package br.com.dentalclinic.dto;
 
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Endereco;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONObject;
+
 
 @Getter
 @Setter
@@ -16,6 +19,7 @@ public class ClinicaDTO {
     private int id;
     private String nomeFantasia;
     private String razaoSocial;
+    //@JsonProperty("enderecoDTO")
     private EnderecoDTO enderecoDTO;
 
     public ClinicaDTO(String nomeFantasia, String razaoSocial, Endereco endereco) {
@@ -23,6 +27,8 @@ public class ClinicaDTO {
         this.razaoSocial = razaoSocial;
         this.enderecoDTO = new EnderecoDTO(endereco);
     }
+
+
 
     public ClinicaDTO(Clinica clinica) {
         if(clinica.getId()!=0){

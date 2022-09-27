@@ -28,26 +28,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    /**@Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().headers().frameOptions().disable().and()
                 .authorizeRequests()
-                .antMatchers("/usuario").permitAll()
-                .antMatchers("/admin").hasAnyRole("ADMIN")
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/usuario/authenticate").permitAll()
+                .antMatchers("/usuario/salvar").hasAnyRole("USER","ADMIN")
+                .antMatchers("/usuario/atualizar").hasAnyRole("ADMIN")
+                .antMatchers("/tipousuario/**").hasAnyRole("ADMIN")
+                .antMatchers("/endereco/**").hasAnyRole("ADMIN")
+                .antMatchers("/clinica/**").hasAnyRole("ADMIN")
+                .antMatchers("/dentista/**").hasAnyRole("ADMIN")
+                .antMatchers("/paciente/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/consulta/**").hasAnyRole("USER","ADMIN")
                 .anyRequest()
                 .authenticated().and()
-                //.formLogin();
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }**/
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
-                //.and()
-                //.authorizeRequests().antMatchers("/h2-console/**").permitAll().and();
-        httpSecurity.csrf().disable();
-        httpSecurity.headers().frameOptions().disable();
+                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

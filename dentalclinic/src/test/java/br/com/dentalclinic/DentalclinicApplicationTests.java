@@ -12,9 +12,9 @@ import org.junit.runner.JUnitCore;
 class DentalclinicApplicationTests {
 
 
-    @Test public void run() {
-        JUnitCore.runClasses(ClinicaServiceImplTest.class, ConsultaServiceImplTest.class);
-    }
+    //@Test public void run() {
+     //   JUnitCore.runClasses(ClinicaServiceImplTest.class, ConsultaServiceImplTest.class);
+    //}
 //    public static void main(String[] args){
 //        Result result = JUnitCore.runClasses(UnitTestSuite.class);
 //

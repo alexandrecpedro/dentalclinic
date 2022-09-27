@@ -22,8 +22,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Fail.fail;
 
-//@SpringBootTest
-@RunWith(SpringRunner.class)
+@SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ClinicaServiceImplTest {
     /** Attributes **/
