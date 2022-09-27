@@ -7,8 +7,10 @@ import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.service.impl.ClinicaServiceImpl;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.junit.jupiter.api.*;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,9 +22,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Fail.fail;
 
-@SpringBootTest
+//@SpringBootTest
+@RunWith(SpringRunner.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ClinicaServiceImplTest {
+public class ClinicaServiceImplTest {
     /** Attributes **/
     @Autowired
     ClinicaServiceImpl clinicaServiceImpl;

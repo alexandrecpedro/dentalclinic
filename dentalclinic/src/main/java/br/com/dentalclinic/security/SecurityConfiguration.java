@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    @Override
+    /**@Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
@@ -39,6 +39,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.formLogin();
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }**/
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
+                //.and()
+                //.authorizeRequests().antMatchers("/h2-console/**").permitAll().and();
+        httpSecurity.csrf().disable();
+        httpSecurity.headers().frameOptions().disable();
     }
 
     @Override

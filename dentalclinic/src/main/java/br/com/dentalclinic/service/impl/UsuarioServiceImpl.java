@@ -96,18 +96,6 @@ public class UsuarioServiceImpl implements IService<UsuarioDTO>, UserDetailsServ
         return usuarioRepository.existsById(id);
     }
 
-    public Usuario mapperDTOToEntity(UsuarioDTO usuarioDTO) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Usuario usuario = objectMapper.convertValue(usuarioDTO, Usuario.class);
-        return usuario;
-    }
-
-    public UsuarioDTO mapperEntityToDTO(Usuario usuario) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        UsuarioDTO usuarioDTO = objectMapper.convertValue(usuario, UsuarioDTO.class);
-        return usuarioDTO;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmail(username).orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado!"));

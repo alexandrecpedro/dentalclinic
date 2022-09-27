@@ -25,6 +25,7 @@ import static org.assertj.core.api.Fail.fail;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
+public
 class ConsultaServiceImplTest {
     /** Attributes **/
 
