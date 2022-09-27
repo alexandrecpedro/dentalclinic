@@ -3,8 +3,7 @@ package br.com.dentalclinic.service;
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,6 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Fail.fail;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TipoUsuarioServiceImplTest {
     /** Attributes **/
     @Autowired
@@ -54,6 +54,7 @@ public class TipoUsuarioServiceImplTest {
     }
 
     @Test
+    @Order(1)
     public void salvar(){
         for(int i =0;i<listaTipoUsuarioDTO.size();i++){
             listaTipoUsuarioDTO.set(i,tipoUsuarioServiceImpl.salvar(listaTipoUsuarioDTO.get(i)));
@@ -64,6 +65,7 @@ public class TipoUsuarioServiceImplTest {
     }
 
     @Test
+    @Order(2)
     public void buscarTodos(){
         List<TipoUsuarioDTO> todosTiposUsuario = tipoUsuarioServiceImpl.buscarTodos();
         if(todosTiposUsuario.size()<3){
@@ -72,6 +74,7 @@ public class TipoUsuarioServiceImplTest {
     }
 
     @Test
+    @Order(3)
     public void buscarById(){
         for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
             Optional<TipoUsuarioDTO> tipoUsuario2 = tipoUsuarioServiceImpl.buscarById(t.getId());
@@ -86,6 +89,7 @@ public class TipoUsuarioServiceImplTest {
     }
 
     @Test
+    @Order(4)
     public void findByNome(){
         for(TipoUsuarioDTO t : listaTipoUsuarioDTO){
             TipoUsuarioDTO tipoUsuarioBuscado = tipoUsuarioServiceImpl.buscarByNome(t.getNome());
@@ -96,6 +100,7 @@ public class TipoUsuarioServiceImplTest {
     }
 
     @Test
+    @Order(5)
     public void atualizar() {
         for(TipoUsuarioDTO tipoUsuario : listaTipoUsuarioDTO){
             tipoUsuario.setNome("Novo "+tipoUsuario.getNome());
@@ -111,6 +116,7 @@ public class TipoUsuarioServiceImplTest {
     }
 
     @Test
+    @Order(6)
     public void deletar(){
         for(TipoUsuarioDTO tipoUusario : listaTipoUsuarioDTO){
             tipoUsuarioServiceImpl.deletar(tipoUusario.getId());
