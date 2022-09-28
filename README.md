@@ -9,6 +9,184 @@ Consulte **[Implantação](#-implantao)** para saber como implantar o projeto.
 
 ![Imagem do diagrama UML](./images/diagrama-dentista.png)
 
+## 📦 Testes API - POSTMAN
+> URL: http://localhost:8080
+#### Autentication
+Para os testes é preciso ter o token de autorirazação.
+```json
+{
+    "email": "admin@dh.com",
+    "senha":"admin"
+}
+```
+```
+GET /usuario/authenticate
+```
+#### TIPO USUÁRIO
+> POST /tipoUsuario/salvar
+```json
+{
+    "logradouro":"uuuuuuuuuuu",
+    "numero":"12",
+    "complemento":"qweer",
+    "bairro":"santarem",
+    "localidade":"sao paulo",
+    "uf":"PA",
+    "cep":"123456"
+}
+```
+#### ENDEREÇO
+> POST /endereco/salvar
+```json
+{
+    "logradouro":"uuuuuuuuuuu",
+    "numero":"12",
+    "complemento":"qweer",
+    "bairro":"santarem",
+    "localidade":"sao paulo",
+    "uf":"PA",
+    "cep":"123456"
+}
+```
+#### USUÁRIO
+> POST /usuario/salvar
+```json
+{
+  "email": "pedro@gmail.com",
+  "senha": "123456778",
+  "enderecoDTO": {
+    "nome": "Paciente"
+  }
+}
+```
+#### PACIENTE
+> POST /paciente/salvar
+```json
+{
+    "nome": "Marcos",
+    "sobrenome": "Pedro",
+    "cpf": "1231231235",
+    "telefone": "99999-9999",
+    "usuarioDTO": {
+        "email": "marcos@gmail.com",
+        "senha": "123321123",
+        "tipoUsuarioDTO": {
+            "nome": "Paciente"
+        }
+    },
+    "enderecoDTO": {
+        "logradouro": "uuuuuuuuuuu",
+        "numero": "12",
+        "complemento": "qweer",
+        "bairro": "santarem",
+        "localidade": "sao paulo",
+        "uf": "PA",
+        "cep": "123456"
+    }
+}
+```
+#### DENTISTA
+> POST /dentista/salvar
+```json
+{
+    "nome": "Fabio",
+    "sobrenome": "Neres",
+    "cro": "123456",
+    "usuarioDTO": {
+        "email": "fabio@gmail.com",
+        "senha": "12345678",
+        "tipoUsuarioDTO": {
+            "nome": "ADMIN"
+        }
+    },
+    "clinicaDTO": {
+        "nomeFantasia": "Clinica X",
+        "razaoSocial": "Clinica X",
+        "enderecoDTO": {
+            "logradouro": "Rua Manuel Teles Vitancos",
+            "numero": "598",
+            "complemento": "CASA 018",
+            "bairro": "Belém‎",
+            "localidade": "São Paulo",
+            "uf": "SP",
+            "cep": "00000-016"
+        }
+    }
+}
+```
+#### CLINICA
+> POST /clinica/salvar
+```json
+{
+  "nomeFantasia":"Clinica Feliz", 
+  "razaoSocial":"Clinica Feliz", 
+  "enderecoDTO":{
+    "logradouro":"Rua Germano Vítor dos Santos",
+    "numero":"598",
+    "complemento":"CASA 013",
+    "bairro":"Morumbi",
+    "localidade":"LOCALIDADE 1",
+    "uf":"SP",
+    "cep":"00000-001"}
+}
+```
+#### CONSULTA
+> POST /consulta/salvar
+```json
+{
+    "descricao": "",
+    "status": "",
+    "pacienteDTO": {
+        "nome": "Marcos",
+        "sobrenome": "Pedro",
+        "cpf": "1231231235",
+        "telefone": "99999-9999",
+        "usuarioDTO": {
+            "email": "marcos@gmail.com",
+            "senha": "123321123",
+            "tipoUsuarioDTO": {
+                "nome": "Paciente"
+            }
+        },
+        "enderecoDTO": {
+            "logradouro": "uuuuuuuuuuu",
+            "numero": "12",
+            "complemento": "qweer",
+            "bairro": "santarem",
+            "localidade": "sao paulo",
+            "uf": "PA",
+            "cep": "123456"
+        }
+    },
+    "dentistaDTO": {
+        "nome": "Fabio",
+        "sobrenome": "Neres",
+        "cro": "123456",
+        "usuarioDTO": {
+            "email": "fabio@gmail.com",
+            "senha": "12345678",
+            "tipoUsuarioDTO": {
+                "nome": "ADMIN"
+            }
+        },
+        "clinicaDTO": {
+            "nomeFantasia": "Clinica X",
+            "razaoSocial": "Clinica X",
+            "enderecoDTO": {
+                "logradouro": "Rua Manuel Teles Vitancos",
+                "numero": "598",
+                "complemento": "CASA 018",
+                "bairro": "Belém‎",
+                "localidade": "São Paulo",
+                "uf": "SP",
+                "cep": "00000-016"
+            }
+        }
+    },
+    "data": "27/09/2022",
+    "hora": "21:22"
+}
+```
 ## 📦 Implantação
 
 ### [Postman](Postman/TURMA1.postman_collection.json)

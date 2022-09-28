@@ -63,6 +63,15 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"1\",\r\n    \"nome\":\"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/tipoUsuario/atualizar",
 							"protocol": "http",
@@ -84,7 +93,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/tipoUsuario/{id}",
+							"raw": "http://localhost:8080/tipoUsuario/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -92,7 +101,7 @@
 							"port": "8080",
 							"path": [
 								"tipoUsuario",
-								"{id}"
+								"1"
 							]
 						}
 					},
@@ -129,14 +138,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/paciente/buscarTodos",
+							"raw": "http://localhost:8080/endereco/buscarTodos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"paciente",
+								"endereco",
 								"buscarTodos"
 							]
 						}
@@ -148,15 +157,24 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"logradouro\":\"uuuuuuuuuuu\",\r\n    \"numero\":\"12\",\r\n    \"complemento\":\"qweer\",\r\n    \"bairro\":\"santarem\",\r\n    \"localidade\":\"sao paulo\",\r\n    \"uf\":\"PA\",\r\n    \"cep\":\"123456\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/paciente/salvar",
+							"raw": "http://localhost:8080/endereco/salvar",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"paciente",
+								"endereco",
 								"salvar"
 							]
 						}
@@ -168,15 +186,24 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"logradouro\": \"teste\",\r\n    \"numero\": \"12\",\r\n    \"complemento\": \"qweer\",\r\n    \"bairro\": \"santarem\",\r\n    \"localidade\": \"sao paulo\",\r\n    \"uf\": \"PA\",\r\n    \"cep\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/paciente/atualizar",
+							"raw": "http://localhost:8080/endereco/atualizar",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"paciente",
+								"endereco",
 								"atualizar"
 							]
 						}
@@ -189,14 +216,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/paciente/{id}",
+							"raw": "http://localhost:8080/endereco/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"paciente",
+								"endereco",
 								"{id}"
 							]
 						}
@@ -235,7 +262,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"PACIENTE\"\r\n}",
+							"raw": "{\r\n    \"email\": \"pedro@gmail.com\",\r\n    \"senha\": \"123456778\",\r\n    \"enderecoDTO\": {\r\n        \"nome\": \"Paciente\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -367,6 +394,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Marcos\",\r\n    \"sobrenome\": \"Pedro\",\r\n    \"cpf\": \"1231231235\",\r\n    \"telefone\": \"99999-9999\",\r\n    \"usuarioDTO\": {\r\n        \"email\": \"marcos@gmail.com\",\r\n        \"senha\": \"123321123\",\r\n        \"tipoUsuarioDTO\": {\r\n            \"nome\": \"Paciente\"\r\n        }\r\n    },\r\n    \"enderecoDTO\": {\r\n        \"logradouro\": \"uuuuuuuuuuu\",\r\n        \"numero\": \"12\",\r\n        \"complemento\": \"qweer\",\r\n        \"bairro\": \"santarem\",\r\n        \"localidade\": \"sao paulo\",\r\n        \"uf\": \"PA\",\r\n        \"cep\": \"123456\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/paciente/salvar",
 							"protocol": "http",
@@ -474,7 +510,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"Fabio\",\r\n    \"sobrenome\":\"Neres\",\r\n    \"cro\":\"123456\",\r\n    \"usuario\":[{\r\n        \"email\":\"fabio@gmail.com\",\r\n        \"senha\":\"12345678\",\r\n        \"tipoUsuario\":{\r\n           \"nome\":\"ADMIN\"\r\n        }\r\n    }],\r\n    \"clinica\":[{\r\n        \"nomeFantasia\":\"Clinica X\",\r\n        \"razaoSocial\":\"Clinica X\",\r\n        \"endereco\":[{\r\n            \"logradouro\":\"Rua Manuel Teles Vitancos\",\r\n            \"numero\":\"598\",\r\n            \"complemento\":\"CASA 018\",\r\n            \"bairro\":\"Belém‎\",\r\n            \"localidade\":\"São Paulo\",\r\n            \"uf\":\"SP\",\r\n            \"cep\":\"00000-016\"\r\n        }]\r\n    }]\r\n}",
+							"raw": "{\r\n    \"nome\": \"Fabio\",\r\n    \"sobrenome\": \"Neres\",\r\n    \"cro\": \"123456\",\r\n    \"usuarioDTO\": {\r\n        \"email\": \"fabio@gmail.com\",\r\n        \"senha\": \"12345678\",\r\n        \"tipoUsuarioDTO\": {\r\n            \"nome\": \"ADMIN\"\r\n        }\r\n    },\r\n    \"clinicaDTO\": {\r\n        \"nomeFantasia\": \"Clinica X\",\r\n        \"razaoSocial\": \"Clinica X\",\r\n        \"enderecoDTO\": {\r\n            \"logradouro\": \"Rua Manuel Teles Vitancos\",\r\n            \"numero\": \"598\",\r\n            \"complemento\": \"CASA 018\",\r\n            \"bairro\": \"Belém‎\",\r\n            \"localidade\": \"São Paulo\",\r\n            \"uf\": \"SP\",\r\n            \"cep\": \"00000-016\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,14 +603,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/clinica",
+							"raw": "http://localhost:8080/clinica/buscarTodos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"clinica"
+								"clinica",
+								"buscarTodos"
 							]
 						}
 					},
@@ -585,6 +622,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nomeFantasia\": \"Clinica Feliz\",\r\n    \"razaoSocial\": \"Clinica Feliz\",\r\n    \"enderecoDTO\": {\r\n        \"logradouro\": \"Rua Germano Vítor dos Santos\",\r\n        \"numero\": \"598\",\r\n        \"complemento\": \"CASA 013\",\r\n        \"bairro\": \"Morumbi\",\r\n        \"localidade\": \"LOCALIDADE 1\",\r\n        \"uf\": \"SP\",\r\n        \"cep\": \"00000-001\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/clinica/salvar",
 							"protocol": "http",
@@ -671,14 +717,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/consulta",
+							"raw": "http://localhost:8080/consulta/buscarTodos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"consulta"
+								"consulta",
+								"buscarTodos"
 							]
 						}
 					},
