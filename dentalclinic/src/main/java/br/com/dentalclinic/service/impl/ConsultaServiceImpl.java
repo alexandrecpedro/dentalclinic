@@ -36,22 +36,38 @@ public class ConsultaServiceImpl implements IService<ConsultaDTO> {
         Consulta consulta = new Consulta(consultaDTO);
         int idPaciente = consulta.getPaciente().getId();
         int idDentista = consulta.getDentista().getId();
+        Paciente paciente;
+        PacienteDTO pacienteDTO;
+        Dentista dentista;
+        DentistaDTO dentistaDTO;
 
-        if (pacienteService.ifPacienteExists(idPaciente) && dentistaService.ifDentistaExists(idDentista)) {
-            PacienteDTO pacienteDTO = pacienteService.buscarById(idPaciente).orElseThrow(() -> {
+        if (pacienteService.ifPacienteExists(idPaciente) ){
+
+            pacienteDTO = pacienteService.buscarById(idPaciente).orElseThrow(() -> {
                 throw new ResourceNotFoundException("Paciente não encontrado!");
             });
-            Paciente paciente = new Paciente(pacienteDTO);
-            DentistaDTO dentistaDTO = dentistaService.buscarById(idDentista).orElseThrow(() -> {
+            paciente = new Paciente(pacienteDTO);
+
+        }else{
+            pacienteDTO = pacienteService.salvar(new PacienteDTO(consultaDTO.getPaciente()));
+            paciente = new Paciente(pacienteDTO);
+        }
+        consulta.setPaciente(paciente);
+        if(dentistaService.ifDentistaExists(idDentista)) {
+            dentistaDTO = dentistaService.buscarById(idDentista).orElseThrow(() -> {
                 throw new ResourceNotFoundException("Dentista não encontrado!");
             });
-            Dentista dentista = new Dentista(dentistaDTO);
-
-            consulta.setPaciente(paciente);
-            consulta.setDentista(dentista);
+            dentista = new Dentista(dentistaDTO);
+        }else{
+            dentistaDTO = dentistaService.salvar(new DentistaDTO(consultaDTO.getDentista()));
+            dentista = new Dentista(dentistaDTO);
         }
 
-        consultaDTO = new ConsultaDTO(consultaRepository.save(new Consulta(consultaDTO)));
+            consulta.setDentista(dentista);
+        consulta = consultaRepository.save(consulta);
+
+
+        consultaDTO = new ConsultaDTO(consulta);
         return consultaDTO;
     }
 

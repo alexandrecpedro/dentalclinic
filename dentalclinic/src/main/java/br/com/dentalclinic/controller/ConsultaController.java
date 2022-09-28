@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static br.com.dentalclinic.utils.DentalClinicUtils.asJsonString;
+
 @RestController
 @RequestMapping("/consulta")
 public class ConsultaController {
@@ -20,7 +22,7 @@ public class ConsultaController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<ConsultaDTO> salvar(@RequestBody @Validated ConsultaDTO consultaDTO) {
+    public ResponseEntity<ConsultaDTO> salvar(@RequestBody ConsultaDTO consultaDTO) {
         return ResponseEntity.ok(consultaService.salvar(consultaDTO));
     }
 
