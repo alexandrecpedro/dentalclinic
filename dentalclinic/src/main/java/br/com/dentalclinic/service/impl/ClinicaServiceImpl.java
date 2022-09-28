@@ -37,8 +37,14 @@ public class ClinicaServiceImpl implements IService<ClinicaDTO> {
             });
             Endereco endereco = new Endereco(enderecoDTO);
             clinica = clinicaRepository.save(clinica);
+            clinicaDTO = new ClinicaDTO(clinica);
+        }else{
+            clinicaDTO.setEnderecoDTO(enderecoService.salvar(clinicaDTO.getEnderecoDTO()));
+            Clinica clinica2 = new Clinica(clinicaDTO);
+            clinica2 = clinicaRepository.save(clinica2);
+            clinicaDTO = new ClinicaDTO(clinica2);
         }
-        clinicaDTO = new ClinicaDTO(clinica);
+
         return clinicaDTO;
     }
 

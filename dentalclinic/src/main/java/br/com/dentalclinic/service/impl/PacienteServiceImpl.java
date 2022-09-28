@@ -36,22 +36,36 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
         Paciente paciente = new Paciente(pacienteDTO);
         int idEndereco = paciente.getEndereco().getId();
         int idUsuario = paciente.getUsuario().getId();
+        Endereco endereco;
+        EnderecoDTO enderecoDTO;
+        Usuario usuario;
+        UsuarioDTO usuarioDTO;
 
-        if (enderecoService.ifEnderecoExists(idEndereco) && usuarioService.ifUsuarioExists(idUsuario)) {
-            EnderecoDTO enderecoDTO = enderecoService.buscarById(idEndereco).orElseThrow(() -> {
+        if (enderecoService.ifEnderecoExists(idEndereco)){
+            enderecoDTO = enderecoService.buscarById(idEndereco).orElseThrow(() -> {
                 throw new ResourceNotFoundException("Endereço não encontrado");
             });
-            Endereco endereco = new Endereco(enderecoDTO);
-            UsuarioDTO usuarioDTO = usuarioService.buscarById(idUsuario).orElseThrow(() -> {
+            endereco = new Endereco(enderecoDTO);
+
+        } else {
+            enderecoDTO = enderecoService.salvar(new EnderecoDTO(pacienteDTO.getEndereco()));
+            endereco = new Endereco(enderecoDTO);
+        }
+            paciente.setEndereco(endereco);
+
+        if(usuarioService.ifUsuarioExists(idUsuario)) {
+
+            usuarioDTO = usuarioService.buscarById(idUsuario).orElseThrow(() -> {
                 throw new ResourceNotFoundException("Usuário não encontrado");
             });
-            Usuario usuario = new Usuario(usuarioDTO);
-
-            paciente.setEndereco(endereco);
+            usuario = new Usuario(usuarioDTO);
+        }else {
+            usuarioDTO = usuarioService.salvar(new UsuarioDTO(pacienteDTO.getUsuario()));
+            usuario = new Usuario(usuarioDTO);
+        }
             paciente.setUsuario(usuario);
 
             paciente = pacienteRepository.save(paciente);
-        }
 
         pacienteDTO = new PacienteDTO(paciente);
 

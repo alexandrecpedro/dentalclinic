@@ -43,6 +43,20 @@ public class ConsultaDTO {
         this.hora = consulta.getHora();
     }
 
+    public ConsultaDTO(String descricao, String status, PacienteDTO pacienteDTO, DentistaDTO dentistaDTO, String data, String hora) {
+        this.descricao = descricao;
+        this.status = status;
+        this.paciente = new Paciente(pacienteDTO);
+        this.dentista = new Dentista(dentistaDTO);
+        String[] dataArr;
+        dataArr = data.split("/");
+        String[] horaArr;
+        horaArr = hora.split(":");
+        this.data = LocalDate.of(Integer.parseInt(dataArr[2]),Integer.parseInt(dataArr[1]),Integer.parseInt(dataArr[0]));
+        this.hora = LocalTime.of(Integer.parseInt(horaArr[0]),Integer.parseInt(horaArr[1]));
+    }
+
+
     @Override
     public String toString() {
         return "ConsultaDTO{" +
@@ -55,4 +69,5 @@ public class ConsultaDTO {
                 ", hora=" + hora +
                 '}';
     }
+
 }

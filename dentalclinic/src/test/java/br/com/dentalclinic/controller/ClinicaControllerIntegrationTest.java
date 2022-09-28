@@ -1,5 +1,7 @@
 package br.com.dentalclinic.controller;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
+import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
 import br.com.dentalclinic.dto.UsuarioDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +26,8 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UsuarioControllerIntegrationTest {
+class ClinicaControllerIntegrationTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -39,41 +42,23 @@ class UsuarioControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
-    void createAuthenticationTokenTest() throws Exception {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setEmail("teste@email.com");
-        usuarioDTO.setSenha("1234Teste");
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuario/authenticate")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(String.valueOf(usuarioDTO)))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-    }
-
-    @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     void salvarTest() throws Exception {
-        TipoUsuarioDTO tipoUsuarioDTO = new TipoUsuarioDTO();
-        tipoUsuarioDTO.setNome("ROLE_ADMIN");
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setEmail("teste@email.com");
-        usuarioDTO.setSenha("1234Teste");
-        usuarioDTO.setTipoUsuarioDTO(tipoUsuarioDTO);
+        EnderecoDTO enderecoDTO = new EnderecoDTO("Rua Germano Vítor dos Santos","598","CASA 013","Morumbi","LOCALIDADE 1","SP","00000-001"
+);
+        ClinicaDTO clinicaDTO = new ClinicaDTO("Clinica Alex das antiga","alex&cia",enderecoDTO);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuario/salvar")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/clinica/salvar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(usuarioDTO)))
+                        .content(asJsonString(clinicaDTO)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         String responseBody = mvcResult.getResponse().getContentAsString();
-        usuarioDTO = objectFromString(UsuarioDTO.class, responseBody);
-        assertNotNull(usuarioDTO.getId());
+        clinicaDTO = objectFromString(ClinicaDTO.class, responseBody);
+        assertNotNull(clinicaDTO.getId());
     }
+
 }
