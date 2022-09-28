@@ -1,10 +1,19 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.TipoUsuarioDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import br.com.dentalclinic.enums.UserRoles;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_tipo_usuario")
 public class TipoUsuario implements Serializable {
@@ -12,39 +21,24 @@ public class TipoUsuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String nome;
 
     /** Constructor **/
-    public TipoUsuario() {
-    }
-
     public TipoUsuario(String nome) {
         this.nome = nome;
     }
 
-    public TipoUsuario(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
     public TipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) {
+        if(tipoUsuarioDTO.getId()!=0){
+            this.id = tipoUsuarioDTO.getId();
+        } else{
+            this.id=0;
+        }
         this.nome = tipoUsuarioDTO.getNome();
     }
 
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /** Methods **/
     @Override
     public String toString() {
         return "TipoUsuario{" +

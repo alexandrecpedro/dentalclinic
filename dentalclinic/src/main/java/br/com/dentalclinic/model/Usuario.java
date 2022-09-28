@@ -1,31 +1,51 @@
 package br.com.dentalclinic.model;
 
 import br.com.dentalclinic.dto.UsuarioDTO;
+import br.com.dentalclinic.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_usuario")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Usuario implements Serializable {
+public class  Usuario implements UserDetails {
     /** Attributes **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String email, senha;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = TipoUsuario.class)
+
+    @Column(nullable = false,unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
+
+    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = TipoUsuario.class)
     @PrimaryKeyJoinColumn
     private TipoUsuario tipoUsuario;
 
     /** Constructor **/
-    public Usuario() {
-    }
-
     public Usuario(UsuarioDTO usuarioDTO) {
+        if(usuarioDTO.getId()!=0){
+            this.id = usuarioDTO.getId();
+        }else{
+            this.id = 0;
+        }
         this.email = usuarioDTO.getEmail();
         this.senha = usuarioDTO.getSenha();
-        this.tipoUsuario = usuarioDTO.getTipoUsuario();
+        this.tipoUsuario = new TipoUsuario(usuarioDTO.getTipoUsuarioDTO());
     }
 
     public Usuario(String email, String senha, TipoUsuario tipoUsuario) {
@@ -34,42 +54,49 @@ public class Usuario implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(tipoUsuario.getNome());
+        return Collections.singleton(grantedAuthority);
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
+    @Override
+    public String getPassword() {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    /** Methods **/
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
+                ", tipoUsuario=" + tipoUsuario.toString() +
                 '}';
     }
 }

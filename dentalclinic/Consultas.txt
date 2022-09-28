@@ -1,0 +1,16 @@
+banguela;pendente;2022;1;1;1;1
+dentadura;confirmada;2022;2;2;2;2
+dor de dente;encerrada;2022;3;3;3;3
+banguela;cancelada;2022;4;4;4;4
+dentadura;pendente;2022;5;5;5;5
+dor de dente;confirmada;2022;6;6;6;6
+banguela;encerrada;2022;7;7;7;7
+dentadura;cancelada;2022;8;8;8;8
+dor de dente;pendente;2022;9;9;9;9
+banguela;confirmada;2022;10;10;10;10
+dentadura;encerrada;2022;11;11;11;11
+dor de dente;cancelada;2022;12;12;12;12
+banguela;pendente;2022;1;13;13;13
+dentadura;confirmada;2022;2;14;14;14
+dor de dente;encerrada;2022;3;15;15;15
+banguela;cancelada;2022;4;16;16;16

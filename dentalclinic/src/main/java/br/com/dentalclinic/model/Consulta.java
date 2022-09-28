@@ -1,13 +1,18 @@
 package br.com.dentalclinic.model;
 
-import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.dto.ConsultaDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_consulta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -16,89 +21,56 @@ public class Consulta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Date dataConsulta;
+
+    @Column(nullable = false)
     private String descricao;
+
+    @Column(nullable = false)
     private String status;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Paciente.class)
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = Paciente.class)
     private Paciente paciente;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, targetEntity = Dentista.class)
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = Dentista.class)
     private Dentista dentista;
 
-    /** Constructor **/
-    public Consulta() {
-    }
+    @Column(nullable = false)
+    private LocalDate data;
+    @Column(nullable = false)
+    private LocalTime hora;
 
+    /** Constructor **/
     public Consulta(ConsultaDTO consultaDTO) {
-        this.dataConsulta = consultaDTO.getDataConsulta();
+        if(consultaDTO.getId()!=0){
+            this.id=consultaDTO.getId();
+        }
         this.descricao = consultaDTO.getDescricao();
         this.status = consultaDTO.getStatus();
         this.paciente = consultaDTO.getPaciente();
         this.dentista = consultaDTO.getDentista();
+        this.data = consultaDTO.getData();
+        this.hora = consultaDTO.getHora();
     }
 
-    public Consulta(Date dataConsulta, String descricao, String status, Paciente paciente, Dentista dentista) {
-        this.dataConsulta = dataConsulta;
+    public Consulta(String descricao, String status, Paciente paciente, Dentista dentista, LocalDate data, LocalTime hora) {
         this.descricao = descricao;
         this.status = status;
         this.paciente = paciente;
         this.dentista = dentista;
+        this.data = data;
+        this.hora = hora;
     }
 
-    /** Getters/Setters **/
-    public int getId() {
-        return id;
-    }
-
-    public Date getDataConsulta() {
-        return dataConsulta;
-    }
-
-    public void setDataConsulta(Date dataConsulta) {
-        this.dataConsulta = dataConsulta;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Dentista getDentista() {
-        return dentista;
-    }
-
-    public void setDentista(Dentista dentista) {
-        this.dentista = dentista;
-    }
-
-    /** Methods **/
     @Override
     public String toString() {
         return "Consulta{" +
                 "id=" + id +
-                ", dataConsulta=" + dataConsulta +
                 ", descricao='" + descricao + '\'' +
                 ", status='" + status + '\'' +
+                ", paciente=" + paciente.toString() +
+                ", dentista=" + dentista.toString() +
+                ", data=" + data +
+                ", hora=" + hora +
                 '}';
     }
 }

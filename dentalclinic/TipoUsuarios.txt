@@ -1,4 +1,4 @@
-Adminmistrador
+Administrador
 Dentista
 Recepcionista
 Paciente

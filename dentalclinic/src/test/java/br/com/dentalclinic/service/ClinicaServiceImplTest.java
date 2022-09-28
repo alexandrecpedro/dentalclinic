@@ -1,13 +1,16 @@
 package br.com.dentalclinic.service;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
+import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.model.Clinica;
 import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.service.impl.ClinicaServiceImpl;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,7 +23,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Fail.fail;
 
 @SpringBootTest
-class ClinicaServiceImplTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class ClinicaServiceImplTest {
     /** Attributes **/
     @Autowired
     ClinicaServiceImpl clinicaServiceImpl;
@@ -28,8 +32,8 @@ class ClinicaServiceImplTest {
     @Autowired
     EnderecoServiceImpl enderecoServiceImpl;
 
-    static ArrayList<Clinica> listaClinica = new ArrayList<Clinica>();
-    static ArrayList<Endereco> listaEndereco = new ArrayList<Endereco>();
+    static ArrayList<ClinicaDTO> listaClinica = new ArrayList<>();
+    static ArrayList<EnderecoDTO> listaEndereco = new ArrayList<>();
 
     //#######################################################
     //Funcao para comparar clinicas
@@ -53,7 +57,7 @@ class ClinicaServiceImplTest {
             while(line != null){
                 String[] atrArray;
                 atrArray = line.split(";");
-                Endereco end = new Endereco(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
+                EnderecoDTO end = new EnderecoDTO(atrArray[0],atrArray[1],atrArray[2],atrArray[3],atrArray[4],atrArray[5],atrArray[6]);
                 listaEndereco.add(end);
                 line = reader.readLine();
             }
@@ -64,6 +68,7 @@ class ClinicaServiceImplTest {
         }
     }
     @Test
+    @Order(1)
     public void salvar() {
         //#######################################################
         //Salvando os 16 Enderecos na base de dados para criacao das Clinicas
@@ -76,15 +81,21 @@ class ClinicaServiceImplTest {
         //#######################################################
         BufferedReader reader;
         try {
+            for(int i=0;i<listaEndereco.size();i++){
+                listaEndereco.set(i,enderecoServiceImpl.salvar(listaEndereco.get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
             reader = new BufferedReader(new FileReader("./Clinicas.txt"));
             String line = reader.readLine();
             int i = 0;
             while(line != null){
                 String[] atrArray;
                 atrArray = line.split(";");
-                Clinica clinica = new Clinica(atrArray[0],atrArray[1],listaEndereco.get(i++));
-                clinicaServiceImpl.salvar(clinica);
-                listaClinica.add(clinica);
+                ClinicaDTO clinicaDTO = new ClinicaDTO(atrArray[0],atrArray[1],listaEndereco.get(i++));
+                listaClinica.add(clinicaServiceImpl.salvar(clinicaDTO));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -95,17 +106,19 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(2)
     public void buscarTodos(){
-        List<Clinica> todasClinicasDb = clinicaServiceImpl.buscarTodos();
-        if(todasClinicasDb.size()<16){
+        List<ClinicaDTO> todasClinicasDb = clinicaServiceImpl.buscarTodos();
+        if(todasClinicasDb.size()<listaClinica.size()){
             fail("Falha ao inserir ou buscar todos enderecos");
         }
     }
 
     @Test
+    @Order(3)
     public void buscarById() {
-        for(Clinica c1 : listaClinica){
-            Optional<Clinica> c2 = clinicaServiceImpl.buscarById(c1.getId());
+        for(ClinicaDTO c1 : listaClinica){
+            Optional<ClinicaDTO> c2 = clinicaServiceImpl.buscarById(c1.getId());
             if(c2.isEmpty()){
                 fail("Falha buiscando Clinica na BD.");
             }
@@ -116,28 +129,30 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(4)
     public void buscarByNomeFantasia() {
-        for(Clinica c1 : listaClinica){
-            Optional<Clinica> c2 = clinicaServiceImpl.buscarByNomeFantasia(c1.getNomeFantasia());
+        for(ClinicaDTO c1 : listaClinica){
+            Optional<ClinicaDTO> c2 = clinicaServiceImpl.buscarByNomeFantasia(c1.getNomeFantasia());
             if(c2.isEmpty()){
-                fail("Falha buiscando Clinica na BD.");
+                fail("Falha buscando Clinica na BD.");
             }
             if(!comparaObjetoToString(c1, c2.get())){
-                fail("Falha buiscando Clinica na BD.");
+                fail("Falha buscando Clinica na BD.");
             }
         }
     }
 
     @Test
+    @Order(5)
     public void atualizar() {
         int i = 1;
-        for(Clinica c : listaClinica){
+        for(ClinicaDTO c : listaClinica){
             c.setNomeFantasia("Clinica Teste "+i++);
             clinicaServiceImpl.atualizar(c);
         }
-        List<Clinica> listaClinicas2 = clinicaServiceImpl.buscarTodos();
+        List<ClinicaDTO> listaClinicas2 = clinicaServiceImpl.buscarTodos();
         i = 1;
-        for(Clinica c : listaClinicas2){
+        for(ClinicaDTO c : listaClinicas2){
             if(!c.getNomeFantasia().equals("Clinica Teste "+i++)){
                 fail("Falha no teste de atualizacao");
             }
@@ -145,11 +160,12 @@ class ClinicaServiceImplTest {
     }
 
     @Test
+    @Order(6)
     public void deletar() {
-        for(Clinica c : listaClinica){
+        for(ClinicaDTO c : listaClinica){
             clinicaServiceImpl.deletar(c.getId());
         }
-        List<Clinica> listaClinica2 = clinicaServiceImpl.buscarTodos();
+        List<ClinicaDTO> listaClinica2 = clinicaServiceImpl.buscarTodos();
         if(listaClinica2.size()>0 || enderecoServiceImpl.buscarTodos().size()>0){
             fail("Falha ao deletar todas entradas");
         }

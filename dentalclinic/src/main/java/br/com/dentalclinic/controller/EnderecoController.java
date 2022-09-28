@@ -1,12 +1,14 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.model.Endereco;
+import br.com.dentalclinic.dto.EnderecoDTO;
 import br.com.dentalclinic.service.impl.EnderecoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,20 +20,26 @@ public class EnderecoController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<Endereco> salvar(@RequestBody Endereco endereco) {
-        return ResponseEntity.ok(enderecoService.salvar(endereco));
+    public ResponseEntity<EnderecoDTO> salvar(@RequestBody @Validated EnderecoDTO enderecoDTO) {
+        System.out.println(enderecoDTO.toString());
+        return ResponseEntity.ok(enderecoService.salvar(enderecoDTO));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Endereco>> buscarById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<EnderecoDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(enderecoService.buscarById(id));
     }
 
+    @GetMapping("/buscarTodos")
+    public List<EnderecoDTO> buscarTodos() {
+        return ResponseEntity.ok(enderecoService.buscarTodos()).getBody();
+    }
+
     @PutMapping("/atualizar")
-    public ResponseEntity<Endereco> atualizar(@RequestBody Endereco endereco) {
-        return (enderecoService.buscarById(endereco.getId()).equals(null)) ?
+    public ResponseEntity<EnderecoDTO> atualizar(@RequestBody @Validated EnderecoDTO enderecoDTO) {
+        return (enderecoService.buscarById(enderecoDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
-                : ResponseEntity.ok(enderecoService.atualizar(endereco));
+                : ResponseEntity.ok(enderecoService.atualizar(enderecoDTO));
     }
 
     @DeleteMapping("/{id}")

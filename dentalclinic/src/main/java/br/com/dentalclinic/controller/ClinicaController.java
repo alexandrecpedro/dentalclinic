@@ -1,12 +1,15 @@
 package br.com.dentalclinic.controller;
 
-import br.com.dentalclinic.model.Clinica;
+import br.com.dentalclinic.dto.ClinicaDTO;
 import br.com.dentalclinic.service.impl.ClinicaServiceImpl;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,20 +21,26 @@ public class ClinicaController {
 
     /** Methods **/
     @PostMapping("/salvar")
-    public ResponseEntity<Clinica> salvar(@RequestBody Clinica clinica) {
-        return ResponseEntity.ok(clinicaService.salvar(clinica));
+    public ResponseEntity<ClinicaDTO> salvar(@RequestBody ClinicaDTO clinicaDTO) {
+
+        //return ResponseEntity.ok(new ClinicaDTO(clinicaDTO.getString("nomeFantasia"),clinicaDTO.getString("razaoSocial"),clinicaDTO.getJSONObject("endereco")));
+
+        return ResponseEntity.ok(clinicaService.salvar(clinicaDTO));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Clinica>> buscarById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<ClinicaDTO>> buscarById(@PathVariable Integer id) {
         return ResponseEntity.ok(clinicaService.buscarById(id));
     }
-
+    @GetMapping("/buscarTodos")
+    public List<ClinicaDTO> buscarTodos() {
+        return ResponseEntity.ok(clinicaService.buscarTodos()).getBody();
+    }
     @PutMapping("/atualizar")
-    public ResponseEntity<Clinica> atualizar(@RequestBody Clinica clinica) {
-        return (clinicaService.buscarById(clinica.getId()).equals(null)) ?
+    public ResponseEntity<ClinicaDTO> atualizar(@RequestBody @Validated ClinicaDTO clinicaDTO) {
+        return (clinicaService.buscarById(clinicaDTO.getId()).equals(null)) ?
                 new ResponseEntity(HttpStatus.NOT_FOUND)
-                : ResponseEntity.ok(clinicaService.atualizar(clinica));
+                : ResponseEntity.ok(clinicaService.atualizar(clinicaDTO));
     }
 
     @DeleteMapping("/{id}")

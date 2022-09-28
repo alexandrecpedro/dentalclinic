@@ -1,11 +1,10 @@
 package br.com.dentalclinic.service;
 
-import br.com.dentalclinic.model.TipoUsuario;
-import br.com.dentalclinic.model.Usuario;
+import br.com.dentalclinic.dto.TipoUsuarioDTO;
+import br.com.dentalclinic.dto.UsuarioDTO;
 import br.com.dentalclinic.service.impl.TipoUsuarioServiceImpl;
 import br.com.dentalclinic.service.impl.UsuarioServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,6 +19,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Fail.fail;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UsuarioServiceImplTest {
     /** Attributes **/
     @Autowired
@@ -28,8 +28,8 @@ class UsuarioServiceImplTest {
     @Autowired
     TipoUsuarioServiceImpl tipoUsuarioService;
 
-    static ArrayList<Usuario> listaUsuario = new ArrayList();
-    static ArrayList<TipoUsuario> listaTipoUsuario = new ArrayList();
+    static ArrayList<UsuarioDTO> listaUsuario = new ArrayList();
+    static ArrayList<TipoUsuarioDTO> listaTipoUsuario = new ArrayList();
 
     public boolean ComparaObjetoToString(Object o1, Object o2){
         System.out.println(o1.toString());
@@ -47,16 +47,19 @@ class UsuarioServiceImplTest {
 
     }
 
+    /** Tests **/
     @Test
-    public void SalvarTipoUsuarios(){
+    @Order(1)
+    public void salvarUsuarios() {
         BufferedReader reader;
-
         try{
             reader = new BufferedReader(new FileReader("./TipoUsuarios.txt"));
             String line = reader.readLine();
+            int i = 0;
             while(line != null){
-                listaTipoUsuario.add(new TipoUsuario(line));
-                tipoUsuarioService.salvar(new TipoUsuario(line));
+                listaTipoUsuario.add(new TipoUsuarioDTO(line));
+                listaTipoUsuario.set(i,tipoUsuarioService.salvar(listaTipoUsuario.get(i)));
+                i++;
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -64,18 +67,13 @@ class UsuarioServiceImplTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /** Tests **/
-    @Test
-    public void salvarUsuarios() {
-        BufferedReader reader;
         try{
             reader = new BufferedReader(new FileReader("./Usuario.txt"));
             String line = reader.readLine();
             while(line!=null){
                 String[] arrayLineSplit = line.split(";");
-                listaUsuario.add(new Usuario(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioService.buscarByNome(arrayLineSplit[2])));
+                //TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioService.buscarByNome(arrayLineSplit[2]);
+                listaUsuario.add(new UsuarioDTO(arrayLineSplit[0],arrayLineSplit[1],tipoUsuarioService.buscarByNome(arrayLineSplit[2])));
                 line = reader.readLine();
             }
         }catch (FileNotFoundException e) {
@@ -83,55 +81,60 @@ class UsuarioServiceImplTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(Usuario user : listaUsuario){
-            usuarioServiceImpl.salvar(user);
+        for(int i = 0;i<listaUsuario.size();i++){
+            listaUsuario.set(i,usuarioServiceImpl.salvar(listaUsuario.get(i)));
         }
     }
 
     @Test
+    @Order(2)
     public void buscarTodos(){
-        List<Usuario> listaUsuariosBuscados = usuarioServiceImpl.buscarTodos();
+        List<UsuarioDTO> listaUsuariosBuscados = usuarioServiceImpl.buscarTodos();
         if(listaUsuariosBuscados.size()!=listaUsuario.size()){
             fail("Falha Buscando Todos Usuarios.");
         }
     }
 
     @Test
+    @Order(3)
     public void buscarById() {
-        for(Usuario u : listaUsuario){
-            Optional<Usuario> u2 = usuarioServiceImpl.buscarById(u.getId());
-            if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
+        for(UsuarioDTO u : listaUsuario){
+            Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarById(u.getId());
+            if(u2.isEmpty() || !ComparaObjetoToString(u,u2.get())){
                 fail("Falha buscando usuario pelo id.");
             }
         }
     }
 
     @Test
+    @Order(4)
     public void buscarByEmail() {
-        for(Usuario u : listaUsuario){
-            Optional<Usuario> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
-            if(u2.isEmpty() || !ComparaObjetoToString(u,u2)){
+        for(UsuarioDTO u : listaUsuario){
+            Optional<UsuarioDTO> u2 = usuarioServiceImpl.buscarByEmail(u.getEmail());
+            if(u2.isEmpty() || !ComparaObjetoToString(u,u2.get())){
                 fail("Falha buscando usuario pelo id.");
             }
         }
     }
 
     @Test
+    @Order(5)
     public void atualizar() {
-        for(Usuario u : listaUsuario){
+        for(UsuarioDTO u : listaUsuario){
             u.setSenha("XXXX");
             usuarioServiceImpl.atualizar(u);
         }
-        for(Usuario u : listaUsuario){
-            if(!ComparaObjetoToString(u,usuarioServiceImpl.buscarById(u.getId()))){
+        for(UsuarioDTO u : listaUsuario){
+            if(!ComparaObjetoToString(u,usuarioServiceImpl.buscarById(u.getId()).get())){
                 fail("Falha Atualizando Usuario.");
             }
         }
     }
 
     @Test
+    @Order(6)
     public void deletar() {
-        for(Usuario u : listaUsuario){
+        for(UsuarioDTO u : listaUsuario){
             usuarioServiceImpl.deletar(u.getId());
         }
         if(usuarioServiceImpl.buscarTodos().size()>0){

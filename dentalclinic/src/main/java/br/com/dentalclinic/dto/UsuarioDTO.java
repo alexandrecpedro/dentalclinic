@@ -2,54 +2,43 @@ package br.com.dentalclinic.dto;
 
 import br.com.dentalclinic.model.TipoUsuario;
 import br.com.dentalclinic.model.Usuario;
+import lombok.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UsuarioDTO {
 
     private int id;
     private String email;
     private String senha;
-    private TipoUsuario tipoUsuario;
+    private TipoUsuarioDTO tipoUsuarioDTO;
 
-    public UsuarioDTO() {
-    }
-
-    public UsuarioDTO(String email, String senha, TipoUsuario tipoUsuario) {
+    public UsuarioDTO(String email, String senha, TipoUsuarioDTO tipoUsuarioDTO) {
         this.email = email;
         this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
+        this.tipoUsuarioDTO = tipoUsuarioDTO;
     }
 
     public UsuarioDTO(Usuario usuario){
+        if(usuario.getId()!=0){
+            this.id=usuario.getId();
+        }else{
+            this.id=0;
+        }
         this.email = usuario.getEmail();
         this.senha = usuario.getSenha();
-        this.tipoUsuario = usuario.getTipoUsuario();
+        this.tipoUsuarioDTO = new TipoUsuarioDTO(usuario.getTipoUsuario());
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", tipoUsuarioDTO=" + tipoUsuarioDTO.toString() +
+                '}';
     }
 }

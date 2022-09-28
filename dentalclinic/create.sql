@@ -63,5 +63,5 @@ fk_idPaciente INT,
 fk_idDentista INT
 );
 
-ALTER TABLE tb_consulta ADD FOREIGN KEY (fk_idPaciente) REFERENCES tb_paciente(id);
+ALTER TABLE tb_clinica ADD FOREIGN KEY (fk_idPaciente) REFERENCES tb_paciente(id);
 ALTER TABLE tb_consulta ADD FOREIGN KEY (fk_idDentista) REFERENCES tb_dentista(id);

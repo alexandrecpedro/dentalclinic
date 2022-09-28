@@ -1,67 +1,112 @@
 package br.com.dentalclinic.service.impl;
 
+import br.com.dentalclinic.dto.ClinicaDTO;
+import br.com.dentalclinic.dto.EnderecoDTO;
+import br.com.dentalclinic.exception.BadRequestException;
+import br.com.dentalclinic.exception.ResourceNotFoundException;
 import br.com.dentalclinic.model.Clinica;
+import br.com.dentalclinic.model.Endereco;
 import br.com.dentalclinic.repository.IClinicaRepository;
-import br.com.dentalclinic.repository.IEnderecoRepository;
 import br.com.dentalclinic.service.IService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClinicaServiceImpl implements IService<Clinica> {
-    /** Attribute **/
+public class ClinicaServiceImpl implements IService<ClinicaDTO> {
+    /** Attributes **/
     @Autowired
-    private IClinicaRepository IClinicaRepository;
+    private IClinicaRepository clinicaRepository;
 
     @Autowired
-    private IEnderecoRepository IEnderecoRepository;
-
-    /** Constructor **/
-    public ClinicaServiceImpl(IClinicaRepository IClinicaRepository) {
-        this.IClinicaRepository = IClinicaRepository;
-    }
+    private EnderecoServiceImpl enderecoService;
 
     /** Methods **/
     @Override
-    public Clinica salvar(Clinica clinica) {
-        if (!clinica.equals(null)) {
-            IClinicaRepository.save(clinica);
+    public ClinicaDTO salvar(ClinicaDTO clinicaDTO) {
+        Clinica clinica = new Clinica(clinicaDTO);
+        int idEndereco = clinica.getEndereco().getId();
+
+        if (enderecoService.ifEnderecoExists(idEndereco)) {
+            EnderecoDTO enderecoDTO = enderecoService.buscarById(idEndereco).orElseThrow(() -> {
+                throw new ResourceNotFoundException("Endereço não encontrado!");
+            });
+            Endereco endereco = new Endereco(enderecoDTO);
+            clinica = clinicaRepository.save(clinica);
+            clinicaDTO = new ClinicaDTO(clinica);
+        }else{
+            clinicaDTO.setEnderecoDTO(enderecoService.salvar(clinicaDTO.getEnderecoDTO()));
+            Clinica clinica2 = new Clinica(clinicaDTO);
+            clinica2 = clinicaRepository.save(clinica2);
+            clinicaDTO = new ClinicaDTO(clinica2);
         }
-        return clinica;
+
+        return clinicaDTO;
     }
+
     @Override
-    public Optional<Clinica> buscarById(Integer id) {
-        return IClinicaRepository.findById(id);
+    public Optional<ClinicaDTO> buscarById(Integer id) {
+        Clinica clinica = clinicaRepository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Clínica não encontrada!");
+        });
+        ClinicaDTO clinicaDTO = new ClinicaDTO(clinica);
+        return Optional.ofNullable(clinicaDTO);
     }
+
     @Override
-    public Clinica atualizar(Clinica clinica) {
-        return IClinicaRepository.saveAndFlush(clinica);
+    public List<ClinicaDTO> buscarTodos() {
+        List<Clinica> clinicas = clinicaRepository.findAll();
+        List<ClinicaDTO> clinicaDTOS = new ArrayList<>();
+
+        for (Clinica clinica : clinicas) {
+            ClinicaDTO clinicaDTO = new ClinicaDTO(clinica);
+            clinicaDTOS.add(clinicaDTO);
+        }
+        return clinicaDTOS;
+    }
+
+    @Override
+    public ClinicaDTO atualizar(ClinicaDTO clinicaDTO) {
+        Clinica clinica = new Clinica(clinicaDTO);
+        clinica = clinicaRepository.saveAndFlush(clinica);
+        clinicaDTO = new ClinicaDTO(clinica);
+        return clinicaDTO;
     }
 
     @Override
     public void deletar(Integer id) {
-        IClinicaRepository.deleteById(id);
+        if (clinicaRepository.existsById(id)) {
+            clinicaRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Clínica inexistente!");
+        }
     }
 
-    public List<Clinica> buscarTodos() {
-        return IClinicaRepository.findAll();
+    public Optional<ClinicaDTO> buscarByNomeFantasia(String nomeFantasia) {
+        Clinica clinica = clinicaRepository.findByNomeFantasia(nomeFantasia).orElseThrow(()-> new BadRequestException("Clínica inexistente!"));
+        ClinicaDTO clinicaDTO = new ClinicaDTO(clinica);
+        return Optional.ofNullable(clinicaDTO);
     }
 
-    public Optional<Clinica> buscarByNomeFantasia(String nomeFantasia){return IClinicaRepository.findByNomeFantasia(nomeFantasia);}
-//
-//    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO){
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Clinica clinica = objectMapper.convertValue(clinicaDTO, Clinica.class);
-//        return clinica;
-//    }
-//
-//    public ClinicaDTO mapperEntityToDTO(Clinica clinica){
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        ClinicaDTO clinicaDTO = objectMapper.convertValue(clinica, ClinicaDTO.class);
-//        return clinicaDTO;
-//    }
+    public boolean ifClinicaExists(int id){
+        return clinicaRepository.existsById(id);
+    }
+
+    public Clinica mapperDTOToEntity(ClinicaDTO clinicaDTO) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Clinica clinica = objectMapper.convertValue(clinicaDTO, Clinica.class);
+        return clinica;
+    }
+
+    public ClinicaDTO mapperEntityToDTO(Clinica clinica) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ClinicaDTO clinicaDTO = objectMapper.convertValue(clinica, ClinicaDTO.class);
+        return clinicaDTO;
+    }
+
 
 }
